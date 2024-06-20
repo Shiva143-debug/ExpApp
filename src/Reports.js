@@ -104,7 +104,7 @@ function Reports({ id, isdark }) {
 
 
     const filteredSourceData = sourceData.filter((item) => {
-        return item.month === parseInt(Month) && item.year === parseInt(Year);
+        return item.month === parseInt(Month) && item.year === Year;
     });
 
 

@@ -79,9 +79,17 @@ function Dashboard({ id, isdark }) {
         const userId = id;
         // fetch(`http://localhost:3005/getSource/${userId}`)
         fetch(`https://exciting-spice-armadillo.glitch.me/getSource/${userId}/${Month}/${Year}`)
-            .then(res => res.json())
-            .then(data => setTotalIncome(data))
-            .catch(err => console.log(err))
+        .then(res => res.json())
+        .then(data => {
+            if (Array.isArray(data)) {
+                setTotalIncome(data);
+            } else {
+                setTotalIncome([])
+            }
+        })
+            // .then(res => res.json())
+            // .then(data => setTotalIncome(data))
+            // .catch(err => console.log(err))
 
     }, [Month, Year, id])
 
@@ -104,7 +112,7 @@ function Dashboard({ id, isdark }) {
                 if (Array.isArray(data)) {
                     setYearData(data);
                 } else {
-                    console.error('Expected array but got', data);
+                    setYearData([])
                 }
             })
             .catch(err => console.log(err));
