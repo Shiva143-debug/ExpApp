@@ -112,6 +112,8 @@ function Dashboard({ id, isdark }) {
     
 
 
+
+
     const filteredTotalCostData = totalCostData.filter((d) => {
         return d.month.toString() === Month & d.year.toString() === Year;
     });
@@ -297,7 +299,7 @@ function Dashboard({ id, isdark }) {
                             <>
                                 <button class="btn btn-primary mx-2 mt-5 mb-5" style={{ width: "150px" }} onClick={yearlyReport}>Hide YearWise Expenditure</button>
                                 <div className="d-flex">
-                                    <label style={{ color: isdark ? "white" : "black", width: isMobile ? "100px" : "300px" }}><b>Select Year:</b></label>
+                                    <label style={{ color: isdark ? "white" : "black", width: isMobile ? "100px" : "300px" }}><b>Select year:</b></label>
                                     <select
                                         name="year"
                                         style={{ width: isMobile ? "100px" : "300px" }}
