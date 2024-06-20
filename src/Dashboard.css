@@ -1,0 +1,29 @@
+.image-circle {
+    width:60px;
+    height:60px;
+    background-image: linear-gradient(#e20337, #c60188, #7700c3);
+    border-width: 2px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+   
+  }
+
+  .mobile-image-circle{
+    width:40px;
+    height:40px;
+    background-image: linear-gradient(#e20337, #c60188, #7700c3);
+    border-width: 2px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    margin-top: 20px;
+  }
+
+  
