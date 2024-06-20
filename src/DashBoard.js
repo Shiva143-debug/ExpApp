@@ -86,17 +86,30 @@ function Dashboard({ id, isdark }) {
     }, [Month, Year, id])
 
 
+    // useEffect(() => {
+    //     const userId = id;
+    //     fetch(`https://exciting-spice-armadillo.glitch.me/getYearWiseData/${userId}/${year}`)
+    //         .then(res => res.json())
+    //         .then(data => setYearData(data))
+    //         .catch(err => console.log(err))
+
+    // }, [year, id])
+ 
+      
     useEffect(() => {
         const userId = id;
         fetch(`https://exciting-spice-armadillo.glitch.me/getYearWiseData/${userId}/${year}`)
             .then(res => res.json())
-            .then(data => setYearData(data))
-            .catch(err => console.log(err))
-
-    }, [year, id])
- 
-      
-
+            .then(data => {
+                if (Array.isArray(data)) {
+                    setYearData(data);
+                } else {
+                    console.error('Expected array but got', data);
+                }
+            })
+            .catch(err => console.log(err));
+    }, [year, id]);
+    
 
 
     const filteredTotalCostData = totalCostData.filter((d) => {
