@@ -88,7 +88,7 @@ function Source({ id ,isdark}) {
                         <div style={{ width: isMobile ? "100%" : "85%", backgroundColor:isdark?"black": "whitesmoke", color:isdark?"white": "", top: 100 }} className="d-flex flex-column justify-content-center align-items-center vh-100">
                             <Toast ref={toast} />
                             <center><h1 style={{ color:isdark?"white": "navy" ,fontSize:isMobile?"18px":"28px"}}>ADD THE <i style={{ color: "red" }}>SOURCE</i> OF INCOME</h1></center>
-                            <form id="myForm" onSubmit={handleSubmit} className={isMobile ? "p-2 rounded mb-5 pt-5" : " rounded mb-5 p-5"} style={{ width: isMobile ? "90%" : "60%", height: "50%",backgroundColor:isdark?"#555555":"white" }}>
+                            <form id="myForm" onSubmit={handleSubmit} className={isMobile ? "p-2 rounded mb-5 pt-5" : " rounded mb-5 p-5"} style={{ width: isMobile ? "90%" : "60%", height: "60vh",backgroundColor:isdark?"#555555":"white" }}>
 
 
                                 <div className="mb-5 row">

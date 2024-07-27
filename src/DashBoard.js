@@ -9,6 +9,7 @@ import Chart from 'chart.js/auto';
 import "./Dashboard.css"
 import MyPieChart from './MyPieChart';
 // import MyPieChart from './MyPieChart';
+import { useNavigate } from 'react-router-dom';
 
 
 const months = [
@@ -34,8 +35,16 @@ function Dashboard({ id, isdark }) {
     const [year, setSelectedYearr] = useState("2024");
     const [showYearlyReport, setShowYearlyReport] = useState(false)
 
+    const navigate = useNavigate();
 
-
+    // const handleCategoryClick = (category) => {
+    //     navigate(`/report?category=${encodeURIComponent(category)}`);
+    // };
+    const handleCategoryClick = (category) => {
+        const month = encodeURIComponent(Month);
+        const year = encodeURIComponent(Year);
+        navigate(`/reports?category=${encodeURIComponent(category)}&month=${month}&year=${year}`);
+    };
 
     const handleSelectChange = (event) => {
         const { name, value } = event.target;
@@ -170,7 +179,7 @@ function Dashboard({ id, isdark }) {
 
 
 
-
+ 
     const expenseMap = {};
     yearWiseExpenceData.forEach((d) => {
         const monthName = months[d.month - 1]; // Convert month number to name
@@ -283,7 +292,7 @@ function Dashboard({ id, isdark }) {
                                 const percentage = ((item.TotalCost / totalAmount) * 100).toFixed(2);
 
                                 return (
-                                    <div key={index} class="m-2 d-flex justify-content-around p-2" style={{ backgroundColor: colors[index % colors.length], width: isMobile ? "43%" : "250px", height: isMobile ? "120px" : "150px", borderRadius: "12px" }}>
+                                    <div onClick={() => handleCategoryClick(item.category)}  key={index} class="m-2 d-flex justify-content-around p-2" style={{ backgroundColor: colors[index % colors.length], width: isMobile ? "43%" : "250px", height: isMobile ? "120px" : "150px", borderRadius: "12px" }}>
                                         <div>
                                             <p style={{ fontWeight: "bold", fontSize: isMobile ? '18px' : '20px' }}>{item.category}</p><br />
                                             <p style={{ fontWeight: "bold", fontSize: isMobile ? '14px' : '20px' }}><FaRupeeSign />{parseFloat(item.TotalCost).toFixed(2)}</p>

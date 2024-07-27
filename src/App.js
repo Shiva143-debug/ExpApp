@@ -16,6 +16,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import Footer from "./Footer";
 import { useLocation } from 'react-router-dom';
 import ImageComponent from "./ImageComponent";
+import Report from "./Report";
 
 function Layout({ children, id, isdark, toggleTheme }) {
 
@@ -67,6 +68,7 @@ function App() {
         <Route path="/addcat" element={<Layout id={userId}  isdark={isdark} toggleTheme={toggleTheme}><AddCategory id={userId} isdark={isdark}/></Layout>} />
         <Route path="/source" element={<Layout id={userId}  isdark={isdark} toggleTheme={toggleTheme}><Source id={userId} isdark={isdark}/></Layout>} />
         <Route path="/reports" element={<Layout id={userId} isdark={isdark}  toggleTheme={toggleTheme}><Reports id={userId} isdark={isdark}/></Layout>} />
+        {/* <Route path="/report" element={<Layout id={userId} isdark={isdark}  toggleTheme={toggleTheme}><Report id={userId} isdark={isdark}/></Layout>} /> */}
         <Route path="/image" element={<ImageComponent/>}/>
       </Routes>
     </BrowserRouter>
