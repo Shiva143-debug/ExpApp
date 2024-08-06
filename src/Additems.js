@@ -225,7 +225,7 @@ function Additems({ id,isdark }) {
                             <Slidebar isdark={isdark}/>
                         </div>
                     )}
-                    <div className="d-flex flex-column" style={{ width: isMobile ? "100%" : "85%", backgroundColor:isdark?"black": "whitesmoke" }}>
+                    <div className="d-flex flex-column" style={{ width: isMobile ? "100%" : "85%", backgroundColor:isdark?"black": "whitesmoke",fontFamily: "Arial, sans-serif" }}>
                         <Toast ref={toast} />
 
                         <h2 style={{ color:isdark?"white": "black", textAlign: "start", width: "300px", marginTop: "150px", marginLeft: "50px" }}>Add Expence</h2>
