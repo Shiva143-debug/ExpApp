@@ -228,11 +228,11 @@ function Additems({ id,isdark }) {
                     <div className="d-flex flex-column" style={{ width: isMobile ? "100%" : "85%", backgroundColor:isdark?"black": "whitesmoke" }}>
                         <Toast ref={toast} />
 
-                        <h2 style={{ color:isdark?"white": "navy", textAlign: "start", width: "300px", marginTop: "150px", marginLeft: "50px" }}>Add Expence</h2>
+                        <h2 style={{ color:isdark?"white": "black", textAlign: "start", width: "300px", marginTop: "150px", marginLeft: "50px" }}>Add Expence</h2>
                         <form id="addForm" className={isMobile ? "p-2  mb-5" : "mb-5 p-5"} style={{ width: "90%", minHeight: "80vh" }} onSubmit={handleSubmit}>
                             <div className="mb-5 row">
                                 <div class="col-6">
-                                    <label htmlFor="" className="px-5 fw-bold" style={{ color:isdark?"white": "navy", fontSize: isMobile ? '14px' : '20px' }}>Category:</label>
+                                    <label htmlFor="" className="px-5 fw-bold" style={{ color:isdark?"white": "black", fontSize: isMobile ? '14px' : '20px' }}>Category:</label>
                                 </div>
                                 <div class="col-6">
                                     <select id="id" class="form-control" value={selectedCategory}
@@ -250,7 +250,7 @@ function Additems({ id,isdark }) {
                             </div>
                             <div className="mb-5 row">
                                 <div class="col-6">
-                                    <label htmlFor="" className="px-5 fw-bold" style={{ color:isdark?"white": "navy", fontSize: isMobile ? '14px' : '20px' }}>Expence Name:</label>
+                                    <label htmlFor="" className="px-5 fw-bold" style={{ color:isdark?"white": "black", fontSize: isMobile ? '14px' : '20px' }}>Expence Name:</label>
                                 </div>
                                 <div class="col-6">
 
@@ -276,7 +276,7 @@ function Additems({ id,isdark }) {
                             </div>
                             <div className="mb-5 row">
                                 <div class="col-6">
-                                    <label htmlFor="" className="px-5 fw-bold" style={{ color:isdark?"white": "navy", fontSize: isMobile ? '14px' : '20px' }}>cost:</label>
+                                    <label htmlFor="" className="px-5 fw-bold" style={{ color:isdark?"white": "black", fontSize: isMobile ? '14px' : '20px' }}>cost:</label>
                                 </div>
                                 <div class="col-6">
                                     <input type="number" placeholder="Enter cost" className="form-control"
@@ -287,7 +287,7 @@ function Additems({ id,isdark }) {
 
                             <div className="mb-5 row">
                                 <div class="col-6">
-                                    <label htmlFor="costFrom" className="px-5 fw-bold" style={{ color:isdark?"white": "navy", fontSize: isMobile ? '14px' : '20px' }}>Cost From:</label>
+                                    <label htmlFor="costFrom" className="px-5 fw-bold" style={{ color:isdark?"white": "black", fontSize: isMobile ? '14px' : '20px' }}>Cost From:</label>
                                 </div>
                                 <div class="col-6">
                                     <select id="costFrom" class="form-control" value={selectedSource}
@@ -304,7 +304,7 @@ function Additems({ id,isdark }) {
 
                             <div className="mb-1 row">
                                 <div class="col-6">
-                                    <label htmlFor="" className="px-5 fw-bold" style={{ color:isdark?"white": "navy", fontSize: isMobile ? '14px' : '20px' }}>purchase/spend Date:</label>
+                                    <label htmlFor="" className="px-5 fw-bold" style={{ color:isdark?"white": "black", fontSize: isMobile ? '14px' : '20px' }}>purchase/spend Date:</label>
                                 </div>
                                 <div class="col-6">
                                     <input type="date" placeholder="Enter purchase Date" className="form-control"
@@ -314,7 +314,7 @@ function Additems({ id,isdark }) {
 
                             <div className="mb-5 row">
                                 <div class="col-6">
-                                    <label htmlFor="" className="px-5 fw-bold pt-5" style={{ color:isdark?"white": "navy", fontSize: isMobile ? '14px' : '20px' }}>Description:</label>
+                                    <label htmlFor="" className="px-5 fw-bold pt-5" style={{ color:isdark?"white": "black", fontSize: isMobile ? '14px' : '20px' }}>Description:</label>
                                 </div>
                                 <div class="col-6 mt-5">
                                     <textarea rows="1" placeholder="This is the default text inside the textarea." cols="40" className="form-control" onChange={onChangeDescription}>
@@ -326,7 +326,7 @@ function Additems({ id,isdark }) {
 
                             <div className="mb-5 row">
                                 <div class="col-6">
-                                    <label htmlFor="" className="px-5 fw-bold" style={{color:isdark?"white": "navy", fontSize: isMobile ? '14px' : '20px' }}>Attach Image:</label>
+                                    <label htmlFor="" className="px-5 fw-bold" style={{color:isdark?"white": "black", fontSize: isMobile ? '14px' : '20px' }}>Attach Image:</label>
                                 </div>
                                 <div class="col-6">
                                     <input type="file" id="image" className="form-control" onChange={handleImageChange} />
@@ -336,7 +336,7 @@ function Additems({ id,isdark }) {
 
                             <div className="mb-5 row">
                                 <div class="col-6">
-                                    <label htmlFor="" className="px-5 fw-bold" style={{ color:isdark?"white": "navy", fontSize: isMobile ? '14px' : '20px' }}>Tax Applicable:</label>
+                                    <label htmlFor="" className="px-5 fw-bold" style={{ color:isdark?"white": "black", fontSize: isMobile ? '14px' : '20px' }}>Tax Applicable:</label>
                                 </div>
 
                                 <div class="col-6" style={{ display: "flex" }}>
