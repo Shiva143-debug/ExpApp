@@ -152,7 +152,7 @@ function AddCategory({ id, isdark }) {
                             )}
 
                             {!loading && (
-                                <div className="d-flex flex-column justify-content-center align-items-center rounded p-5" style={{ width: "100%", height: "100%", backgroundColor: isdark ? "black" : "whitesmoke", color: isdark ? "white" : "" }}>
+                                <div className="d-flex flex-column justify-content-center align-items-center rounded p-5" style={{ width: "100%", height: "100%", backgroundColor: isdark ? "black" : "whitesmoke", color: isdark ? "white" : "",fontFamily: "Arial, sans-serif" }}>
                                     <Toast ref={toast} />
 
                                     <h2 style={{ color: isdark ? "white" : "navy", marginTop: isMobile ? "10px" : "150px" }} className="pb-2">ADD CATEGORY</h2>
