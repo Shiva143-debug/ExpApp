@@ -253,24 +253,24 @@ function Dashboard({ id, isdark }) {
                         <div class="d-flex mb-5 ">
                             <select
                                 name="month"
-                                style={{ width: isMobile ? "100px" : "300px", marginTop: "100px" }}
+                                style={{ width: isMobile ? "100px" : "300px", marginTop: "100px",backgroundColor:"transparent" ,color:isdark?"white":"black"}}
                                 className="form-control"
                                 value={Month}
                                 onChange={handleSelectChange}
                             >
                                 {months.map((month, index) => (
-                                    <option key={index} value={index + 1}>{month}</option>
+                                    <option key={index} value={index + 1} style={{color:"black"}}> {month}</option>
                                 ))}
                             </select>
                             <select
                                 name="year"
-                                style={{ width: isMobile ? "100px" : "300px", marginTop: "100px", marginLeft: "20px" }}
+                                style={{ width: isMobile ? "100px" : "300px", marginTop: "100px", marginLeft: "20px" ,backgroundColor:"transparent" ,color:isdark?"white":"black"}}
                                 className="form-control"
                                 value={Year}
                                 onChange={handleSelectChange}
                             >
                                 {years.map((year, index) => (
-                                    <option key={index} value={year}>{year}</option>
+                                    <option key={index} value={year} style={{color:"black"}}>{year}</option>
                                 ))}
                             </select>
 
@@ -292,7 +292,7 @@ function Dashboard({ id, isdark }) {
                                 const percentage = ((item.TotalCost / totalAmount) * 100).toFixed(1);
 
                                 return (
-                                    <div onClick={() => handleCategoryClick(item.category)}  key={index} class="m-2 d-flex justify-content-around p-2" style={{ backgroundColor: colors[index % colors.length], width: isMobile ? "43%" : "250px", height: isMobile ? "120px" : "150px", borderRadius: "12px" }}>
+                                    <div onClick={() => handleCategoryClick(item.category)}  key={index} class="m-2 d-flex justify-content-around p-2" style={{ backgroundColor:isdark?"black": colors[index % colors.length],color:isdark?"white":"",border:isdark?"1px solid white":"", width: isMobile ? "43%" : "250px", height: isMobile ? "120px" : "150px", borderRadius: "12px" }}>
                                         <div>
                                             <p style={{ fontWeight: "bold", fontSize: isMobile ? '18px' : '20px' }}>{item.category}</p><br />
                                             <p style={{ fontWeight: "bold", fontSize: isMobile ? '14px' : '20px' }}><FaRupeeSign />{parseFloat(item.TotalCost).toFixed(2)}</p>
@@ -316,25 +316,25 @@ function Dashboard({ id, isdark }) {
                             <>
                                 <button class="btn btn-primary mx-2 mt-5 mb-5" style={{ width: "150px" }} onClick={yearlyReport}>Hide YearWise Expenditure</button>
                                 <div className="d-flex">
-                                    <label style={{ color: isdark ? "white" : "black", width: isMobile ? "100px" : "300px" }}><b>Select year:</b></label>
+                                    <label style={{ color: isdark ? "white" : "black", width: isMobile ? "100px" : "300px",paddingTop:"10px" }}><b>Select year:</b></label>
                                     <select
                                         name="year"
-                                        style={{ width: isMobile ? "100px" : "300px" }}
+                                        style={{ width: isMobile ? "100px" : "300px" ,backgroundColor:"transparent" ,color:isdark?"white":"black"}}
                                         className="form-control"
                                         value={year}
                                         onChange={handleSelectYearChange}
                                     >
                                         {years.map((year, index) => (
-                                            <option key={index} value={year}>{year}</option>
+                                            <option key={index} value={year} style={{color:"black"}}>{year}</option>
                                         ))}
                                     </select>
                                 </div>
 
                                 {!isMobile &&
 
-                                    <div style={{ maxWidth: isMobile ? "600px" : "800px", overflowX: "auto" }}>
+                                    <div >
 
-                                        <table className="table table-bordered mt-5 mb-5" style={{ width: isMobile ? "500px" : "800px", textAlign: "center" }}>
+                                        <table className="table table-bordered mt-5 mb-5" style={{ width : "80vw", textAlign: "center" }}>
                                             <thead>
                                                 <tr>
                                                     <th>Month</th>
@@ -369,7 +369,7 @@ function Dashboard({ id, isdark }) {
                                     </div>
                                 }
                                 {isMobile &&
-                                    <div style={{marginBottom:"100px",display:"flex",flexDirection:"column"}}>
+                                    <div style={{marginBottom:"100px",display:"flex",flexDirection:"column",marginLeft:"-15px"}}>
                                         <MyPieChart combinedData={combinedData} />
                                         <b style={{color:isdark?"white":"black"}}>Total Income: {totalIncome}</b>
                                         <b style={{color:isdark?"white":"black"}}>Total Expences:{totalExpense}</b>

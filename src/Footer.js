@@ -7,7 +7,7 @@ import { FaMoneyBill1Wave } from "react-icons/fa6";
 import { TbReportSearch } from "react-icons/tb";
 import './MobileSlidebar.css';
 
-const Footer = () => {
+const Footer = ({isdark}) => {
     const location = useLocation();
 
 
@@ -35,7 +35,7 @@ const Footer = () => {
     }
 
     return (
-        <div style={{ width: "100%", position: "fixed", bottom: 0, left: 0, right: 0, backgroundColor: "grey", justifyContent: "space-around", borderRadius:"16px 16px 0px 0px" ,borderTop: "1px solid whitesmoke", display: "flex", flexWrap: "wrap", fontSize: "14px" }}>
+        <div style={{ width: "100%", position: "fixed", bottom: 0, left: 0, right: 0, backgroundColor:isdark? "black":"gray", justifyContent: "space-around", borderRadius:"16px 16px 0px 0px" ,borderTop: "2px solid whitesmoke", display: "flex", flexWrap: "wrap", fontSize: "14px" }}>
             <Link to="/dashBoard" className='nav-link'>
                 <button onClick={() => setActiveButton("dashboard")} className={`${activeButton === 'dashboard' ? "active" : "MobileSideButton"} d-flex flex-column justify-content-center align-items-center`}>
                 <FaHome />DashBoard

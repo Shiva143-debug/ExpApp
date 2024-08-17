@@ -1,43 +1,45 @@
 .card{
-    background-color:#6883bc;
-    color:white;
+    background-color:white;
+    
     display: flex;
     border-radius: 8px;
+    box-shadow: 5px 2px 4px rgba(0, 0, 0, 0.1);
     /* padding-top: 20px; */
 }
 
 .card2{
-    background-color: #6883bc;
-    color:white;
+    background-color: white;
+   
     display: flex;
     flex-direction: column;
     /* justify-content: center;
     align-items: center; */
     height: 300px;
     border-radius: 8px;
+    box-shadow: 5px 2px 4px rgba(0, 0, 0, 0.1);
     /* padding-top: 20px; */
 }
 
 .card3{
-    background-color: #6883bc;
-    color:white;
+    background-color: white;
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
+    box-shadow: 5px 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     /* padding-top: 20px; */
 }
 
 .card4{
-    background-color: #6883bc;
-    color:white;
+    background-color: white;
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  
+    box-shadow: 5px 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     /* padding-top: 20px; */
 }

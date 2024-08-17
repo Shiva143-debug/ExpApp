@@ -31,7 +31,7 @@ function Layout({ children, id, isdark, toggleTheme }) {
       {children}
       {isMobile && (
         <div>
-          <Footer class="mt-5"/>
+          <Footer isdark={isdark}  class="mt-5"/>
         </div>
       )}
     </>

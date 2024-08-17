@@ -689,8 +689,8 @@ import { FaTrash } from 'react-icons/fa';
 import { Toast } from 'primereact/toast';
 import { FiEye } from 'react-icons/fi';
 import { useNavigate, useLocation } from "react-router-dom";
-import ImageComponent from "./ImageComponent";
-import Category from "./Category";
+// import ImageComponent from "./ImageComponent";
+// import Category from "./Category";
 
 const months = [
     "January", "February", "March", "April",
@@ -712,7 +712,7 @@ function Reports({ id, isdark }) {
     const [showCategories, setViewCategories] = useState(false)
     const [productsData, setProductsData] = useState([]);
     const [categoriesData, setCategoriesData] = useState([]);
-    const [showImageComponent, setViewImageComponent] = useState(false)
+    // const [showImageComponent, setViewImageComponent] = useState(false)
     const [image, setImage] = useState("");
     const navigate = useNavigate();
     const isMobile = useMediaQuery('(max-width:768px)');
@@ -941,19 +941,33 @@ function Reports({ id, isdark }) {
         setSearchTerm(event.target.value);
     };
 
-    const filteredDataForTotalCost = filteredTotalCostData.filter((d) =>
-        searchTerm === "" ||
-        d.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        new Date(d.p_date).toLocaleDateString().toLowerCase().includes(searchTerm.toLowerCase()) ||
-        d.product.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        d.source.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        d.description.toLowerCase().includes(searchTerm.toLowerCase())
+    // const filteredDataForTotalCost = filteredTotalCostData.filter((d) =>
+    //     searchTerm === "" ||
+    //     d.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //     new Date(d.p_date).toLocaleDateString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //     d.product.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //     d.source.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //     d.description.toLowerCase().includes(searchTerm.toLowerCase())
 
 
-    );
+    // );
+    const filteredDataForTotalCost = filteredTotalCostData.filter((d) => {
+        if (fromdashboard) {
+            // If fromdashboard is true, filter by category only
+            return d.category.toLowerCase().includes(searchTerm.toLowerCase());
+        } else {
+            // Otherwise, filter by all fields
+            return (
+                d.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                new Date(d.p_date).toLocaleDateString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+                d.product.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                d.source.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                d.description.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+        }
+    });
 
-    const totalCost = filteredDataForTotalCost.reduce((acc, d) => acc + parseFloat(d.cost), 0);
-    const totalTaxAmount = filteredDataForTotalCost.reduce((acc, curr) => acc + parseFloat(curr.tax_amount), 0);
+
 
     const imageClick = (imageUrl) => {
         // window.open(imageUrl, '_blank');
@@ -990,6 +1004,30 @@ function Reports({ id, isdark }) {
     };
 
 
+
+
+
+    const currentData = categoriesData.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+
+    const currentProductData = productsData.slice((currentPagepro - 1) * rowsPerPage, currentPagepro * rowsPerPage);
+
+    const itemsData = filteredTotalCostData.slice((currentPageItems - 1) * rowsPerPage, currentPageItems * rowsPerPage);
+
+    
+    const filteredItems = itemsData.filter((d) => {
+        if (!fromdashboard) {
+            return (
+                d.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                new Date(d.p_date).toLocaleDateString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+                d.product.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                d.description.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+      
+        } else {
+           return d.category.toLowerCase().includes(searchTerm.toLowerCase());
+        }
+    });
+
     const totalPagesforItems = Math.ceil(filteredTotalCostData.length / rowsPerPage);
 
     const handleNextPageitems = () => {
@@ -1000,12 +1038,8 @@ function Reports({ id, isdark }) {
         setCurrentPageitems((prevPag) => Math.max(prevPag - 1, 1));
     };
 
-
-    const currentData = categoriesData.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
-
-    const currentProductData = productsData.slice((currentPagepro - 1) * rowsPerPage, currentPagepro * rowsPerPage);
-
-    const itemsData = filteredTotalCostData.slice((currentPageItems - 1) * rowsPerPage, currentPageItems * rowsPerPage);
+    const totalCost = filteredDataForTotalCost.reduce((acc, d) => acc + parseFloat(d.cost), 0);
+    const totalTaxAmount = filteredDataForTotalCost.reduce((acc, curr) => acc + parseFloat(curr.tax_amount), 0);
 
     return (
 
@@ -1035,25 +1069,25 @@ function Reports({ id, isdark }) {
                                     {!fromdashboard && !showItems && !showCategories && <div class="d-flex">
                                         <select
                                             name="month"
-                                            style={{ width: isMobile ? "100px" : "300px", marginTop: "100px", marginLeft: "20px" }}
+                                            style={{ width: isMobile ? "100px" : "300px", marginTop: "100px", marginLeft: "20px",backgroundColor:"transparent" ,color:isdark?"white":"black" }}
                                             className="form-control"
                                             value={Month}
                                             onChange={handleSelectChange}
 
                                         >
                                             {months.map((month, index) => (
-                                                <option key={index} value={index + 1}>{month}</option>
+                                                <option key={index} value={index + 1} style={{color:"black"}}>{month}</option>
                                             ))}
                                         </select>
                                         <select
                                             name="year"
-                                            style={{ width: isMobile ? "100px" : "300px", marginTop: "100px", marginLeft: "20px" }}
+                                            style={{ width: isMobile ? "100px" : "300px", marginTop: "100px", marginLeft: "20px" ,backgroundColor:"transparent" ,color:isdark?"white":"black"}}
                                             className="form-control"
                                             value={Year}
                                             onChange={handleSelectChange}
                                         >
                                             {years.map((year, index) => (
-                                                <option key={index} value={year}>{year}</option>
+                                                <option key={index} value={year} style={{color:"black"}}>{year}</option>
                                             ))}
                                         </select>
 
@@ -1066,7 +1100,7 @@ function Reports({ id, isdark }) {
                                         <center><h1 style={{ color: isdark ? "white" : "navy" }}> {months[Month - 1]} - {Year} Report</h1></center>
                                         <div className="d-flex  justify-content-center align-items-center" style={{ flexDirection: isMobile ? "column" : "row" }}>
 
-                                            <div className="card px-2 mt-5 mx-5 pt-2" style={{ width: isMobile ? "200px" : "300px" }}>
+                                            <div className="card px-2 mt-5 mx-5 pt-2" style={{ width: isMobile ? "200px" : "300px",backgroundColor:isdark?"black":"",border:isdark?"1px solid white":""  ,color:isdark?"white":""}}>
                                                 <h1 style={{ fontSize: isMobile ? '18px' : '24px' }}>Sources of Income From</h1>
                                                 <ol>
                                                     {Object.entries(aggregatedData).map(([source, amount]) => (
@@ -1081,11 +1115,11 @@ function Reports({ id, isdark }) {
                                             </div>
 
 
-                                            <div className="card3  mx-5  mt-5 p-4" style={{ width: isMobile ? "200px" : "300px" }}>
+                                            <div className="card3  mx-5  mt-5 p-4" style={{ width: isMobile ? "200px" : "300px",backgroundColor:isdark?"black":"",border:isdark?"1px solid white":"" ,color:isdark?"white":""}}>
                                                 <h4 style={{ fontSize: isMobile ? '18px' : '24px' }}>Expences</h4>
                                                 <h2>{totalCost} RS/-</h2>
                                             </div>
-                                            <div className="card4 mx-5  mt-5 p-4" style={{ width: isMobile ? "200px" : "300px" }}>
+                                            <div className="card4 mx-5  mt-5 p-4" style={{ width: isMobile ? "200px" : "300px",backgroundColor:isdark?"black":"",border:isdark?"1px solid white":"" ,color:isdark?"white":"" }}>
                                                 <h4 style={{ fontSize: isMobile ? '16px' : '24px' }}>Tax Amount</h4>
                                                 <h2>{totalTaxAmount} RS/-</h2>
                                             </div>
@@ -1103,7 +1137,7 @@ function Reports({ id, isdark }) {
                                 {showTable &&
                                     <div style={{ display: "flex", flexDirection: "column" }}>
                                         {!fromdashboard && <center><h1 style={{ color: isdark ? "white" : "navy" }}> {months[Month - 1]} - {Year} Report</h1></center>}
-                                        {!fromdashboard && <input type="text" className={isMobile ? "form-control mx-1" : "form-control mx-5"} placeholder="Search..." value={searchTerm} onChange={handleSearchChange} style={{ marginRight: "10px", padding: "5px", width: "50vw" }} />}
+                                        {!fromdashboard && <input type="text" className={isMobile ? "form-control mx-1" : "form-control mx-5"} placeholder="Search..." value={searchTerm} onChange={handleSearchChange} style={{ marginRight: "10px", padding: "5px", width:isMobile?"50vw": "20vw" ,backgroundColor:"transparent" ,color:isdark?"white":"black"}} />}
 
                                         {/* <div style={{ maxWidth: isMobile ? "600px" : "1000px", overflowX: "auto" }}>
 
@@ -1126,7 +1160,7 @@ function Reports({ id, isdark }) {
                                                     {!fromdashboard && <th>Action</th>}
                                                 </thead>
                                                 <tbody>
-                                                    {itemsData.filter((d) => searchTerm === "" || d.category.toLowerCase().includes(searchTerm.toLowerCase()) || new Date(d.p_date).toLocaleDateString().toLowerCase().includes(searchTerm.toLowerCase()) || d.product.toLowerCase().includes(searchTerm.toLowerCase()) || d.description.toLowerCase().includes(searchTerm.toLowerCase())).map((d, i) => {
+                                                    {filteredItems.map((d, i) => {
 
                                                         const date = new Date(d.p_date);
                                                         const formattedDate = `${date.getFullYear().toString()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}`;
