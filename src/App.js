@@ -17,6 +17,8 @@ import Footer from "./Footer";
 import { useLocation } from 'react-router-dom';
 import ImageComponent from "./ImageComponent";
 import Report from "./Report";
+import SignUpForm from "./SignUpForm";
+import LoginForm from "./LoginForm";
 
 function Layout({ children, id, isdark, toggleTheme }) {
 
@@ -62,7 +64,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login setUserId={setUserId} />} />
+      <Route path="/" element={<SignUpForm />} />
+      <Route path="/login" element={<LoginForm setUserId={setUserId}/>} /> 
+        {/* <Route path="/" element={<Login setUserId={setUserId} />} /> */}
         <Route path="/dashBoard" element={<Layout id={userId}  isdark={isdark} toggleTheme={toggleTheme}><DashBoard id={userId} isdark={isdark}/></Layout>} />
         <Route path="/additems" element={<Layout id={userId}  isdark={isdark} toggleTheme={toggleTheme}><Additems id={userId}  isdark={isdark}/></Layout>} />
         <Route path="/addcat" element={<Layout id={userId}  isdark={isdark} toggleTheme={toggleTheme}><AddCategory id={userId} isdark={isdark}/></Layout>} />

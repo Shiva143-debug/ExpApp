@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { IoIosSunny } from "react-icons/io";
 import { IoMoon } from "react-icons/io5";
-import './Login.css';
+import './App.css';
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ConfirmPopup, confirmPopup } from 'primereact/confirmpopup';
@@ -26,7 +26,7 @@ function Header({ id,isdark, toggleTheme }) {
 
     const toggletheme = () => {
         toggleTheme();
-        setBackgroundColor(isdark ? 'white' : 'gray');
+        setBackgroundColor(isdark ? 'white' : '#242424');
       };
 
     // const toggletheme = () => {
@@ -133,7 +133,7 @@ function Header({ id,isdark, toggleTheme }) {
 
 
     return (
-        <div className="d-flex justify-content-between" style={{ position: "fixed", width: "100vw", backgroundColor: backgroundColor, zIndex: 100, padding: "10px", borderBottom: "1px solid whitesmoke" }}>
+        <div className="d-flex justify-content-between" style={{ position: "fixed", width: "100vw", backgroundColor: backgroundColor,color:isdark?"white":"black", zIndex: 100, padding: "10px", boxShadow:isdark? '0 2px 4px white':  '0 2px 4px rgba(0, 0, 0, 0.1)'}}>
             <Toast ref={toast} />
 
             <ConfirmPopup style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
@@ -166,7 +166,7 @@ function Header({ id,isdark, toggleTheme }) {
                     </label>
                 </div>
                 {!isMobile &&
-                    <button onClick={confirm1} type="button" className="logout-button" style={{ marginTop: "10px", height: "50px" }}>Logout</button>
+                    <button onClick={confirm1} type="button" className="logout-button" style={{ marginTop: "10px", height: "50px" ,marginRight:"20px"}}>Logout</button>
                 }
                 {isMobile && <IoMdExit size={30} style={{ margin: "5px 10px" }} onClick={confirm1} />}
 

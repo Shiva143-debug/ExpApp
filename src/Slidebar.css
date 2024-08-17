@@ -1,11 +1,12 @@
 .sideButton {
-    width: 100%;
+    width: 90%;
     height: 50px;
     border: none;
     background-color: whitesmoke;
     color: navy;
     font-weight: 600;
-    border-radius: 16px;
+    border-top-right-radius: 24px;
+    border-bottom-right-radius: 24px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -15,13 +16,14 @@
 }
 
 .active {
-    background-color: #94a3b8;
+    background-image: linear-gradient(navy,red);
     font-weight: bold;
     color: white;
-    width: 100%;
+    width: 90%;
     height: 50px;
     border: none;
-    border-radius: 16px;
+    border-top-right-radius: 24px;
+    border-bottom-right-radius: 24px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -32,6 +34,7 @@
 .slidebar {
     background-color: white;
     width: 100vh;
+   
 }
 
 /* .nav-link{
