@@ -289,7 +289,7 @@ function Dashboard({ id, isdark }) {
                         </div>
                         <div style={{ display: "flex", flexWrap: "wrap", width: "100%" }} class="mt-2">
                             {groupedArray.map((item, index) => {
-                                const percentage = ((item.TotalCost / totalAmount) * 100).toFixed(2);
+                                const percentage = ((item.TotalCost / totalAmount) * 100).toFixed(1);
 
                                 return (
                                     <div onClick={() => handleCategoryClick(item.category)}  key={index} class="m-2 d-flex justify-content-around p-2" style={{ backgroundColor: colors[index % colors.length], width: isMobile ? "43%" : "250px", height: isMobile ? "120px" : "150px", borderRadius: "12px" }}>

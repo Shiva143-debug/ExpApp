@@ -68,7 +68,7 @@ const Category = ({id,isdark,close,updateData}) => {
 
     return (
         <div style={{width:"100%"}} class="p-2">
-        <form  class={isMobile?"p-3":"p-5"} style={{width:"100%", backgroundColor: isdark ? "black" : "whiteSmoke" }} onSubmit={handleSubmitCategory}>
+        <form  class={isMobile?"p-3":"p-5"} style={{width:"100%", backgroundColor: isdark ? "black" : "whiteSmoke",fontFamily: "Arial, sans-serif" }} onSubmit={handleSubmitCategory}>
              <Toast ref={toast} />
             <div style={{display:"flex",flexDirection:"column"}}>
                 <div className="col-1">

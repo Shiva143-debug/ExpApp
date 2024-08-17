@@ -225,10 +225,10 @@ function Additems({ id,isdark }) {
                             <Slidebar isdark={isdark}/>
                         </div>
                     )}
-                    <div className="d-flex flex-column" style={{ width: isMobile ? "100%" : "85%", backgroundColor:isdark?"black": "whitesmoke" }}>
+                    <div className="d-flex flex-column" style={{ width: isMobile ? "100%" : "85%", backgroundColor:isdark?"navy": "whitesmoke",fontFamily: "Arial, sans-serif" }}>
                         <Toast ref={toast} />
 
-                        <h2 style={{ color:isdark?"white": "navy", textAlign: "start", width: "300px", marginTop: "150px", marginLeft: "50px" }}>Add Expence</h2>
+                        <h2 style={{ color:isdark?"white": "black", textAlign: "start", width: "300px", marginTop: "150px", marginLeft: "50px" }}>Add Expence</h2>
                         <form id="addForm" className={isMobile ? "p-2  mb-5" : "mb-5 p-5"} style={{ width: "90%", minHeight: "80vh" }} onSubmit={handleSubmit}>
                             <div className="mb-5 row">
                                 <div class="col-6">
