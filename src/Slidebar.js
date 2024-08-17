@@ -33,11 +33,7 @@ function Slidebar({isdark}) {
 
     return (
         <>
-<<<<<<< HEAD
  <div className='slidebar d-flex flex-column' style={{ position: 'fixed', top: 80, left: 0, width: "15%",height:"100vh",backgroundColor:isdark?"rgb(59, 58, 58)": "white",boxShadow: isdark? '0 2px 4px white':'0 2px 4px rgba(0, 0, 0, 0.1)' }}>
-=======
-        <div className='slidebar d-flex flex-column' style={{ position: 'fixed', top: 80, left: 0, width: "15%",height:"100vh",backgroundColor:isdark?"gray": "white",boxShadow: '2px 0 5px rgba(0, 0, 0, 0.1)' }}>
->>>>>>> f4b03f3176fdc39ca6bf8fb9cf3a3a93449e1c77
 
             <Link to="/dashBoard" className='nav-link'>
                 <button onClick={() => setActiveButton('dashboard')} className={`mb-5 mt-2 ${activeButton === 'dashboard' ? "active" : "sideButton"}`}>
