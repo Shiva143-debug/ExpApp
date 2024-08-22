@@ -62,32 +62,6 @@ function Header({ id,isdark, toggleTheme }) {
     };
 
 
-    // const handleImageChange = (e) => {
-    //     let img = e.target.files[0]
-    //     // console.log(img)
-
-    //     var urlCreator = window.URL || window.webkitURL;
-    //     var imageUrl = urlCreator.createObjectURL(img);
-
-    //     // console.log(imageUrl)
-
-    //     setImage(imageUrl);
-
-    //     const values = {
-    //         profile_picture_url:imageUrl, id
-    //     }
-
-    //     // console.log(values)
-    //     axios.post('https://exciting-spice-armadillo.glitch.me/uploadProfilePicture', values)
-    //         .then((response) => {
-    //             console.log('Profile picture uploaded successfully');
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error uploading profile picture:', error);
-    //         });
-
-    // };
-
     const handleImageChange = (e) => {
         if (e.target.files && e.target.files[0]) {
             ImageUtils.convertImage(e.target.files[0]).then(function (base64) {
@@ -126,14 +100,11 @@ function Header({ id,isdark, toggleTheme }) {
             .catch(err => console.log(err));
     }, [id, image]);
 
-
-
-
     const isMobile = useMediaQuery('(max-width:768px)');
 
 
     return (
-        <div className="d-flex justify-content-between" style={{ position: "fixed", width: "100vw", backgroundColor: backgroundColor,color:isdark?"white":"black", zIndex: 100, padding: "10px", boxShadow:isdark? '0 2px 4px white':  '0 2px 4px rgba(0, 0, 0, 0.1)',}}>
+        <div className="d-flex justify-content-between" style={{ position: "fixed", width: "100vw", backgroundColor: isdark?"#242424":"white",color:isdark?"white":"black", zIndex: 100, padding: "10px", boxShadow:isdark? '0 2px 4px white':  '0 2px 4px rgba(0, 0, 0, 0.1)',}}>
             <Toast ref={toast} />
 
             <ConfirmPopup style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
