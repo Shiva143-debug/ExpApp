@@ -307,7 +307,7 @@ function Dashboard({ id, isdark }) {
 
                             <>
 
-                                <div className="d-flex mb-3" style={{ marginTop: isMobile ? "80px" : "80px" }}>
+                                <div className="d-flex mb-3" style={{ marginTop: isMobile ? "80px" : "80px",height:isMobile?"100vh":"" }}>
                                     <label style={{ color: isdark ? "white" : "black", width: isMobile ? "100px" : "300px", paddingTop: "5px" }}><b>Select year:</b></label>
                                     <select
                                         name="year"
