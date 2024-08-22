@@ -237,7 +237,7 @@ function Dashboard({ id, isdark }) {
                         </div>
                     )}
 
-                    <div className={isMobile ? "d-flex flex-column p-3" : "d-flex flex-column p-3"} style={{ width: isMobile ? "100%" : "85%", backgroundColor: isdark ? "black" : "whitesmoke" }}>
+                    <div className={isMobile ? "d-flex flex-column p-3" : "d-flex flex-column p-3"} style={{height:isMobile?"100%":"", width: isMobile ? "100%" : "85%", backgroundColor: isdark ? "black" : "whitesmoke" }}>
                         {!showYearlyReport &&
                             <div style={{ minHeight: "100vh" }}>
 
@@ -345,7 +345,7 @@ function Dashboard({ id, isdark }) {
                                         <b style={{ color: isdark ? "white" : "black" }}>Available Balance:{totalBalance}</b>
                                     </div>
                                 }
-                                <button class="btn btn-primary  mx-2" style={{ width: "150px" }} onClick={yearlyReport}>Show  Monthly Expenditure</button>
+                                <button class="btn btn-primary mb-5 mx-2" style={{ width: "150px" }} onClick={yearlyReport}>Show  Monthly Expenditure</button>
                             </>
                         }
 
