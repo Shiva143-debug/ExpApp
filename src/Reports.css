@@ -62,3 +62,93 @@ li{
         display: none;
     }
 }
+
+
+.dark-theme-table tbody tr:nth-child(even) {
+    background-color: #3a3a3a;
+    color: rgb(177, 173, 173);
+}
+
+.dark-theme-table tbody tr:nth-child(odd) {
+    background-color: #2a2a2a;
+    color: white;
+}
+
+
+.dark-theme-table thead th {
+    background-color: #444;
+    color: white;
+}
+
+.dark-theme-table .p-paginator {
+    background-color: #444;
+    color: #fff;
+}
+
+.dark-theme-table .p-paginator .p-paginator-current {
+    background-color: #555;
+    color: #fff;
+}
+
+
+span{
+    color:black
+  }
+  .dark-theme-table span{
+    color:white
+  }
+  
+
+  /* Ensure you have this CSS applied to your component */
+.dataTable-pagination .p-paginator .p-paginator-pages,
+.dataTable-pagination .p-paginator .p-paginator-prev,
+.dataTable-pagination .p-paginator .p-paginator-next,
+.dataTable-pagination .p-paginator .p-paginator-first,
+.dataTable-pagination .p-paginator .p-paginator-last {
+    background-color: white; /* Set background color to white */
+    color: black; /* Set text color for better visibility */
+    border: 1px solid #ccc; /* Optional: Add a border for better separation */
+}
+
+
+.dark-theme-table .dataTable-pagination .p-paginator .p-paginator-pages,
+.dark-theme-table .dataTable-pagination .p-paginator .p-paginator-prev,
+.dark-theme-table .dataTable-pagination .p-paginator .p-paginator-next,
+.dark-theme-table .dataTable-pagination .p-paginator .p-paginator-first,
+.dark-theme-table .dataTable-pagination .p-paginator .p-paginator-last {
+    background-color: black; /* Set background color to white */
+    color: white; /* Set text color for better visibility */
+    border: 1px solid black; /* Optional: Add a border for better separation */
+}
+
+/* Ensure the pagination button is visible against the background */
+.dataTable-pagination .p-paginator .p-paginator-pages .p-paginator-page {
+    color: black; /* Set text color */
+}
+
+.dark-theme-table .dataTable-pagination .p-paginator .p-paginator-pages .p-paginator-page {
+    color: white; /* Set text color */
+}
+/* Optional: Style active page */
+.dataTable-pagination .p-paginator .p-paginator-page.p-highlight {
+    background-color: #f0f0f0; /* Slightly different background for active page */
+    color: black; /* Set text color */
+}
+.dark-theme-table .dataTable-pagination .p-paginator .p-paginator-page.p-highlight {
+    background-color: black; /* Slightly different background for active page */
+    color: white; /* Set text color */
+}
+
+/* Centering container for the spinner */
+.spinner-container {
+    position: fixed; /* Fix the container in place relative to the viewport */
+    top: 0; /* Align with the top of the viewport */
+    left: 0; /* Align with the left of the viewport */
+    width: 100vw; /* Full viewport width */
+    height: 100vh; /* Full viewport height */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    background-color: rgba(255, 255, 255, 0.8); /* Optional: Add a semi-transparent background */
+    z-index: 9999; /* Ensure the spinner is on top of other content */
+}

@@ -44,7 +44,7 @@ const LoginForm = ({ setUserId }) => {
             axios.post("https://exciting-spice-armadillo.glitch.me/login", loginformData)
                 .then(res => {
                     toast.current.show({ severity: 'success', summary: 'Success', detail: 'Login successfully' });
-                    setLoginFormData({ loginEmail: '', password: '' }); // Clear form fields
+                    // setLoginFormData({ loginEmail: '', password: '' }); 
                     setTimeout(() => {
                         navigate("/dashBoard");
                         setUserId(res.data.result.id);
@@ -57,25 +57,6 @@ const LoginForm = ({ setUserId }) => {
             .finally(() => setLoading(false));
         }
     };
-    // const handlesubmitlogin = async (e) => {
-    //     e.preventDefault();
-    //     if (validateLoginForm()) {
-    //         try {
-    //             const response = await axios.post('https://syoft.dev/Api/userlogin/api/userlogin', loginformData);
-    //             if (response.data.status === true) {
-    //                 localStorage.setItem('user', JSON.stringify(response.data));
-    //                 navigate('/dashboard');
-    //             } else {
-
-    //                 alert("enter valid credentials");
-    //             }
-    //         } catch (error) {
-    //             console.error('Error during login:', error);
-    //         }
-    //     } else {
-    //         alert("Enter all Required fields")
-    //     }
-    // };
 
     const signupclick = () => {
         navigate("/")
@@ -87,26 +68,7 @@ const LoginForm = ({ setUserId }) => {
 
 
     return (
-        // <div className="container">
-        //     <ImageContainer />
-        //     <div className="form-section">
-        //         <div >
-        //         <img src="https://res.cloudinary.com/dxgbxchqm/image/upload/v1722424699/Screenshot_2024-07-31_164744_ii2feo.png" className="logo" alt="logo"/>
-        //             <h1 className='sl-heading'>Log In</h1>
-        //             <p>Don't have an account? <span onClick={signupclick}>Sign Up</span></p>
-        // <form onSubmit={handlesubmitlogin}>
-        //     <label>Email address*</label>
-        //     <input type="email" name="user_email" placeholder="Email" onChange={handleChangelogin} onBlur={handleBlur} />
-        //     {touchedFields.user_email && loginFormErrors.user_email && <p className="error">{loginloginFormErrors.user_email}</p>}
-        //     <label>Password*</label>
-        //     <input type="password" name="user_password" placeholder="Password" onChange={handleChangelogin} onBlur={handleBlur} />
-        //     {touchedFields.user_password && loginloginFormErrors.user_password && <p className="error">{loginloginFormErrors.user_password}</p>}
-        //     <button type="submit">Log In</button>
-        // </form>
-        //         </div>
-
-        //     </div>
-        // </div>
+     
         <div className="container">
             <Toast ref={toast} />
             <ImageContainer />

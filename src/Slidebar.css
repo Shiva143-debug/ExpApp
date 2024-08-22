@@ -1,8 +1,8 @@
 .sideButton {
     width: 90%;
     height: 50px;
-    border: none;
-    background-color: whitesmoke;
+    border: 3px solid whitesmoke;
+    background-color: transparent;
     color: navy;
     font-weight: 600;
     border-top-right-radius: 24px;
@@ -21,7 +21,7 @@
     color: white;
     width: 90%;
     height: 50px;
-    border: none;
+    border: 1px solid green;
     border-top-right-radius: 24px;
     border-bottom-right-radius: 24px;
     display: flex;

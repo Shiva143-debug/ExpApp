@@ -1,4 +1,4 @@
-import { Link ,useLocation} from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { LiaDeskpro, LiaProceduresSolid } from "react-icons/lia";
 import { TbReportSearch } from "react-icons/tb";
@@ -6,7 +6,7 @@ import { SiProxmox } from "react-icons/si";
 import './Slidebar.css';
 import { useState, useEffect } from 'react';
 
-function Slidebar({isdark}) {  
+function Slidebar({ isdark }) {
     const location = useLocation();
     const [activeButton, setActiveButton] = useState(getActiveButton(location.pathname));
 
@@ -33,39 +33,39 @@ function Slidebar({isdark}) {
 
     return (
         <>
- <div className='slidebar d-flex flex-column' style={{ position: 'fixed', top: 80, left: 0, width: "15%",height:"100vh",backgroundColor:isdark?"rgb(59, 58, 58)": "white",boxShadow: isdark? '0 2px 4px white':'0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+            <div className='slidebar d-flex flex-column' style={{ position: 'fixed', top: 80, left: 0, width: "15%", height: "100vh", backgroundColor: isdark ? "rgb(59, 58, 58)" : "white", boxShadow: isdark ? '0 2px 4px white' : '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
 
-            <Link to="/dashBoard" className='nav-link'>
-                <button onClick={() => setActiveButton('dashboard')} className={`mb-5 mt-2 ${activeButton === 'dashboard' ? "active" : "sideButton"}`}>
-                    <SiProxmox style={{ marginRight: "50px" }} />DashBoard
-                </button>
-            </Link>
-    
-            <Link to="/additems" className='nav-link'>
-                <button onClick={() => setActiveButton('additems')} className={`mb-5 ${activeButton === 'additems' ? "active" : "sideButton"}`}>
-                    <MdOutlineProductionQuantityLimits style={{ marginRight: "50px" }} /> Add Expences
-                </button>
-            </Link>
+                <Link to="/dashBoard" className='nav-link'>
+                    <button onClick={() => setActiveButton('dashboard')} className={`mb-5 mt-2 ${activeButton === 'dashboard' ? "active" : "sideButton"}`} style={{ backgroundColor: isdark ? "transparent" : "",color:isdark?"white":"",border:isdark?"3px solid rgba(0, 0, 0, 0.1)":""}}>
+                        <SiProxmox />DashBoard
+                    </button>
+                </Link>
 
-            <Link to="/addcat" className='nav-link'>
-                <button onClick={() => setActiveButton('addcat')} className={`mb-5 ${activeButton === 'addcat' ? "active" : "sideButton"}`}>
-                    <LiaDeskpro style={{ marginRight: "50px" }} />   Add Category
-                </button>
-            </Link>
+                <Link to="/additems" className='nav-link'>
+                    <button onClick={() => setActiveButton('additems')} className={`mb-5 ${activeButton === 'additems' ? "active" : "sideButton"}`} style={{ backgroundColor: isdark ? "transparent" : "",color:isdark?"white":"",border:isdark?"3px solid rgba(0, 0, 0, 0.1)":""}}>
+                        <MdOutlineProductionQuantityLimits /> Add Expences
+                    </button>
+                </Link>
 
-            <Link to="/source" className='nav-link'>
-                <button onClick={() => setActiveButton('source')} className={`mb-5 ${activeButton === 'source' ? "active" : "sideButton"}`}>
-                    <LiaProceduresSolid style={{ marginRight: "50px" }} />   Add Source
-                </button>
-            </Link>
+                <Link to="/addcat" className='nav-link'>
+                    <button onClick={() => setActiveButton('addcat')} className={`mb-5 ${activeButton === 'addcat' ? "active" : "sideButton"}`} style={{ backgroundColor: isdark ? "transparent" : "",color:isdark?"white":"",border:isdark?"3px solid rgba(0, 0, 0, 0.1)":""}}>
+                        <LiaDeskpro />   Add Category
+                    </button>
+                </Link>
 
-            <Link to="/reports" className='nav-link'>
-                <button onClick={() => setActiveButton('reports')} className={`mb-5 ${activeButton === 'reports' ? "active" : "sideButton"}`}>
-                    <TbReportSearch style={{ marginRight: "50px" }} />   Reports
-                </button>
-            </Link>
-        </div>
-        
+                <Link to="/source" className='nav-link'>
+                    <button onClick={() => setActiveButton('source')} className={`mb-5 ${activeButton === 'source' ? "active" : "sideButton"}`} style={{ backgroundColor: isdark ? "transparent" : "",color:isdark?"white":"",border:isdark?"3px solid rgba(0, 0, 0, 0.1)":""}}>
+                        <LiaProceduresSolid />   Add Source
+                    </button>
+                </Link>
+
+                <Link to="/reports" className='nav-link'>
+                    <button onClick={() => setActiveButton('reports')} className={`mb-5 ${activeButton === 'reports' ? "active" : "sideButton"}`} style={{ backgroundColor: isdark ? "transparent" : "",color:isdark?"white":"",border:isdark?"3px solid rgba(0, 0, 0, 0.1)":""}}>
+                        <TbReportSearch />   Reports
+                    </button>
+                </Link>
+            </div>
+
 
         </>
     );

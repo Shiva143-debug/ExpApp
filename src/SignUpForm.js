@@ -76,28 +76,7 @@ const SignUpForm = () => {
         }
     };
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     if (validateForm()) {
-    //         const payload = {
-    //             ...formData,
-    //             user_lastname: 'doe',
-    //             user_city: 'Hyderabad',
-    //             user_zipcode: '500072'
-    //         };
-    //         try {
-    //             const response = await axios.post('https://syoft.dev/Api/user_registeration/api/user_registeration', payload);
-    //             if (response.data.msg === "Already Exists") {
-    //                 navigate("/login")
-    //             }
-    //         } catch (error) {
-    //             console.error('Error during registration:', error);
-    //         }
-    //     } else {
-    //         alert("Enter all Required fields")
-    //     }
-    // };
-
+  
     const signinclick = () => {
         navigate("/login")
     };

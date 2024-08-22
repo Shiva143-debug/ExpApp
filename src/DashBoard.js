@@ -10,6 +10,9 @@ import "./Dashboard.css"
 import MyPieChart from './MyPieChart';
 // import MyPieChart from './MyPieChart';
 import { useNavigate } from 'react-router-dom';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+
 
 
 const months = [
@@ -37,9 +40,7 @@ function Dashboard({ id, isdark }) {
 
     const navigate = useNavigate();
 
-    // const handleCategoryClick = (category) => {
-    //     navigate(`/report?category=${encodeURIComponent(category)}`);
-    // };
+    
     const handleCategoryClick = (category) => {
         const month = encodeURIComponent(Month);
         const year = encodeURIComponent(Year);
@@ -68,6 +69,7 @@ function Dashboard({ id, isdark }) {
     useEffect(() => {
         const userId = id;
         fetch(`https://exciting-spice-armadillo.glitch.me/getExpenseCost/${userId}`)
+
             .then(res => res.json())
             .then(data => setExpenseCost(data))
             .catch(err => console.log(err))
@@ -88,31 +90,19 @@ function Dashboard({ id, isdark }) {
         const userId = id;
         // fetch(`http://localhost:3005/getSource/${userId}`)
         fetch(`https://exciting-spice-armadillo.glitch.me/getSource/${userId}/${Month}/${Year}`)
-        .then(res => res.json())
-        .then(data => {
-            if (Array.isArray(data)) {
-                setTotalIncome(data);
-            } else {
-                setTotalIncome([])
-            }
-        })
-            // .then(res => res.json())
-            // .then(data => setTotalIncome(data))
-            // .catch(err => console.log(err))
+            .then(res => res.json())
+            .then(data => {
+                if (Array.isArray(data)) {
+                    setTotalIncome(data);
+                } else {
+                    setTotalIncome([])
+                }
+            })
+        
 
     }, [Month, Year, id])
 
 
-    // useEffect(() => {
-    //     const userId = id;
-    //     fetch(`https://exciting-spice-armadillo.glitch.me/getYearWiseData/${userId}/${year}`)
-    //         .then(res => res.json())
-    //         .then(data => setYearData(data))
-    //         .catch(err => console.log(err))
-
-    // }, [year, id])
- 
-      
     useEffect(() => {
         const userId = id;
         fetch(`https://exciting-spice-armadillo.glitch.me/getYearWiseData/${userId}/${year}`)
@@ -126,7 +116,7 @@ function Dashboard({ id, isdark }) {
             })
             .catch(err => console.log(err));
     }, [year, id]);
-    
+
 
 
 
@@ -179,7 +169,7 @@ function Dashboard({ id, isdark }) {
 
 
 
- 
+
     const expenseMap = {};
     yearWiseExpenceData.forEach((d) => {
         const monthName = months[d.month - 1]; // Convert month number to name
@@ -247,85 +237,87 @@ function Dashboard({ id, isdark }) {
                         </div>
                     )}
 
-                    <div className={isMobile ? "d-flex flex-column p-3" : "d-flex flex-column p-5"} style={{ width: isMobile ? "100%" : "85%", backgroundColor: isdark ? "black" : "whitesmoke", minHeight: "100vh" }}>
-
-
-                        <div class="d-flex mb-5 ">
-                            <select
-                                name="month"
-                                style={{ width: isMobile ? "100px" : "300px", marginTop: "100px",backgroundColor:"transparent" ,color:isdark?"white":"black"}}
-                                className="form-control"
-                                value={Month}
-                                onChange={handleSelectChange}
-                            >
-                                {months.map((month, index) => (
-                                    <option key={index} value={index + 1} style={{color:"black"}}> {month}</option>
-                                ))}
-                            </select>
-                            <select
-                                name="year"
-                                style={{ width: isMobile ? "100px" : "300px", marginTop: "100px", marginLeft: "20px" ,backgroundColor:"transparent" ,color:isdark?"white":"black"}}
-                                className="form-control"
-                                value={Year}
-                                onChange={handleSelectChange}
-                            >
-                                {years.map((year, index) => (
-                                    <option key={index} value={year} style={{color:"black"}}>{year}</option>
-                                ))}
-                            </select>
-
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <div >
-                                <h3 style={{ color: isdark ? "white" : "black", fontSize: isMobile ? '14px' : '20px' }}>{months[Month - 1]} Spend</h3>
-                                <h4 style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}><FaRupeeSign />{totalAmount}</h4>
-                            </div>
-
-                            <div>
-                                <h4 style={{ color: isdark ? "white" : "black", fontSize: isMobile ? '14px' : '20px' }} >Total Earned Income:<b>{grandTotal}</b></h4>
-                                <h4 style={{ color: isdark ? "white" : "black", fontSize: isMobile ? '14px' : '20px' }}>Available Balance:<b>{grandTotal - totalAmount}</b></h4>
-                            </div>
-
-                        </div>
-                        <div style={{ display: "flex", flexWrap: "wrap", width: "100%" }} class="mt-2">
-                            {groupedArray.map((item, index) => {
-                                const percentage = ((item.TotalCost / totalAmount) * 100).toFixed(1);
-
-                                return (
-                                    <div onClick={() => handleCategoryClick(item.category)}  key={index} class="m-2 d-flex justify-content-around p-2" style={{ backgroundColor:isdark?"black": colors[index % colors.length],color:isdark?"white":"",border:isdark?"1px solid white":"", width: isMobile ? "43%" : "250px", height: isMobile ? "120px" : "150px", borderRadius: "12px" }}>
-                                        <div>
-                                            <p style={{ fontWeight: "bold", fontSize: isMobile ? '18px' : '20px' }}>{item.category}</p><br />
-                                            <p style={{ fontWeight: "bold", fontSize: isMobile ? '14px' : '20px' }}><FaRupeeSign />{parseFloat(item.TotalCost).toFixed(2)}</p>
-                                        </div>
-                                        <div className={isMobile ? "mobile-image-circle" : "image-circle"}>
-                                            <p style={{ color: "white", fontSize: isMobile ? '12px' : '20px' }}>{percentage}%</p>
-                                        </div>
-                                    </div>
-                                )
-                            })}
-                        </div>
-
+                    <div className={isMobile ? "d-flex flex-column p-3" : "d-flex flex-column p-3"} style={{ width: isMobile ? "100%" : "85%", backgroundColor: isdark ? "black" : "whitesmoke" }}>
                         {!showYearlyReport &&
+                            <div style={{ minHeight: "100vh" }}>
 
-                            <button class="btn btn-primary mx-2 mt-5 mb-5" style={{ width: "150px" }} onClick={yearlyReport}>Show YearWise Expenditure</button>
+                                <div class="d-flex mb-5 ">
+                                    <select
+                                        name="month"
+                                        style={{ width: isMobile ? "100px" : "300px", marginTop: "100px", backgroundColor: "transparent", color: isdark ? "white" : "black" }}
+                                        className="form-control"
+                                        value={Month}
+                                        onChange={handleSelectChange}
+                                    >
+                                        {months.map((month, index) => (
+                                            <option key={index} value={index + 1} style={{ color: "black" }}> {month}</option>
+                                        ))}
+                                    </select>
+                                    <select
+                                        name="year"
+                                        style={{ width: isMobile ? "100px" : "300px", marginTop: "100px", marginLeft: "20px", backgroundColor: "transparent", color: isdark ? "white" : "black" }}
+                                        className="form-control"
+                                        value={Year}
+                                        onChange={handleSelectChange}
+                                    >
+                                        {years.map((year, index) => (
+                                            <option key={index} value={year} style={{ color: "black" }}>{year}</option>
+                                        ))}
+                                    </select>
+
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <div >
+                                        <h3 style={{ color: isdark ? "white" : "black", fontSize: isMobile ? '14px' : '20px' }}>{months[Month - 1]} Spend</h3>
+                                        <h4 style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}><FaRupeeSign />{totalAmount}</h4>
+                                    </div>
+
+                                    <div>
+                                        <h4 style={{ color: isdark ? "white" : "black", fontSize: isMobile ? '14px' : '20px' }} >Total Earned Income:<b>{grandTotal}</b></h4>
+                                        <h4 style={{ color: isdark ? "white" : "black", fontSize: isMobile ? '14px' : '20px' }}>Available Balance:<b>{grandTotal - totalAmount}</b></h4>
+                                    </div>
+
+                                </div>
+                                <div style={{ display: "flex", flexWrap: "wrap", width: "100%" }} class="mt-2">
+                                    {groupedArray.map((item, index) => {
+                                        const percentage = ((item.TotalCost / totalAmount) * 100).toFixed(1);
+
+                                        return (
+                                            <div onClick={() => handleCategoryClick(item.category)} key={index} class="m-2 d-flex justify-content-around p-2" style={{ backgroundColor: isdark ? "black" : colors[index % colors.length], color: isdark ? "white" : "", border: isdark ? "1px solid white" : "", width: isMobile ? "43%" : "250px", height: isMobile ? "120px" : "150px", borderRadius: "12px" }}>
+                                                <div>
+                                                    <p style={{ fontWeight: "bold", fontSize: isMobile ? '18px' : '20px' }}>{item.category}</p><br />
+                                                    <p style={{ fontWeight: "bold", fontSize: isMobile ? '14px' : '20px' }}><FaRupeeSign />{parseFloat(item.TotalCost).toFixed(2)}</p>
+                                                </div>
+                                                <div className={isMobile ? "mobile-image-circle" : "image-circle"}>
+                                                    <p style={{ color: "white", fontSize: isMobile ? '12px' : '20px' }}>{percentage}%</p>
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+
+
+
+                                <button class="btn btn-primary mx-2 mt-2 mb-5" style={{ width: "150px" }} onClick={yearlyReport}>Show YearWise Expenditure</button>
+                            </div>
                         }
 
 
                         {showYearlyReport &&
 
                             <>
-                                <button class="btn btn-primary mx-2 mt-5 mb-5" style={{ width: "150px" }} onClick={yearlyReport}>Hide YearWise Expenditure</button>
-                                <div className="d-flex">
-                                    <label style={{ color: isdark ? "white" : "black", width: isMobile ? "100px" : "300px",paddingTop:"10px" }}><b>Select year:</b></label>
+
+                                <div className="d-flex mb-3" style={{ marginTop: isMobile ? "80px" : "80px" }}>
+                                    <label style={{ color: isdark ? "white" : "black", width: isMobile ? "100px" : "300px", paddingTop: "5px" }}><b>Select year:</b></label>
                                     <select
                                         name="year"
-                                        style={{ width: isMobile ? "100px" : "300px" ,backgroundColor:"transparent" ,color:isdark?"white":"black"}}
+                                        style={{ width: isMobile ? "100px" : "300px", backgroundColor: "transparent", color: isdark ? "white" : "black" }}
                                         className="form-control"
                                         value={year}
                                         onChange={handleSelectYearChange}
                                     >
                                         {years.map((year, index) => (
-                                            <option key={index} value={year} style={{color:"black"}}>{year}</option>
+                                            <option key={index} value={year} style={{ color: "black" }}>{year}</option>
                                         ))}
                                     </select>
                                 </div>
@@ -333,50 +325,27 @@ function Dashboard({ id, isdark }) {
                                 {!isMobile &&
 
                                     <div >
-
-                                        <table className="table table-bordered mt-5 mb-5" style={{ width : "80vw", textAlign: "center" }}>
-                                            <thead>
-                                                <tr>
-                                                    <th>Month</th>
-                                                    <th>Income</th>
-                                                    <th>Expense</th>
-                                                    <th>Balance</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {combinedData.map((d, i) => (
-                                                    <tr key={i} >
-                                                        <td style={{ backgroundColor: i % 2 === 0 ? '#f2f2f2' : '#e6e6e6' }}>{d.month}</td>
-                                                        <td style={{ backgroundColor: i % 2 === 0 ? '#f2f2f2' : '#e6e6e6' }}>{d.income}</td>
-                                                        <td style={{ backgroundColor: i % 2 === 0 ? '#f2f2f2' : '#e6e6e6' }}>{d.expense}</td>
-                                                        <td style={{ backgroundColor: i % 2 === 0 ? '#f2f2f2' : '#e6e6e6' }}>{d.balance}</td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td colSpan="2" style={{ textAlign: "right" }}><b>Total Income: {totalIncome}</b></td>
-                                                    <td style={{ textAlign: "right" }}><b>Total Expences:{totalExpense}</b></td>
-                                                    <td style={{ textAlign: "right" }}> <b>Available Balance:{totalBalance}</b></td>
-
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-
-
-
-
+                                        
+                                      
+                                       <div className={`card mb-5 ${isdark ? 'dark-theme' : ''}`}>
+                                            <DataTable value={combinedData} stripedRows tableStyle={{ minWidth: '50rem' }}>
+                                                <Column field="month" header="MONTH"></Column>
+                                                <Column field="income" header="INCOME"></Column>
+                                                <Column field="expense" header="CATEGORY"></Column>
+                                                <Column field="balance" header="BALANCE"></Column>
+                                            </DataTable>
+                              </div>
                                     </div>
                                 }
                                 {isMobile &&
-                                    <div style={{marginBottom:"100px",display:"flex",flexDirection:"column",marginLeft:"-15px"}}>
+                                    <div style={{ marginBottom: "10px", display: "flex", flexDirection: "column" }}>
                                         <MyPieChart combinedData={combinedData} />
-                                        <b style={{color:isdark?"white":"black"}}>Total Income: {totalIncome}</b>
-                                        <b style={{color:isdark?"white":"black"}}>Total Expences:{totalExpense}</b>
-                                        <b style={{color:isdark?"white":"black"}}>Available Balance:{totalBalance}</b>
+                                        <b style={{ color: isdark ? "white" : "black" }}>Total Income: {totalIncome}</b>
+                                        <b style={{ color: isdark ? "white" : "black" }}>Total Expences:{totalExpense}</b>
+                                        <b style={{ color: isdark ? "white" : "black" }}>Available Balance:{totalBalance}</b>
                                     </div>
                                 }
-
+                                <button class="btn btn-primary mb-5 mx-2" style={{ width: "150px" }} onClick={yearlyReport}>Show  Monthly Expenditure</button>
                             </>
                         }
 

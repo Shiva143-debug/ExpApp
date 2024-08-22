@@ -13,11 +13,6 @@ import ImageUtils from './ImageUtils';
 
 
 function Additems({ id,isdark }) {
-    // const location = useLocation();
-    // const { id } = this.props;
-    // const id = location.state.id;
-    // console.log(id)
-
     const [Data, setData] = useState([])
     const [products, setProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("select");
@@ -32,7 +27,6 @@ function Additems({ id,isdark }) {
     const [percentage, setPercentage] = useState("");
     const [taxAmount, setTaxAmount] = useState("");
 
-
     const toast = useRef(null);
     const navigate = useNavigate();
     // console.log(products)
@@ -46,21 +40,8 @@ function Additems({ id,isdark }) {
                 .catch(err => console.log(err))
             )
             .catch(err => console.log(err))
-        // fetchProducts("select");
-    })
-
-
-    // useEffect(() => {
-    //     const userId = id;
-    //     fetch(`https://exciting-spice-armadillo.glitch.me/getSourceData/${userId}`)
-    //         .then(res => res.json())
-    //         .then(data => setSourceData(data)
-    //             .catch(err => console.log(err))
-    //         )
-    //         .catch(err => console.log(err))
-
-
-    // }, [id])
+      
+    },[])
 
     useEffect(() => {
         const userId = id;
@@ -79,14 +60,11 @@ function Additems({ id,isdark }) {
             .catch(err => console.log(err));
     }, [id]);
 
-
     const handleSelectChange = (event) => {
         const selectedValue = event.target.value;
         setSelectedCategory(selectedValue);
         fetchProducts(selectedValue)
     };
-
-
 
     const fetchProducts = (category) => {
         const userId = id;
@@ -95,7 +73,6 @@ function Additems({ id,isdark }) {
             .then(data => setProducts(data))
             .catch(err => console.log(err));
     };
-
 
     const handleProductChange = (event) => {
         const selectedProduct = event.target.value;
@@ -151,14 +128,13 @@ function Additems({ id,isdark }) {
             id, category: selectedCategory, product: selectedProduct, cost, source: selectedSource, p_date: purchaseDate, description, is_tax_app: taxApplicable, percentage, tax_amount: taxAmount, image: attachFile
         }
 
+        console.log(expenseData)
+
         if (taxApplicable === "no") {
             expenseData.percentage = 0;
             expenseData.tax_amount = 0;
 
         }
-
-
-
 
         if (selectedCategory === "select") {
             toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please Select category' });
@@ -212,9 +188,6 @@ function Additems({ id,isdark }) {
     const uniqueSourceNames = [...new Set(sourceData.map((d) => d.source))];
 
     const isMobile = useMediaQuery('(max-width:768px)');
-    // console.log(uniqueSourceNames)
-
-
 
     return (
         <div className="d-flex flex-column">
@@ -228,7 +201,7 @@ function Additems({ id,isdark }) {
                     <div className="d-flex flex-column" style={{ width: isMobile ? "100%" : "85%", backgroundColor:isdark?"black": "whitesmoke",fontFamily: "Arial, sans-serif" }}>
                         <Toast ref={toast} />
 
-                        <h2 style={{ color:isdark?"white": "black", textAlign: "start", width: "300px", marginTop: "150px", marginLeft: "50px" }}>Add Expence</h2>
+                        <h2 style={{ color:isdark?"white": "black", textAlign: "start", width: "300px", marginTop: "100px", marginLeft: "50px" }}>Add Expence</h2>
                         <form id="addForm" className={isMobile ? "p-2  mb-5" : "mb-5 p-5"} style={{ width: "90%", minHeight: "80vh" }} onSubmit={handleSubmit}>
                             <div className="mb-5 row">
                                 <div class="col-6">

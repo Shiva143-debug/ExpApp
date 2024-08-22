@@ -23,48 +23,11 @@ function AddCategory({ id, isdark }) {
     const navigate = useNavigate();
     const toast = useRef(null);
 
-    // const uppercaseCategory = values.category ? values.category.toLocaleUpperCase() : '';
-
-    // const categoryData = {
-    //     id, category: uppercaseCategory,
-    // };
-
     const productData = {
         id,
         category: selectedOption,
         product: values.product,
     };
-
-    // const handleSubmitCategory = (e) => {
-    //     e.preventDefault();
-    //     setLoading(true);
-
-    //     if (!values.category) {
-    //         toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please enter category' });
-    //         setLoading(false);
-    //         return;
-    //     } else {
-    //         axios.post("https://exciting-spice-armadillo.glitch.me/addshopcategory", categoryData)
-    //             .then(res => {
-    //                 console.log(res);
-    //                 setData(prevData => [...prevData, categoryData]);
-    //                 console.log(Data)
-    //                 setValues({});
-    //                 toast.current.show({ severity: 'success', summary: 'Success', detail: 'category added successfully' });
-
-    //                 setValues({});
-
-    //                 setLoading(false);
-
-    //             })
-    //             .catch(err => {
-    //                 console.log(err);
-    //                 setLoading(false);
-
-    //             });
-    //     }
-    // };
-
 
     const handleSubmitProduct = (e) => {
         e.preventDefault();
@@ -104,20 +67,14 @@ function AddCategory({ id, isdark }) {
             .catch(err => console.log(err))
     }, [id])
 
-
-
     const handleSelectChange = (event) => {
         const selectedValue = event.target.value;
         setSelectedOption(selectedValue);
     };
 
-
     const onBack = () => {
         navigate("/dashBoard");
     }
-
-    const isMobile = useMediaQuery('(max-width:768px)');
-
     const iconClick = () => {
         setShowDialouge(true)
     }
@@ -126,12 +83,11 @@ function AddCategory({ id, isdark }) {
         setShowDialouge(false)
     }
 
-
     const updateData = (newCategory) => {
         setData(prevData => [...prevData, newCategory]);
       };
 
-
+      const isMobile = useMediaQuery('(max-width:768px)');
     return (
         <>
             <div className="d-flex flex-column">
@@ -157,20 +113,7 @@ function AddCategory({ id, isdark }) {
 
                                     <h2 style={{ color: isdark ? "white" : "navy", marginTop: isMobile ? "10px" : "150px" }} className="pb-2">ADD CATEGORY</h2>
 
-                                    {/* <form className={isMobile ? "p-2  rounded mb-5" : " rounded mb-5 p-5"} style={{ width: isMobile ? "100%" : "70%", backgroundColor: isdark ? "#555555" : "white" }} onSubmit={handleSubmitCategory}>
-                                        <div className="row">
-                                            <div className="col-1">
-                                                <label htmlFor="" className="fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}>category:</label>
-                                            </div>
-                                            <div className="col-6">
-                                                <input type="text" placeholder="Enter Category Name" className="form-control mx-5" style={{ width: isMobile ? "80%" : "100%", padding: isMobile ? "5px" : "10px" }} onChange={e => setValues({ ...values, category: e.target.value })} />
-                                            </div>
-                                            <div className="col-1"></div>
-                                            <div className="col-2">
-                                                <button type="submit" className={`btn btn-primary ${isMobile ? "btn-sm" : "btn-lg"}`}>ADD</button>
-                                            </div>
-                                        </div>
-                                    </form> */}
+                                 
 
                                     <p>*To Add Itmes first you need to choose category if the category is not present in the below form</p>
 
@@ -184,12 +127,7 @@ function AddCategory({ id, isdark }) {
                                                 <select id="id" class="form-control" value={selectedOption}
                                                     onChange={handleSelectChange}>
                                                     <option value="select">Select Category</option>
-                                                    {/* {Data.map((d) => (
-                                                        <option key={d.id} value={d.category}>
-                                                            {d.category}
-                                                        </option>
-                                                    ))} */}
-
+                                   
                                                     {[...new Set(Data.map((d) => d.category))].map((category, index) => (
                                                         <option key={index} value={category}>
                                                             {category}
@@ -201,7 +139,6 @@ function AddCategory({ id, isdark }) {
                                                 <CiSquarePlus onClick={iconClick} />
                                             </div>
 
-
                                         </div>
                                         <div className="row">
                                             <div class="col-4">
@@ -212,8 +149,6 @@ function AddCategory({ id, isdark }) {
                                                 <input type="text" placeholder="Enter Product/item Name" className="form-control"
                                                     onChange={e => setValues({ ...values, product: e.target.value })} />
                                             </div>
-
-
 
                                         </div>
 
@@ -227,11 +162,7 @@ function AddCategory({ id, isdark }) {
                                         </div>
 
                                     </form>
-
-
                                 </div>
-
-
 
                             )}
 

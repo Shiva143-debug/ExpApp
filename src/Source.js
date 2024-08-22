@@ -7,8 +7,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 
 function Source({ id ,isdark}) {
-    const [salaryDate, setSelectedDate] = useState("");
-    
+    const [salaryDate, setSelectedDate] = useState("");  
     const [sourceName, setSourceName] = useState("");
     const [amount, setAmount] = useState("");
     const navigate = useNavigate();
@@ -18,8 +17,6 @@ function Source({ id ,isdark}) {
     const onChangeSalaryDate = (event) => {
         setSelectedDate(event.target.value)
     }
-
-
     const handleSourceNameChange = (event) => {
         setSourceName(event.target.value)
     }
@@ -70,8 +67,6 @@ function Source({ id ,isdark}) {
     const onBack = () => {
         navigate("/dashBoard");
     }
-
-    
     const isMobile = useMediaQuery('(max-width:768px)');
 
     return (
@@ -127,9 +122,6 @@ function Source({ id ,isdark}) {
                                 </div>
 
                             </form>
-
-
-
                         </div>
                     </div>
                 </div>

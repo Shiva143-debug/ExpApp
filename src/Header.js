@@ -133,7 +133,7 @@ function Header({ id,isdark, toggleTheme }) {
 
 
     return (
-        <div className="d-flex justify-content-between" style={{ position: "fixed", width: "100vw", backgroundColor: backgroundColor,color:isdark?"white":"black", zIndex: 100, padding: "10px", boxShadow:isdark? '0 2px 4px white':  '0 2px 4px rgba(0, 0, 0, 0.1)'}}>
+        <div className="d-flex justify-content-between" style={{ position: "fixed", width: "100vw", backgroundColor: backgroundColor,color:isdark?"white":"black", zIndex: 100, padding: "10px", boxShadow:isdark? '0 2px 4px white':  '0 2px 4px rgba(0, 0, 0, 0.1)',}}>
             <Toast ref={toast} />
 
             <ConfirmPopup style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />

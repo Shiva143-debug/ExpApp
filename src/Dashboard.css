@@ -27,3 +27,34 @@
   }
 
   
+
+  .dark-theme .p-datatable {
+    background-color: #333; 
+    color: #fff; 
+}
+
+.dark-theme .p-datatable thead th {
+    background-color: #444; 
+    color: white;
+}
+
+.dark-theme .p-datatable tbody tr {
+    border-bottom: 1px solid #555; 
+    color: white;
+}
+
+.dark-theme .p-datatable tbody tr:nth-child(even) {
+    background-color: #3a3a3a; 
+    color:rgb(177, 173, 173)
+}
+
+.dark-theme .p-datatable tbody tr:nth-child(odd) {
+    background-color: #2a2a2a; 
+    color:white
+}
+span{
+  color:black
+}
+.dark-theme span{
+  color:white
+}
