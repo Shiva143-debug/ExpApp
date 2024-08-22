@@ -305,7 +305,7 @@ function Dashboard({ id, isdark }) {
 
                         {showYearlyReport &&
 
-                            <>
+                            <div style={{height:isMobile?"100vh":""}}>
 
                                 <div className="d-flex mb-3" style={{ marginTop: isMobile ? "80px" : "80px" }}>
                                     <label style={{ color: isdark ? "white" : "black", width: isMobile ? "100px" : "300px", paddingTop: "5px" }}><b>Select year:</b></label>
@@ -346,7 +346,7 @@ function Dashboard({ id, isdark }) {
                                     </div>
                                 }
                                 <button class="btn btn-primary mb-5 mx-2" style={{ width: "150px" }} onClick={yearlyReport}>Show  Monthly Expenditure</button>
-                            </>
+                            </div>
                         }
 
 
