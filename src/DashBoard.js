@@ -345,7 +345,7 @@ function Dashboard({ id, isdark }) {
                                         <b style={{ color: isdark ? "white" : "black" }}>Available Balance:{totalBalance}</b>
                                     </div>
                                 }
-                                <button class="btn btn-primary mb-5 mx-2" style={{ width: "150px" }} onClick={yearlyReport}>Show  Monthly Expenditure</button>
+                                <button class="btn btn-primary  mx-2" style={{ width: "150px" }} onClick={yearlyReport}>Show  Monthly Expenditure</button>
                             </>
                         }
 
