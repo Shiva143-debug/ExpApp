@@ -307,7 +307,7 @@ function Dashboard({ id, isdark }) {
 
                             <>
 
-                                <div className="d-flex mb-3" style={{ marginTop: isMobile ? "80px" : "80px",height:isMobile?"100vh":"" }}>
+                                <div className="d-flex mb-3" style={{ marginTop: isMobile ? "80px" : "80px" }}>
                                     <label style={{ color: isdark ? "white" : "black", width: isMobile ? "100px" : "300px", paddingTop: "5px" }}><b>Select year:</b></label>
                                     <select
                                         name="year"
@@ -338,7 +338,7 @@ function Dashboard({ id, isdark }) {
                                     </div>
                                 }
                                 {isMobile &&
-                                    <div style={{ marginBottom: "10px", display: "flex", flexDirection: "column" }}>
+                                    <div style={{ marginBottom: "10px", display: "flex", flexDirection: "column",height:isMobile?"100vh":"" }}>
                                         <MyPieChart combinedData={combinedData} />
                                         <b style={{ color: isdark ? "white" : "black" }}>Total Income: {totalIncome}</b>
                                         <b style={{ color: isdark ? "white" : "black" }}>Total Expences:{totalExpense}</b>
