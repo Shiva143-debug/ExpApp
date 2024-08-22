@@ -338,7 +338,7 @@ function Dashboard({ id, isdark }) {
                                     </div>
                                 }
                                 {isMobile &&
-                                    <div style={{ marginBottom: "10px", display: "flex", flexDirection: "column",height:isMobile?"100%":"" }}>
+                                    <div style={{ marginBottom: "10px", display: "flex", flexDirection: "column" }}>
                                         <MyPieChart combinedData={combinedData} />
                                         <b style={{ color: isdark ? "white" : "black" }}>Total Income: {totalIncome}</b>
                                         <b style={{ color: isdark ? "white" : "black" }}>Total Expences:{totalExpense}</b>
