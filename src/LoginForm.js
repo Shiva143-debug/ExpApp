@@ -76,7 +76,7 @@ const LoginForm = ({ setUserId }) => {
                 <div className='form-border'>
                     <img src="https://res.cloudinary.com/dxgbxchqm/image/upload/v1722424699/Screenshot_2024-07-31_164744_ii2feo.png" className="logo" alt="logo" />
                     <h1 className='sl-heading'>Log In</h1>
-                    <p>Don't have an account? <span onClick={signupclick}>Sign Up</span></p>
+                    <p>Don't have an account? <span onClick={signupclick} style={{color:"blue"}}>Sign Up</span></p>
                     <div>
                         <form onSubmit={handleLoginFormSubmit}>
                             <label>Email address*</label>
@@ -88,7 +88,7 @@ const LoginForm = ({ setUserId }) => {
                          
                             {/* <button type="submit" className='mt-2'>Log In</button> */}
                         
-                            <button type="submit" className='mt-2' disabled={loading}>
+                            <button type="submit" className='mt-2 l-r-button' disabled={loading}>
                                 {loading ? (
                                     <div className="spinner"></div> 
                                 ) : (

@@ -94,7 +94,7 @@ const SignUpForm = () => {
                 <div >
                     <img src="https://res.cloudinary.com/dxgbxchqm/image/upload/v1722424699/Screenshot_2024-07-31_164744_ii2feo.png" className="logo" alt="logo" />
                     <h1 className='sl-heading'>Sign Up</h1>
-                    <p>Already have an account? <span onClick={signinclick}>Sign In</span></p>
+                    <p>Already have an account? <span onClick={signinclick} style={{color:"blue"}}>Sign In</span></p>
                     <div>
                         <form onSubmit={handleFormSubmit}>
                             <label>FullName*</label>
@@ -115,7 +115,7 @@ const SignUpForm = () => {
                                 <input type="checkbox" /> I agree to the <span>Terms of Service</span> and <span>privacy policy</span>
                             </label>
                             {/* <button type="submit" className='mt-2'>Create your free account</button> */}
-                            <button type="submit" className='mt-2' disabled={loading}>
+                            <button type="submit" className='mt-2 l-r-button' disabled={loading} >
                                 {loading ? (
                                     <div className="spinner"></div> 
                                 ) : (

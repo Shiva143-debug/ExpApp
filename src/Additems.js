@@ -9,7 +9,7 @@ import axios from 'axios';
 import Slidebar from "./Slidebar";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import ImageUtils from './ImageUtils';
-
+import "./App.css"
 
 
 function Additems({ id, isdark }) {
@@ -104,8 +104,6 @@ function Additems({ id, isdark }) {
     const handleTaxApplicableChange = event => {
         setTaxApplicable(event.target.value)
 
-
-
     }
 
     const onPercentage = (event) => {
@@ -122,13 +120,13 @@ function Additems({ id, isdark }) {
         setCost(event.target.value)
     }
 
-    const getSources=()=>{
+    const getSources=(date)=>{
         const userId = id;
-        console.log(purchaseDate)
+        console.log(date)
         // const currentMonth = purchaseDate.getMonth() + 1; 
         // const currentYear = purchaseDate.getFullYear();
 
-        const selectedDate = new Date(purchaseDate);
+        const selectedDate = new Date(date);
     const currentMonth = selectedDate.getMonth() + 1; // getMonth() returns 0-11, so add 1
     const currentYear = selectedDate.getFullYear();
         
@@ -146,7 +144,7 @@ function Additems({ id, isdark }) {
 
     const onChangePurchaseDate = (event) => {
         setPurchaseDate(event.target.value)
-        getSources()
+        getSources(event.target.value)
         
     }
 
@@ -254,11 +252,12 @@ function Additems({ id, isdark }) {
                                 <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}>Category:</label>
                             </div>
                             <div class="col-6">
-                                <select id="id" class="form-control" value={selectedCategory}
+                                <select id="id" class="form-control" value={selectedCategory} 
+                                style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}
                                     onChange={handleSelectChange}>
-                                    <option value="select">Select</option>
+                                    <option value="select" style={{ backgroundColor:isdark? "black":"white", color: isdark ? "white" : "black"}}>Select category</option>
                                     {Data.map((d) => (
-                                        <option key={d.categoryId} value={d.category}>
+                                        <option key={d.categoryId} value={d.category} style={{ backgroundColor:isdark? "black":"white", color: isdark ? "white" : "black"}}>
                                             {d.category}
                                         </option>
                                     ))}
@@ -282,10 +281,11 @@ function Additems({ id, isdark }) {
                                         className="form-control"
                                         value={selectedProduct}
                                         onChange={handleProductChange}
+                                        style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}
                                     >
-                                        <option value="">Select a Product</option>
+                                        <option value="" style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}>Select a Product</option>
                                         {products.map((product) => (
-                                            <option key={product.productId} value={product.product}>
+                                            <option key={product.productId} value={product.product} style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}>
                                                 {product.product}
                                             </option>
                                         ))}
@@ -298,8 +298,8 @@ function Additems({ id, isdark }) {
                                 <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}>cost:</label>
                             </div>
                             <div class="col-6">
-                                <input type="number" placeholder="Enter cost" className="form-control"
-                                    onChange={onChangeCost} />
+                                <input type="number" placeholder="Enter cost"
+                                    onChange={onChangeCost} className={`form-control ${isdark ? 'dark-mode-input' : 'light-mode-input'}`}   style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}/>
                             </div>
                         </div>
 
@@ -311,7 +311,7 @@ function Additems({ id, isdark }) {
                             </div>
                             <div class="col-6">
                                 <input type="date" placeholder="Enter purchase Date" className="form-control"
-                                    onChange={onChangePurchaseDate} />
+                                    onChange={onChangePurchaseDate} style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}} />
                             </div>
                         </div>
 
@@ -321,10 +321,11 @@ function Additems({ id, isdark }) {
                             </div>
                             <div class="col-6">
                                 <select id="costFrom" class="form-control" value={selectedSource}
+                                style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}
                                     onChange={handleSourceSelectChange}>
-                                    <option value="select">Select the source</option>
+                                    <option value="select" style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}>Select the source</option>
                                     {uniqueSourceNames.map((source) => (
-                                        <option key={source} value={source}>
+                                        <option key={source} value={source} style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}> 
                                             {source}
                                         </option>
                                     ))}
@@ -337,7 +338,7 @@ function Additems({ id, isdark }) {
                                 <label htmlFor="" className="px-5 fw-bold pt-5" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}>Description:</label>
                             </div>
                             <div class="col-6 mt-5">
-                                <textarea rows="1" placeholder="This is the default text inside the textarea." cols="40" className="form-control" onChange={onChangeDescription}>
+                                <textarea rows="1" placeholder="This is the default text inside the textarea." cols="40" className="form-control" onChange={onChangeDescription} style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}>
 
                                 </textarea>
 
@@ -349,7 +350,7 @@ function Additems({ id, isdark }) {
                                 <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}>Attach Image:</label>
                             </div>
                             <div class="col-6">
-                                <input type="file" id="image" className="form-control" onChange={handleImageChange} />
+                                <input type="file" id="image" className="form-control" onChange={handleImageChange} style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}/>
 
                             </div>
                         </div>
@@ -381,7 +382,7 @@ function Additems({ id, isdark }) {
                                     </div>
                                     <div class="col-6 ">
                                         <input type="number" placeholder="Enter percentage" className="form-control"
-                                            onChange={onPercentage} value={percentage} />
+                                            onChange={onPercentage} value={percentage} style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}/>
                                     </div>
 
                                 </div>
@@ -390,7 +391,7 @@ function Additems({ id, isdark }) {
                                         <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}>Tax Amount:</label>
                                     </div>
                                     <div class="col-6 ">
-                                        <input type="number" value={taxAmount} className="form-control" disabled />
+                                        <input type="number" value={taxAmount} className="form-control" disabled style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}a/>
                                     </div>
 
 

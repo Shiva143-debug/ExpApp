@@ -175,19 +175,6 @@ input {
   font-size: 16px;
 }
 
-button {
-  padding: 10px;
-  font-size: 16px;
-  background-color: #074f9c;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 16px;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
 
 
 
@@ -494,3 +481,37 @@ display: flex;
   box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.2);
   width:"200px"
 }
+
+/* .dark-mode-input {
+  background-color: black;
+  color: white;
+} */
+
+.dark-mode-input::placeholder {
+  color: white;
+}
+/* 
+.light-mode-input {
+  background-color: white;
+  color: black;
+} */
+
+.light-mode-input::placeholder {
+  color: black;
+}
+
+
+.l-r-button {
+    padding: 10px;
+    font-size: 16px;
+    background-color:blue;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 16px;
+  }
+  
+  .l-r-button:hover {
+    background-color: #0056b3;
+  }
+  

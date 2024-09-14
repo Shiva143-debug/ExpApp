@@ -291,15 +291,39 @@ function Reports({ id, isdark }) {
 
         if (!rowData.image) return <p>No Image</p>;
         return (
-            <>
+            // <>
 
-                <img src={rowData.image} alt={`error for ${rowData.name}`} style={{ maxWidth: "100px", maxHeight: "50px" }} />
-                <FiEye
-                    style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', cursor: 'pointer', color: 'white', zIndex: 1 }}
-                    onClick={() => imageClick(rowData.image)}
+            //     <img src={rowData.image} alt={`error for ${rowData.name}`} style={{ maxWidth: "100px", maxHeight: "50px" }} />
+            //     <FiEye
+            //         style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', cursor: 'pointer', color: 'white', zIndex: 1 }}
+            //         onClick={() => imageClick(rowData.image)}
 
-                />
-            </>)
+            //     />
+            // </>
+
+            <div style={{ position: "relative", display: "inline-block", maxWidth: "100px", maxHeight: "50px" }}>
+    <img 
+        src={rowData.image} 
+        alt={`error for ${rowData.name}`} 
+        style={{ width: "100px", maxHeight: "50px" }} 
+    />
+    <FiEye
+        style={{
+            position: 'absolute',
+            cursor: 'pointer',
+            color: 'white',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 1,
+            color:isdark?"white":"red"
+        }}
+        className="eye-icon"
+        onClick={() => imageClick(rowData.image)}
+    />
+</div>
+            )
+
     }
 
     const descriptionBodyTemplate = (rowData) => {
@@ -476,7 +500,7 @@ function Reports({ id, isdark }) {
                                     {!fromdashboard && <input type="text" className={isMobile ? "form-control mx-1" : "form-control mx-5"} placeholder="Search..." value={searchTerm} onChange={handleSearchChange} style={{ marginRight: "10px", padding: "5px", width: isMobile ? "50vw" : "20vw", backgroundColor: "transparent", color: isdark ? "white" : "black" }} />}
 
                                     <div style={{ maxWidth: isMobile ? "100vw" : "80vw", overflowX: "auto" }} className={isMobile ? "mx-1" : "mx-5"}>
-                                        {fromdashboard && <button onClick={todashboard}>Back</button>}
+                                        {fromdashboard && <button onClick={todashboard} className="report-back-button">Back</button>}
 
 
                                         {!fromdashboard && <p style={{ color: isdark ? "white" : "black" }}>If you want filter the rows based on DATE 2024/08/04 use this format**</p>}
