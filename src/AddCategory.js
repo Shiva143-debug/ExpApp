@@ -117,7 +117,7 @@ function AddCategory({ id, isdark }) {
 
                                     <p>*To Add Itmes first you need to choose category if the category is not present in the below form</p>
 
-                                    <form className={isMobile ? "p-3 rounded mb-5" : "rounded mb-5 p-5 mb-5"} style={{ width: isMobile ? "100%" : "70%", backgroundColor: isdark ? "#555555" : "white", marginBottom: "20px" }} onSubmit={handleSubmitProduct}>
+                                    <form className={isMobile ? "p-3 rounded mb-5" : "rounded mb-5 p-5 mb-5"} style={{ width: isMobile ? "100%" : "60%", backgroundColor: isdark ? "transparent" : "white", marginBottom: "20px" ,boxShadow:isdark?"0px 0px 10px white": "5px 5px 10px rgba(0, 0, 0, 0.3)"}} onSubmit={handleSubmitProduct}>
                                         <div className="row">
                                             <div class="col-4 mb-5">
                                                 <label htmlFor="" className="fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}>choose Category:</label>

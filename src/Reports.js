@@ -12,6 +12,9 @@ import { FiEye } from 'react-icons/fi';
 import { useNavigate, useLocation } from "react-router-dom";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+
 
 const months = [
     "January", "February", "March", "April",
@@ -33,7 +36,7 @@ function Reports({ id, isdark }) {
     const [showCategories, setViewCategories] = useState(false)
     const [productsData, setProductsData] = useState([]);
     const [categoriesData, setCategoriesData] = useState([]);
-    const [mainsourceData,setMainSourceData]= useState([]);
+    const [mainsourceData, setMainSourceData] = useState([]);
     const [fromdashboard, setfromdashboard] = useState("")
     const [searchTerm, setSearchTerm] = useState("");
     const [image, setImage] = useState("");
@@ -302,27 +305,27 @@ function Reports({ id, isdark }) {
             // </>
 
             <div style={{ position: "relative", display: "inline-block", maxWidth: "100px", maxHeight: "50px" }}>
-    <img 
-        src={rowData.image} 
-        alt={`error for ${rowData.name}`} 
-        style={{ width: "100px", maxHeight: "50px" }} 
-    />
-    <FiEye
-        style={{
-            position: 'absolute',
-            cursor: 'pointer',
-            color: 'white',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            zIndex: 1,
-            color:isdark?"white":"red"
-        }}
-        className="eye-icon"
-        onClick={() => imageClick(rowData.image)}
-    />
-</div>
-            )
+                <img
+                    src={rowData.image}
+                    alt={`error for ${rowData.name}`}
+                    style={{ width: "100px", maxHeight: "50px" }}
+                />
+                <FiEye
+                    style={{
+                        position: 'absolute',
+                        cursor: 'pointer',
+                        color: 'white',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        zIndex: 1,
+                        color: isdark ? "white" : "red"
+                    }}
+                    className="eye-icon"
+                    onClick={() => imageClick(rowData.image)}
+                />
+            </div>
+        )
 
     }
 
@@ -398,6 +401,86 @@ function Reports({ id, isdark }) {
 
     const totalCost = filteredDataForTotalCost.reduce((acc, d) => acc + parseFloat(d.cost), 0);
     const totalTaxAmount = filteredDataForTotalCost.reduce((acc, curr) => acc + parseFloat(curr.tax_amount), 0);
+
+
+const exportPdf = () => {
+    let exportColumns = [
+        { header: 'Category', dataKey: 'category' },
+        { header: 'Product', dataKey: 'product' },
+        { header: 'Cost', dataKey: 'cost' },
+        { header: 'Date', dataKey: 'p_date' },
+        { header: 'Tax Amount', dataKey: 'tax_amount' },
+        { header: 'Description', dataKey: 'description' },
+    ];
+
+    const assets = filteredItems.map(item => ({
+        category: item.category,
+        product: item.product,
+        cost: item.cost,
+        p_date: item.p_date,
+        tax_amount: item.tax_amount,
+        description: item.description
+    }));
+
+    const doc = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: [210, 297],
+    });
+
+  
+    doc.autoTable({
+        columns: exportColumns,
+        body: assets,
+        margin: { top: 50 },
+        styles: { overflow: 'linebreak' },
+        columnStyles: {
+            cost: { halign: 'right' },     
+            tax_amount: { halign: 'right' }, 
+        },
+        theme: 'grid',
+        headStyles: { fillColor: [22, 160, 133] },
+        showHead: 'everyPage',
+        foot: [[
+            { content: 'Total:', colSpan: 2, styles: { halign: 'right', fontStyle: 'bold' } },
+            { content: totalCost, styles: { halign: 'right', fontStyle: 'bold' } }, 
+            { content: '', },  
+            { content: totalTaxAmount, styles: { halign: 'right', fontStyle: 'bold' } }, 
+            { content: '' },  
+        ]]
+    });
+
+    const addHeaders = doc => {
+        const pageCount = doc.internal.getNumberOfPages();
+
+        for (let i = 1; i <= pageCount; i++) {
+            doc.setPage(i);
+            doc.setFontSize(25);
+            doc.text(`${months[Month - 1]} - ${Year} Report`, 10, 30); 
+            doc.setFontSize(14);
+            doc.setFont('', 'bold');
+            doc.setFontSize(25);
+            doc.text('Expenditure', doc.internal.pageSize.width - 68, 25);
+            
+            doc.setLineWidth(1);
+            doc.line(10, 32, doc.internal.pageSize.width - 10, 32);
+        }
+    };
+
+    const addFooters = doc => {
+        const pageCount = doc.internal.getNumberOfPages();
+        for (let i = 1; i <= pageCount; i++) {
+            doc.setPage(i);
+            doc.setFontSize(8);
+            doc.text(`Page ${i} of ${pageCount}`, doc.internal.pageSize.width / 2, 287, { align: 'center' });
+        }
+    };
+
+    addHeaders(doc);
+    addFooters(doc);
+    doc.save(`${months[Month - 1]}_${Year}_Report.pdf`); 
+};
+
 
     return (
 
@@ -503,10 +586,10 @@ function Reports({ id, isdark }) {
                                         {fromdashboard && <button onClick={todashboard} className="report-back-button">Back</button>}
 
 
-                                        {!fromdashboard && <p style={{ color: isdark ? "white" : "black" }}>If you want filter the rows based on DATE 2024/08/04 use this format**</p>}
+                                        {/* {!fromdashboard && <p style={{ color: isdark ? "white" : "black" }}>If you want filter the rows based on DATE 2024/08/04 use this format**</p>} */}
                                         <div className={` ${isdark ? 'dark-theme-table' : ''}`}>
 
-                                            <DataTable value={filteredItems} stripedRows paginator rows={3} className="dataTable-pagination" style={{ width: isMobile ? "100vw" : "80vw" }}>
+                                            <DataTable value={filteredItems} stripedRows paginator rows={3} className="dataTable-pagination mt-2" style={{ width: isMobile ? "100vw" : "80vw" }}>
                                                 <Column field="category" header="CATEGORY" style={{ width: '25%' }}></Column>
                                                 <Column field="product" header="PRODUCT" style={{ width: '25%' }}></Column>
                                                 <Column field="cost" header="COST" style={{ width: '25%' }}></Column>
@@ -531,14 +614,21 @@ function Reports({ id, isdark }) {
                                         <div class="mt-2 mx-5" style={{ display: "flex", justifyContent: "space-between", marginBottom: "100px" }}>
                                             <button onClick={onBack} className={`btn btn-info ${isMobile ? "btn-sm" : "btn-lg"}`} style={{ marginRight: "20px" }}>Back To Reports</button>
 
-
-                                            <CSVLink
-                                                data={csvData}
-                                                filename={"reports.csv"}
-                                                className={`btn btn-success ${isMobile ? "btn-sm" : "btn-lg"}`}
-                                            >
-                                                Download Reports <FaDownload />
-                                            </CSVLink>
+                                            {/* <Dropdown style={{ float: 'right' }}>
+                                    <Dropdown.Toggle variant="btn btn-success" id="dropdown-basic">
+                                        <BiExport /> Export
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu>
+                                        <Dropdown.Item onClick={exportExcel}><AiOutlineFileExcel style={{ marginRight: '10px', color: 'green', height: '20px', width: '20px' }} />Excel</Dropdown.Item>
+                                        <Dropdown.Divider />
+                                        <Dropdown.Item onClick={exportPdf}><AiOutlineFilePdf style={{ marginRight: '10px', color: 'red', height: '20px', width: '20px' }} />Pdf</Dropdown.Item>
+                                    </Dropdown.Menu>
+                                </Dropdown> */}
+                                            <div >
+                                                <CSVLink data={csvData} filename={"reports.csv"} className={`btn btn-success ${isMobile ? "btn-sm" : "btn-lg"}`}> Excel <FaDownload />
+                                                </CSVLink>
+                                                <button onClick={exportPdf} className={`btn btn-success ${isMobile ? "btn-sm" : "btn-lg"} mx-2` }>PDF <FaDownload /></button>
+                                            </div>
                                         </div>
 
                                     }

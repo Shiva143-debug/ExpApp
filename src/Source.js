@@ -82,8 +82,8 @@ function Source({ id ,isdark}) {
                         )}
                         <div style={{ width: isMobile ? "100%" : "85%", backgroundColor:isdark?"black": "whitesmoke", color:isdark?"white": "", top: 100,fontFamily: "Arial, sans-serif" }} className="d-flex flex-column justify-content-center align-items-center vh-100">
                             <Toast ref={toast} />
-                            <center><h1 style={{ color:isdark?"white": "navy" ,fontSize:isMobile?"18px":"28px"}}>ADD THE <i style={{ color: "red" }}>SOURCE</i> OF INCOME</h1></center>
-                            <form id="myForm" onSubmit={handleSubmit} className={isMobile ? "p-2 rounded mb-5 pt-5" : " rounded mb-5 p-5"} style={{ width: isMobile ? "90%" : "60%", height: "60vh",backgroundColor:isdark?"#555555":"white" }}>
+                            <center><h1 style={{ color:isdark?"white": "navy" ,fontSize:isMobile?"18px":"28px", marginTop: isMobile ? "10px" : "120px"}}>ADD THE <i style={{ color: "red" }}>SOURCE</i> OF INCOME</h1></center>
+                            <form id="myForm" onSubmit={handleSubmit} className={isMobile ? "p-2 rounded mb-5 pt-5" : " rounded mb-5 p-5"} style={{ width: isMobile ? "90%" : "60%", height:isMobile? "65vh":"60vh",backgroundColor:isdark?"black":"white",boxShadow:isdark?"0px 0px 10px white": "5px 5px 10px rgba(0, 0, 0, 0.3)" }}>
 
 
                                 <div className="mb-5 row">
@@ -116,7 +116,7 @@ function Source({ id ,isdark}) {
                                 </div>
                     
 
-                                <div className="mb-5 mt-5 d-flex justify-content-between mx-5">
+                                <div className="mb-5 mt-2 d-flex justify-content-between mx-5">
                                     <button onClick={onBack} className={`btn btn-info ${isMobile ? "btn-sm" : "btn-lg"}`}>Back</button>
                                     <button type="submit" className={`btn btn-primary ${isMobile ? "btn-sm" : "btn-lg"}`}>ADD</button>
                                 </div>
