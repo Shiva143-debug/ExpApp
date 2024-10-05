@@ -427,11 +427,17 @@ const exportPdf = () => {
         unit: 'mm',
         format: [210, 297],
     });
-
+    let yPos = 40; 
+    Object.entries(aggregatedData).forEach(([source, amount], index) => {
+        doc.setFontSize(12);
+        doc.text(`${source}: ${amount}`, 10, yPos);
+        yPos += 7; 
+    });
   
     doc.autoTable({
         columns: exportColumns,
         body: assets,
+        startY: yPos + 10, 
         margin: { top: 50 },
         styles: { overflow: 'linebreak' },
         columnStyles: {

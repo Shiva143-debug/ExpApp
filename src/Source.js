@@ -83,7 +83,7 @@ function Source({ id ,isdark}) {
                         <div style={{ width: isMobile ? "100%" : "85%", backgroundColor:isdark?"black": "whitesmoke", color:isdark?"white": "", top: 100,fontFamily: "Arial, sans-serif" }} className="d-flex flex-column justify-content-center align-items-center vh-100">
                             <Toast ref={toast} />
                             <center><h1 style={{ color:isdark?"white": "navy" ,fontSize:isMobile?"18px":"28px", marginTop: isMobile ? "10px" : "120px"}}>ADD THE <i style={{ color: "red" }}>SOURCE</i> OF INCOME</h1></center>
-                            <form id="myForm" onSubmit={handleSubmit} className={isMobile ? "p-2 rounded mb-5 pt-5" : " rounded mb-5 p-5"} style={{ width: isMobile ? "90%" : "60%", height:isMobile? "65vh":"60vh",backgroundColor:isdark?"black":"white",boxShadow:isdark?"0px 0px 10px white": "5px 5px 10px rgba(0, 0, 0, 0.3)" }}>
+                            <form id="myForm" onSubmit={handleSubmit} className={isMobile ? "p-2 rounded mb-5 pt-5" : " rounded mb-5 p-5"} style={{ width: isMobile ? "90%" : "60%", height:"60%",backgroundColor:isdark?"black":"white",boxShadow:isdark?"0px 0px 10px white": "5px 5px 10px rgba(0, 0, 0, 0.3)" }}>
 
 
                                 <div className="mb-5 row">
@@ -91,7 +91,7 @@ function Source({ id ,isdark}) {
                                         <label htmlFor="" className="px-5 fw-bold" style={{color:isdark?"white": "navy", fontSize: isMobile ? '16px' : '20px' }}>Source Name:</label>
                                     </div>
                                     <div class="col-6">
-                                        <input type="text" placeholder="Enter source Name" className="form-control"
+                                        <input type="text" placeholder="Enter source Name" className={`form-control ${isdark ? 'dark-mode-input' : 'light-mode-input'}`}  style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}
                                             onChange={handleSourceNameChange} />
                                     </div>
                                 </div>
@@ -100,7 +100,7 @@ function Source({ id ,isdark}) {
                                         <label htmlFor="" className="px-5 fw-bold" style={{ color:isdark?"white": "navy", fontSize: isMobile ? '16px' : '20px' }}>Amount:</label>
                                     </div>
                                     <div class="col-6">
-                                        <input type="number" placeholder="Enter cost" className="form-control"
+                                        <input type="number" placeholder="Enter cost" className={`form-control ${isdark ? 'dark-mode-input' : 'light-mode-input'}`}  style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}
                                             onChange={handleAmountChange} />
                                     </div>
                                 </div>
@@ -110,7 +110,7 @@ function Source({ id ,isdark}) {
                                         <label htmlFor="" className="px-5 fw-bold" style={{ color:isdark?"white": "navy", fontSize: isMobile ? '16px' : '20px' }}>Date:</label>
                                     </div>
                                     <div class="col-6">
-                                        <input type="date" placeholder="Enter purchase Date" className="form-control"
+                                        <input type="date" placeholder="Enter purchase Date" className={`form-control ${isdark ? 'dark-mode-input' : 'light-mode-input'}`}  style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}
                                             onChange={onChangeSalaryDate} />
                                     </div>
                                 </div>

@@ -299,7 +299,7 @@ function Additems({ id, isdark }) {
                             </div>
                             <div class="col-6">
                                 <input type="number" placeholder="Enter cost"
-                                    onChange={onChangeCost} className={`form-control ${isdark ? 'dark-mode-input' : 'light-mode-input'}`}   style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}/>
+                                    onChange={onChangeCost} className="form-control"  style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}/>
                             </div>
                         </div>
 

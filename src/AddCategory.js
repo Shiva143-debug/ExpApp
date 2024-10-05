@@ -10,6 +10,7 @@ import { CiSquarePlus } from "react-icons/ci";
 import Category from "./Category";
 import { Dialog } from 'primereact/dialog';
 
+
 function AddCategory({ id, isdark }) {
     const [values, setValues] = useState({
         category: "",
@@ -125,11 +126,11 @@ function AddCategory({ id, isdark }) {
 
                                             <div class="col-6">
                                                 <select id="id" class="form-control" value={selectedOption}
-                                                    onChange={handleSelectChange}>
-                                                    <option value="select">Select Category</option>
+                                                    onChange={handleSelectChange} style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}>
+                                                    <option value="select" style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}>Select Category</option>
                                    
                                                     {[...new Set(Data.map((d) => d.category))].map((category, index) => (
-                                                        <option key={index} value={category}>
+                                                        <option key={index} value={category} style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}>
                                                             {category}
                                                         </option>
                                                     ))}
@@ -146,7 +147,7 @@ function AddCategory({ id, isdark }) {
                                             </div>
 
                                             <div class="col-7">
-                                                <input type="text" placeholder="Enter Product/item Name" className="form-control"
+                                                <input type="text" placeholder="Enter Product/item Name" className="form-control" style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}
                                                     onChange={e => setValues({ ...values, product: e.target.value })} />
                                             </div>
 
@@ -166,7 +167,7 @@ function AddCategory({ id, isdark }) {
 
                             )}
 
-                            <Dialog visible={showDialogue} style={{ width: '50vw' }} onHide={onHide} >
+                            <Dialog visible={showDialogue} style={{ width:isMobile? '90vw' :'50vw'}} onHide={onHide} >
                                 <Category close={onHide}  id={id} isdark={isdark} updateData={updateData}/>
                             </Dialog>
 

@@ -482,14 +482,7 @@ display: flex;
   width:"200px"
 }
 
-/* .dark-mode-input {
-  background-color: black;
-  color: white;
-} */
 
-.dark-mode-input::placeholder {
-  color: white;
-}
 /* 
 .light-mode-input {
   background-color: white;
@@ -515,3 +508,11 @@ display: flex;
     background-color: #0056b3;
   }
   
+.dark-mode-input{
+    background-color: red;
+}
+
+/* Light mode placeholder styling */
+.light-mode-input::placeholder {
+    color: gray; 
+}

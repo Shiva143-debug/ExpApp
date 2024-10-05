@@ -67,14 +67,14 @@ const Category = ({id,isdark,close,updateData}) => {
 
 
     return (
-        <div style={{width:"100%"}} class="p-2">
+        <div  class="p-2">
         <form  class={isMobile?"p-3":"p-5"} style={{width:"100%", backgroundColor: isdark ? "black" : "whiteSmoke",fontFamily: "Arial, sans-serif" }} onSubmit={handleSubmitCategory}>
              <Toast ref={toast} />
-            <div style={{display:"flex",flexDirection:"column"}}>
-                <div className="col-1">
-                    <label htmlFor="" className="fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}>category:</label>
+            <div className="row" >
+                <div className="col-3">
+                    <label htmlFor="" className="fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px',paddingTop:"10px" }}>category:</label>
                 </div>
-                <div className="col-12">
+                <div className="col-5">
                     <input type="text" placeholder="Enter Category Name" className="form-control mt-2 mb-2" style={{ width: isMobile ? "100%" : "100%", padding: isMobile ? "5px" : "10px" }} onChange={e => setValues({ ...values, category: e.target.value })} />
                 </div>
                 <div className="col-1"></div>
