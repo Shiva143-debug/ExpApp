@@ -3,17 +3,10 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useState, useEffect } from "react"
 import Slidebar from "./Slidebar";
 import { FaRupeeSign } from "react-icons/fa";
-// import { Chart } from 'primereact/chart';
-// import PieChart from './PieChart';
-import Chart from 'chart.js/auto';
-import "./Dashboard.css"
-import MyPieChart from './MyPieChart';
-// import MyPieChart from './MyPieChart';
-import { useNavigate } from 'react-router-dom';
+import MyPieChart from './MyPieChart'; import { useNavigate } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-
-
+import "./Dashboard.css"
 
 const months = [
     "January", "February", "March", "April",
@@ -21,26 +14,21 @@ const months = [
     "September", "October", "November", "December"
 ];
 
-
 const currentYear = new Date().getFullYear();
 const years = Array.from({ length: 7 }, (_, index) => (currentYear - 3 + index).toString());
 
 function Dashboard({ id, isdark }) {
-
     const [Month, setSelectedMonth] = useState((new Date().getMonth() + 1).toString());
     const [Year, setSelectedYear] = useState(new Date().getFullYear().toString());
     const [totalCostData, setExpenseCost] = useState([])
     const [totalIncomeData, setTotalIncome] = useState([])
-
     const [yearsdata, setYearData] = useState([])
     const [yearWiseExpenceData, setYearExpenceData] = useState([])
-
     const [year, setSelectedYearr] = useState("2024");
     const [showYearlyReport, setShowYearlyReport] = useState(false)
-
     const navigate = useNavigate();
 
-    
+
     const handleCategoryClick = (category) => {
         const month = encodeURIComponent(Month);
         const year = encodeURIComponent(Year);
@@ -69,7 +57,6 @@ function Dashboard({ id, isdark }) {
     useEffect(() => {
         const userId = id;
         fetch(`https://exciting-spice-armadillo.glitch.me/getExpenseCost/${userId}`)
-
             .then(res => res.json())
             .then(data => setExpenseCost(data))
             .catch(err => console.log(err))
@@ -85,10 +72,8 @@ function Dashboard({ id, isdark }) {
 
     }, [year, id])
 
-
     useEffect(() => {
         const userId = id;
-        // fetch(`http://localhost:3005/getSource/${userId}`)
         fetch(`https://exciting-spice-armadillo.glitch.me/getSource/${userId}/${Month}/${Year}`)
             .then(res => res.json())
             .then(data => {
@@ -98,10 +83,9 @@ function Dashboard({ id, isdark }) {
                     setTotalIncome([])
                 }
             })
-        
+
 
     }, [Month, Year, id])
-
 
     useEffect(() => {
         const userId = id;
@@ -117,16 +101,14 @@ function Dashboard({ id, isdark }) {
             .catch(err => console.log(err));
     }, [year, id]);
 
-
-
-
+    const grandTotal = totalIncomeData.reduce((acc, curr) => acc + parseInt(curr.amount), 0);
+    const colors = ["#f0f0f0", "#e6f7ff", "#ffcccc", "#ccffcc", "#f9f9f9"];
+    const isMobile = useMediaQuery('(max-width:768px)');
 
     const filteredTotalCostData = totalCostData.filter((d) => {
         return d.month.toString() === Month & d.year.toString() === Year;
     });
-
     const totalAmount = parseFloat(filteredTotalCostData.reduce((acc, curr) => acc + parseFloat(curr.cost), 0)).toFixed(2);
-
 
     const groupedData = filteredTotalCostData.reduce((acc, curr) => {
         const { category, cost } = curr;
@@ -134,15 +116,10 @@ function Dashboard({ id, isdark }) {
         return acc;
     }, {});
 
-
-    // Convert the grouped data into an array of objects
     const groupedArray = Object.keys(groupedData).map((key) => ({
         category: key,
         TotalCost: groupedData[key],
     }));
-
-    const grandTotal = totalIncomeData.reduce((acc, curr) => acc + parseInt(curr.amount), 0);
-
 
     const monthMap = {};
     yearsdata.forEach((d) => {
@@ -154,21 +131,16 @@ function Dashboard({ id, isdark }) {
         }
     });
 
-    // Fill in missing months with 0 amount
     months.forEach((monthName) => {
         if (!monthMap[monthName]) {
             monthMap[monthName] = 0;
         }
     });
 
-    // Convert the map to an array of objects and sort by month order
     const monthData = months.map((monthName) => ({
         month: monthName,
         amount: monthMap[monthName],
     }));
-
-
-
 
     const expenseMap = {};
     yearWiseExpenceData.forEach((d) => {
@@ -180,14 +152,12 @@ function Dashboard({ id, isdark }) {
         }
     });
 
-    // Fill in missing months with 0 cost
     months.forEach((monthName) => {
         if (!expenseMap[monthName]) {
             expenseMap[monthName] = 0;
         }
     });
 
-    // Convert the map to an array of objects and sort by month order
     const monthExpensesData = months.map((monthName) => ({
         month: monthName,
         cost: expenseMap[monthName],
@@ -204,7 +174,6 @@ function Dashboard({ id, isdark }) {
         };
     });
 
-
     let totalIncome = 0;
     let totalExpense = 0;
     let totalBalance = 0;
@@ -215,51 +184,29 @@ function Dashboard({ id, isdark }) {
         totalBalance += parseInt(d.balance);
     });
 
-
     const yearlyReport = () => {
         setShowYearlyReport(!showYearlyReport)
     }
 
-    const colors = ["#f0f0f0", "#e6f7ff", "#ffcccc", "#ccffcc", "#f9f9f9"];
-
-
-    const isMobile = useMediaQuery('(max-width:768px)');
-
     return (
-
         <div className="d-flex flex-column">
             <div>
                 <div class="d-flex">
                     {!isMobile && (
-
                         <div style={{ width: "15%" }}>
                             <Slidebar isdark={isdark} />
                         </div>
                     )}
-
-                    <div className={isMobile ? "d-flex flex-column p-3" : "d-flex flex-column p-3"} style={{height:isMobile?"100%":"", width: isMobile ? "100%" : "85%", backgroundColor: isdark ? "black" : "whitesmoke" }}>
+                    <div className={isMobile ? "d-flex flex-column p-3" : "d-flex flex-column p-3"} style={{ height: isMobile ? "100%" : "", width: isMobile ? "100%" : "85%", backgroundColor: isdark ? "black" : "whitesmoke" }}>
                         {!showYearlyReport &&
                             <div style={{ minHeight: "100vh" }}>
-
                                 <div class="d-flex mb-5 ">
-                                    <select
-                                        name="month"
-                                        style={{ width: isMobile ? "100px" : "300px", marginTop: "100px", backgroundColor: "transparent", color: isdark ? "white" : "black" }}
-                                        className="form-control"
-                                        value={Month}
-                                        onChange={handleSelectChange}
-                                    >
+                                    <select name="month" style={{ width: isMobile ? "100px" : "300px", marginTop: "100px", backgroundColor: "transparent", color: isdark ? "white" : "black" }} className="form-control" value={Month} onChange={handleSelectChange}>
                                         {months.map((month, index) => (
                                             <option key={index} value={index + 1} style={{ color: "black" }}> {month}</option>
                                         ))}
                                     </select>
-                                    <select
-                                        name="year"
-                                        style={{ width: isMobile ? "100px" : "300px", marginTop: "100px", marginLeft: "20px", backgroundColor: "transparent", color: isdark ? "white" : "black" }}
-                                        className="form-control"
-                                        value={Year}
-                                        onChange={handleSelectChange}
-                                    >
+                                    <select name="year" style={{ width: isMobile ? "100px" : "300px", marginTop: "100px", marginLeft: "20px", backgroundColor: "transparent", color: isdark ? "white" : "black" }} className="form-control" value={Year} onChange={handleSelectChange} >
                                         {years.map((year, index) => (
                                             <option key={index} value={year} style={{ color: "black" }}>{year}</option>
                                         ))}
@@ -295,27 +242,15 @@ function Dashboard({ id, isdark }) {
                                         )
                                     })}
                                 </div>
-
-
-
                                 <button class="btn btn-primary mx-2 mt-2 mb-5" style={{ width: "150px" }} onClick={yearlyReport}>Show YearWise Expenditure</button>
                             </div>
                         }
 
-
                         {showYearlyReport &&
-
-                            <div style={{height:isMobile?"100vh":""}}>
-
+                            <div style={{ height: isMobile ? "100vh" : "" }}>
                                 <div className="d-flex mb-3" style={{ marginTop: isMobile ? "80px" : "80px" }}>
                                     <label style={{ color: isdark ? "white" : "black", width: isMobile ? "100px" : "300px", paddingTop: "5px" }}><b>Select year:</b></label>
-                                    <select
-                                        name="year"
-                                        style={{ width: isMobile ? "100px" : "300px", backgroundColor: "transparent", color: isdark ? "white" : "black" }}
-                                        className="form-control"
-                                        value={year}
-                                        onChange={handleSelectYearChange}
-                                    >
+                                    <select name="year" style={{ width: isMobile ? "100px" : "300px", backgroundColor: "transparent", color: isdark ? "white" : "black" }} className="form-control" value={year} onChange={handleSelectYearChange}>
                                         {years.map((year, index) => (
                                             <option key={index} value={year} style={{ color: "black" }}>{year}</option>
                                         ))}
@@ -323,18 +258,15 @@ function Dashboard({ id, isdark }) {
                                 </div>
 
                                 {!isMobile &&
-
                                     <div >
-                                        
-                                      
-                                       <div className={`card mb-5 ${isdark ? 'dark-theme' : ''}`}>
+                                        <div className={`card mb-5 ${isdark ? 'dark-theme' : ''}`}>
                                             <DataTable value={combinedData} stripedRows tableStyle={{ minWidth: '50rem' }}>
                                                 <Column field="month" header="MONTH"></Column>
                                                 <Column field="income" header="INCOME"></Column>
-                                                <Column field="expense" header="CATEGORY"></Column>
+                                                <Column field="expense" header="EXPENCE"></Column>
                                                 <Column field="balance" header="BALANCE"></Column>
                                             </DataTable>
-                              </div>
+                                        </div>
                                     </div>
                                 }
                                 {isMobile &&
@@ -348,15 +280,9 @@ function Dashboard({ id, isdark }) {
                                 <button class="btn btn-primary mb-5 mx-2" style={{ width: "150px" }} onClick={yearlyReport}>Show  Monthly Expenditure</button>
                             </div>
                         }
-
-
                     </div>
-
                 </div>
-
             </div>
-
-
         </div>
 
     )

@@ -1,18 +1,18 @@
 import { useState, useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom";
-import "primereact/resources/themes/lara-light-indigo/theme.css";
-import "primereact/resources/primereact.min.css";
-import "primeicons/primeicons.css";
 import { Toast } from 'primereact/toast';
-import "bootstrap/dist/css/bootstrap.min.css"
 import axios from 'axios';
 import Slidebar from "./Slidebar";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import ImageUtils from './ImageUtils';
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
+import "bootstrap/dist/css/bootstrap.min.css"
 import "./App.css"
 
 
-function Additems({ id, isdark }) {
+function Additems({ id, isdark, selectedExpence, close }) {
     const [Data, setData] = useState([])
     const [products, setProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("select");
@@ -26,10 +26,32 @@ function Additems({ id, isdark }) {
     const [taxApplicable, setTaxApplicable] = useState("no");
     const [percentage, setPercentage] = useState("");
     const [taxAmount, setTaxAmount] = useState("");
-
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [editItemId, setEditItemId] = useState(null);
     const toast = useRef(null);
     const navigate = useNavigate();
-    // console.log(products)
+
+    useEffect(() => {
+        if (selectedExpence) {
+            setSelectedCategory(selectedExpence.category);
+            setEditItemId(selectedExpence.id)
+            setSelectedProduct(selectedExpence.product);
+            setCost(selectedExpence.cost);
+            setPurchaseDate(selectedExpence.p_date);
+            setDescription(selectedExpence.description)
+            setSelectedSource(selectedExpence.source)
+            setTaxApplicable(selectedExpence.is_tax_app)
+            setPercentage(selectedExpence.percentage)
+            setTaxAmount(selectedExpence.tax_amount)
+            setAttachFile(selectedExpence.image)
+            setIsEditMode(true);
+        }
+    }, [selectedExpence]);
+
+
+    const popClose = () => {
+        setTimeout(() => { close(); }, 300);
+    };
 
     useEffect(() => {
         const userId = id;
@@ -41,42 +63,7 @@ function Additems({ id, isdark }) {
             )
             .catch(err => console.log(err))
 
-    }, [])
-
-    // useEffect(() => {
-    //     const userId = id;
-    //     const currentMonth = new Date().getMonth() + 1;
-    //     const currentYear = new Date().getFullYear();
-
-    //     fetch(`https://exciting-spice-armadillo.glitch.me/getSourceData/${userId}`)
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             const filteredData = data.filter(item => {
-    //                 const itemDate = new Date(item.date); 
-    //                 return itemDate.getMonth() + 1 === currentMonth && itemDate.getFullYear() === currentYear;
-    //             });
-    //             setSourceData(filteredData);
-    //         })
-    //         .catch(err => console.log(err));
-    // }, [id]);
-    // useEffect(() => {
-        // const userId = id;
-        // const currentMonth = purchaseDate.getMonth() + 1; 
-        // const currentYear = purchaseDate.getFullYear();
-        
-        // fetch(`https://exciting-spice-armadillo.glitch.me/getSourceData/${userId}`)
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         const filteredData = data.filter(item => {
-        //             const itemDate = new Date(item.date); 
-        //             return itemDate.getMonth() + 1 === currentMonth && itemDate.getFullYear() === currentYear;
-        //         });
-        //         setSourceData(filteredData);
-        //     })
-        //     .catch(err => console.log(err));
-    // }, [id]);
-
-    
+    }, [id])
 
     const handleSelectChange = (event) => {
         const selectedValue = event.target.value;
@@ -103,38 +90,29 @@ function Additems({ id, isdark }) {
 
     const handleTaxApplicableChange = event => {
         setTaxApplicable(event.target.value)
-
     }
 
     const onPercentage = (event) => {
         const percentage = event.target.value;
         setPercentage(percentage);
         const calculatedTaxAmount = (cost * (percentage / 100)).toFixed(2);
-
         setTaxAmount(calculatedTaxAmount);
-
-
     }
 
     const onChangeCost = (event) => {
         setCost(event.target.value)
     }
 
-    const getSources=(date)=>{
+    const getSources = (date) => {
         const userId = id;
-        console.log(date)
-        // const currentMonth = purchaseDate.getMonth() + 1; 
-        // const currentYear = purchaseDate.getFullYear();
-
         const selectedDate = new Date(date);
-    const currentMonth = selectedDate.getMonth() + 1; // getMonth() returns 0-11, so add 1
-    const currentYear = selectedDate.getFullYear();
-        
+        const currentMonth = selectedDate.getMonth() + 1;
+        const currentYear = selectedDate.getFullYear();
         fetch(`https://exciting-spice-armadillo.glitch.me/getSourceData/${userId}`)
             .then(res => res.json())
             .then(data => {
                 const filteredData = data.filter(item => {
-                    const itemDate = new Date(item.date); 
+                    const itemDate = new Date(item.date);
                     return itemDate.getMonth() + 1 === currentMonth && itemDate.getFullYear() === currentYear;
                 });
                 setSourceData(filteredData);
@@ -145,17 +123,13 @@ function Additems({ id, isdark }) {
     const onChangePurchaseDate = (event) => {
         setPurchaseDate(event.target.value)
         getSources(event.target.value)
-        
     }
-
-
 
     const onChangeDescription = (event) => {
         setDescription(event.target.value)
     }
 
     const handleImageChange = (e) => {
-
         if (e.target.files && e.target.files[0]) {
             ImageUtils.convertImage(e.target.files[0]).then(function (base64) {
                 setAttachFile(base64);
@@ -170,14 +144,14 @@ function Additems({ id, isdark }) {
             id, category: selectedCategory, product: selectedProduct, cost, source: selectedSource, p_date: purchaseDate, description, is_tax_app: taxApplicable, percentage, tax_amount: taxAmount, image: attachFile
         }
 
-        console.log(expenseData)
+        const updateItemData = {
+            user_id: id,  cost,  p_date: purchaseDate, description, is_tax_app: taxApplicable, percentage, tax_amount: taxAmount
+        }
 
         if (taxApplicable === "no") {
             expenseData.percentage = 0;
             expenseData.tax_amount = 0;
-
         }
-
         if (selectedCategory === "select") {
             toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please Select category' });
             return;
@@ -196,11 +170,29 @@ function Additems({ id, isdark }) {
         } else if (purchaseDate === "") {
             toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please Select purchaseDate' });
             return;
-        } else {
+        }
+
+        if (isEditMode) {
+            axios.put(`https://exciting-spice-armadillo.glitch.me/updateExpense/${editItemId}`, updateItemData)
+                .then((res) => {
+                    if (toast.current) {
+                        toast.current.show({ severity: 'success', summary: 'Success', detail: 'Updated Expence successfully' });
+                    }
+                    // toast.current.show({ severity: 'success', summary: 'Success', detail: 'Category updated successfully' });
+                    popClose()
+                })
+                .catch((err) => {
+                    console.log(err);
+                    if (toast.current) {
+                        toast.current.show({ severity: 'error', summary: 'Error', detail: 'Error updating Expence' });
+                    }
+                    // toast.current.show({ severity: 'error', summary: 'Error', detail: 'Error updating product' });
+                });
+        }
+        else {
             axios.post("https://exciting-spice-armadillo.glitch.me/postExpenseData", expenseData)
                 .then(res => {
-                    // console.log(res);
-                    toast.current.show({ severity: 'success', summary: 'Success', detail: 'Source of Expence added successfully' });
+                    toast.current.show({ severity: 'success', summary: 'Success', detail: 'Expence added successfully' });
                     document.getElementById("addForm").reset();
                     setTaxApplicable("no")
                     setPercentage("")
@@ -212,7 +204,6 @@ function Additems({ id, isdark }) {
                     setSelectedProduct("")
                     setSelectedCategory("")
                     setAttachFile("")
-
                 })
                 .catch(err => {
                     console.log(err);
@@ -222,144 +213,122 @@ function Additems({ id, isdark }) {
         }
     }
 
-
     const onBack = () => {
         navigate("/dashBoard");
     }
 
-
-
     const uniqueSourceNames = [...new Set(sourceData.map((d) => d.source))];
-
     const isMobile = useMediaQuery('(max-width:768px)');
 
     return (
         <div className="d-flex flex-column">
-
             <div class="d-flex">
-                {!isMobile && (
+                {!isMobile && !isEditMode && (
                     <div style={{ width: "15%" }}>
                         <Slidebar isdark={isdark} />
                     </div>
                 )}
                 <div className="d-flex flex-column" style={{ width: isMobile ? "100%" : "85%", backgroundColor: isdark ? "black" : "whitesmoke", fontFamily: "Arial, sans-serif" }}>
                     <Toast ref={toast} />
-
                     <h2 style={{ color: isdark ? "white" : "black", textAlign: "start", width: "300px", marginTop: "100px", marginLeft: "50px" }}>Add Expence</h2>
                     <form id="addForm" className={isMobile ? "p-2  mb-5" : "mb-5 p-5"} style={{ width: "90%", minHeight: "80vh" }} onSubmit={handleSubmit}>
+                    {!isEditMode &&
                         <div className="mb-5 row">
                             <div class="col-6">
                                 <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}>Category:</label>
                             </div>
                             <div class="col-6">
-                                <select id="id" class="form-control" value={selectedCategory} 
-                                style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}
-                                    onChange={handleSelectChange}>
-                                    <option value="select" style={{ backgroundColor:isdark? "black":"white", color: isdark ? "white" : "black"}}>Select category</option>
+                                <select id="id" disabled={isEditMode} class="form-control" value={selectedCategory} style={{ backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black" }} onChange={handleSelectChange}>
+                                    <option value="select" style={{ backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black" }}>Select category</option>
                                     {Data.map((d) => (
-                                        <option key={d.categoryId} value={d.category} style={{ backgroundColor:isdark? "black":"white", color: isdark ? "white" : "black"}}>
+                                        <option key={d.categoryId} value={d.category} style={{ backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black" }}>
                                             {d.category}
                                         </option>
                                     ))}
-
                                     <option value="others">others</option>
                                 </select>
                             </div>
                         </div>
-                        <div className="mb-5 row">
-                            <div class="col-6">
-                                <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}>Expence Name:</label>
-                            </div>
-                            <div class="col-6">
+}
+                        {!isEditMode &&
+                            <div className="mb-5 row">
+                                <div class="col-6">
+                                    <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}>Expence Name:</label>
+                                </div>
 
-                                {selectedCategory === "others" && <input type="text" placeholder="Enter Expence Name" className="form-control"
-                                    value={selectedProduct}
-                                    onChange={handleProductChange} />}
+                                <div class="col-6">
+                                    {selectedCategory === "others" && <input type="text" placeholder="Enter Expence Name" className="form-control" style={{ backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black" }} value={selectedProduct} onChange={handleProductChange} />}
+                                    {selectedCategory !== "others" &&
+                                        <select className="form-control" value={selectedProduct} onChange={handleProductChange} style={{ backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black" }}
+                                        >
+                                            <option value="" style={{ backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black" }}>Select a Product</option>
+                                            {products.map((product) => (
+                                                <option key={product.productId} value={product.product} style={{ backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black" }}>
+                                                    {product.product}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    }
+                                </div>
 
-                                {selectedCategory !== "others" &&
-                                    <select
-                                        className="form-control"
-                                        value={selectedProduct}
-                                        onChange={handleProductChange}
-                                        style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}
-                                    >
-                                        <option value="" style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}>Select a Product</option>
-                                        {products.map((product) => (
-                                            <option key={product.productId} value={product.product} style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}>
-                                                {product.product}
-                                            </option>
-                                        ))}
-                                    </select>
-                                }
                             </div>
-                        </div>
+                        }
                         <div className="mb-5 row">
                             <div class="col-6">
                                 <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}>cost:</label>
                             </div>
                             <div class="col-6">
-                                <input type="number" placeholder="Enter cost"
-                                    onChange={onChangeCost} className="form-control"  style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}/>
+                                <input type="number" value={cost} placeholder="Enter cost" onChange={onChangeCost} className="form-control" style={{ backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black" }} />
                             </div>
                         </div>
-
-
-
                         <div className="mb-5 row">
                             <div class="col-6">
                                 <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}>purchase/spend Date:</label>
                             </div>
                             <div class="col-6">
-                                <input type="date" placeholder="Enter purchase Date" className="form-control"
-                                    onChange={onChangePurchaseDate} style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}} />
+                                <input type="date" value={purchaseDate} placeholder="Enter purchase Date" className="form-control" onChange={onChangePurchaseDate} style={{ backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black" }} />
                             </div>
                         </div>
-
+                        {!isEditMode &&
                         <div className="mb-1 row">
                             <div class="col-6">
                                 <label htmlFor="costFrom" className="px-5 fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}>Cost From:</label>
                             </div>
                             <div class="col-6">
-                                <select id="costFrom" class="form-control" value={selectedSource}
-                                style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}
-                                    onChange={handleSourceSelectChange}>
-                                    <option value="select" style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}>Select the source</option>
+                                <select id="costFrom" class="form-control" value={selectedSource} style={{ backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black" }} onChange={handleSourceSelectChange}>
+                                    <option value="select" style={{ backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black" }}>Select the source</option>
                                     {uniqueSourceNames.map((source) => (
-                                        <option key={source} value={source} style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}> 
+                                        <option key={source} value={source} style={{ backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black" }}>
                                             {source}
                                         </option>
                                     ))}
                                 </select>
                             </div>
                         </div>
-
+}
                         <div className="mb-5 row">
                             <div class="col-6">
                                 <label htmlFor="" className="px-5 fw-bold pt-5" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}>Description:</label>
                             </div>
                             <div class="col-6 mt-5">
-                                <textarea rows="1" placeholder="This is the default text inside the textarea." cols="40" className="form-control" onChange={onChangeDescription} style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}>
-
+                                <textarea rows="1" value={description} placeholder="This is the default text inside the textarea." cols="40" className="form-control" onChange={onChangeDescription} style={{ backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black" }}>
                                 </textarea>
-
                             </div>
                         </div>
-
+                        {!isEditMode &&
                         <div className="mb-5 row">
                             <div class="col-6">
                                 <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}>Attach Image:</label>
                             </div>
                             <div class="col-6">
-                                <input type="file" id="image" className="form-control" onChange={handleImageChange} style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}/>
-
+                                <input type="file" id="image" className="form-control" onChange={handleImageChange} style={{ backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black" }} />
                             </div>
                         </div>
-
+}
                         <div className="mb-5 row">
                             <div class="col-6">
                                 <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}>Tax Applicable:</label>
                             </div>
-
                             <div class="col-6" style={{ display: "flex" }}>
                                 <div className="px-2">
                                     <input type="radio" id="yes" name="yesORno" value="yes" onChange={handleTaxApplicableChange} checked={taxApplicable === "yes"} />
@@ -370,9 +339,6 @@ function Additems({ id, isdark }) {
                                     <label style={{ color: isdark ? "white" : "navy" }} for="no">NO</label>
                                 </div>
                             </div>
-
-
-
                         </div>
                         {taxApplicable === "yes" ? (
                             <>
@@ -381,8 +347,7 @@ function Additems({ id, isdark }) {
                                         <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}>Tax Percentage:</label>
                                     </div>
                                     <div class="col-6 ">
-                                        <input type="number" placeholder="Enter percentage" className="form-control"
-                                            onChange={onPercentage} value={percentage} style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}/>
+                                        <input type="number" placeholder="Enter percentage" className="form-control" onChange={onPercentage} value={percentage} style={{ backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black" }} />
                                     </div>
 
                                 </div>
@@ -391,26 +356,19 @@ function Additems({ id, isdark }) {
                                         <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px' }}>Tax Amount:</label>
                                     </div>
                                     <div class="col-6 ">
-                                        <input type="number" value={taxAmount} className="form-control" disabled style={{ backgroundColor:isdark? "black":"white",color: isdark ? "white" : "black"}}a/>
+                                        <input type="number" value={taxAmount} className="form-control" disabled style={{ backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black" }} a />
                                     </div>
-
-
                                 </div>
-
                             </>
-
-
                         ) : ""}
 
                         <div className="mb-5 mt-5 d-flex justify-content-between mx-5">
-                            <button onClick={onBack} className={`btn btn-info ${isMobile ? "btn-sm" : "btn-lg"}`}>Back</button>
-                            <button type="submit" className={`btn btn-primary ${isMobile ? "btn-sm" : "btn-lg"}`}>ADD</button>
+                        {!isEditMode &&  <button onClick={onBack} className={`btn btn-info ${isMobile ? "btn-sm" : "btn-lg"}`}>Back</button>}
+                        <button type="submit" className={`btn btn-primary ${isMobile ? "btn-sm" : "btn-lg"}`}>{isEditMode ? "UPDATE" : "ADD"}</button>
                         </div>
                     </form>
                 </div>
             </div>
-
-
         </div>
     );
 }
