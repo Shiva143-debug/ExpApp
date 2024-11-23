@@ -109,10 +109,10 @@ function Source({ id, isdark, selectedSource, close }) {
                                 <Slidebar isdark={isdark} />
                             </div>
                         )}
-                        <div style={{ width: isMobile ? "100%" : "85%", backgroundColor: isdark ? "black" : "whitesmoke", color: isdark ? "white" : "", top: 100, fontFamily: "Arial, sans-serif" }} className="d-flex flex-column justify-content-center align-items-center vh-100">
+                        <div style={{ width: isMobile ? "100%" : "85%", backgroundColor: isdark ? "black" : "whitesmoke", color: isdark ? "white" : "", top: 100, fontFamily: "Arial, sans-serif" ,marginTop:isEditMode?"-150px":""}} className="d-flex flex-column justify-content-center align-items-center vh-100">
                             <Toast ref={toast} />
                             <center><h1 style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? "18px" : "28px", marginTop: isMobile ? "10px" : "120px" }}>{isEditMode ? "UPDATE" : "ADD"} THE <i style={{ color: "red" }}>SOURCE</i> OF INCOME</h1></center>
-                            <form id="myForm" onSubmit={handleSubmit} className={isMobile ? "p-2 rounded mb-5 pt-5" : " rounded mb-5 p-5"} style={{ width: isMobile ? "90%" : "60%", backgroundColor: isdark ? "black" : "white", boxShadow: isdark ? "0px 0px 10px white" : "5px 5px 10px rgba(0, 0, 0, 0.3)" }}>
+                            <form id="myForm" onSubmit={handleSubmit} className={isMobile ? "p-2 rounded pt-5" : " rounded mb-5 p-5"} style={{ width: isMobile ? "90%" : "60%", backgroundColor: isdark ? "black" : "white", boxShadow: isdark ? "0px 0px 10px white" : "5px 5px 10px rgba(0, 0, 0, 0.3)" ,marginBottom:isEditMode?"-150px":""}}>
                                 <div className="mb-5 row">
                                     <div class="col-5">
                                         <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '16px' : '20px' }}>Source Name:</label>

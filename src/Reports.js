@@ -289,37 +289,37 @@ function Reports({ id, isdark }) {
 
     const actionBodyTemplate = (rowData) => {
         return (
-            <>
+            <div className="d-flex flex-shrink">
                 <button onClick={() => handleUpdateExpence(rowData)} className="btn btn-primary mx-2"><MdOutlineDriveFileRenameOutline /></button>
                 <button onClick={() => handleDeleteExpence(rowData.id)} className="btn btn-danger"><FaTrash /></button>
-            </>
+            </div>
         )
     }
 
     const actionBodyTemplateForCategory = (rowData) => {
         return (
-            <>
+            <div className="d-flex flex-shrink">
                 <button onClick={() => handleUpdateCategory(rowData)} className="btn btn-primary mx-2"><MdOutlineDriveFileRenameOutline /></button>
                 <button onClick={() => handleDeleteCategory(rowData.id)} className="btn btn-danger"><FaTrash /></button>
-            </>
+            </div>
         )
     }
 
     const actionBodyTemplateForSource = (rowData) => {
         return (
-            <>
+            <div className="d-flex flex-shrink">
                 <button onClick={() => handleUpdateSource(rowData)} className="btn btn-primary mx-2"><MdOutlineDriveFileRenameOutline /></button>
                 <button onClick={() => handleDeleteSource(rowData.id)} className="btn btn-danger"><FaTrash /></button>
-            </>
+            </div>
         )
     }
 
     const actionBodyTemplateForProduct = (rowData) => {
         return (
-            <>
+            <div className="d-flex flex-shrink">
                 <button onClick={() => handleUpdateProduct(rowData)} className="btn btn-primary mx-2"><MdOutlineDriveFileRenameOutline /></button>
                 <button onClick={() => handleDeleteProduct(rowData.id)} className="btn btn-danger"><FaTrash /></button>
-            </>
+            </div>
         )
     }
 
@@ -650,19 +650,19 @@ function Reports({ id, isdark }) {
                                 </div>
                             }
                         </div>
-                        <Dialog visible={ShowProductDialogue} style={{ width: '60vw' }} onHide={() => { if (!ShowProductDialogue) return; setShowProductDialogue(false); }}>
+                        <Dialog visible={ShowProductDialogue} style={{ width: '90vw',height:"60vh" }} onHide={() => { if (!ShowProductDialogue) return; setShowProductDialogue(false); }}>
                             <AddCategory selectedCategory={selectedCategory} isdark={isdark} id={id} close={onHide} />
                         </Dialog>
 
-                        <Dialog visible={ShowCategoryDialogue} style={{ width: '60vw' }} onHide={() => { if (!ShowCategoryDialogue) return; setShowCategoryDialogue(false); }}>
+                        <Dialog visible={ShowCategoryDialogue} style={{ width: '90vw',height:"30vh" }} onHide={() => { if (!ShowCategoryDialogue) return; setShowCategoryDialogue(false); }}>
                             <Category selectedCategory={selectedCategory} isdark={isdark} id={id} close={onHideCategory} />
                         </Dialog>
 
-                        <Dialog visible={ShowSourceDialogue} style={{ width: '60vw' }} onHide={() => { if (!ShowSourceDialogue) return; setShowSourceDialogue(false); }}>
+                        <Dialog visible={ShowSourceDialogue} style={{ width: '90vw',height:"90vh" }} onHide={() => { if (!ShowSourceDialogue) return; setShowSourceDialogue(false); }}>
                             <Source selectedSource={selectedSource} isdark={isdark} id={id} close={onHideSource} />
                         </Dialog>
 
-                        <Dialog visible={ShowExpenceDialogue} style={{ width: '60vw' }} onHide={() => { if (!ShowExpenceDialogue) return; setShowExpenceDialogue(false); }}>
+                        <Dialog visible={ShowExpenceDialogue} style={{ width: '95vw',height:"90vh" }}  onHide={() => { if (!ShowExpenceDialogue) return; setShowExpenceDialogue(false); }}>
                             <Additems selectedExpence={selectedExpence} isdark={isdark} id={id} close={onHideExpence} />
                         </Dialog>
                     </div>

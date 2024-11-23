@@ -122,7 +122,7 @@ function AddCategory({ id, isdark ,close,selectedCategory}) {
                                 <Slidebar isdark={isdark} />
                             </div>
                         )}
-                        <div className="d-flex flex-column justify-content-center align-items-center vh-100" style={{ width: isMobile ? "100%" : "85%" }}>
+                        <div className="d-flex flex-column justify-content-center align-items-center " style={{width: isMobile ? "100%" : "85%" ,marginTop:isEditMode?"-50px":"",height:isEditMode?"80vh":"100vh"}}>
                             {loading && (
                                 <div className="d-flex justify-content-center align-items-center" style={{ height: '150px' }}>
                                     <ProgressSpinner style={{ width: '50px', height: '50px' }} strokeWidth="8" fill="#EEEEEE" animationDuration=".5s" />
@@ -130,12 +130,12 @@ function AddCategory({ id, isdark ,close,selectedCategory}) {
                             )}
 
                             {!loading && (
-                                <div className="d-flex flex-column justify-content-center align-items-center rounded p-5" style={{ width: "100%", height:isEditMode?"70%": "100%", backgroundColor: isdark ? "black" : "whitesmoke", color: isdark ? "white" : "",fontFamily: "Arial, sans-serif",margin:isEditMode?"10px":"" }}>
+                                <div className="d-flex flex-column justify-content-center align-items-center rounded p-5" style={{ width: "100%", height:isEditMode?"100%": "100%", backgroundColor: isdark ? "black" : "whitesmoke", color: isdark ? "white" : "",fontFamily: "Arial, sans-serif" }}>
                                     <Toast ref={toast} />
                                     {!isEditMode &&<h2 style={{ color: isdark ? "white" : "navy", marginTop: isMobile ? "10px" : "150px"}} className="pb-2">ADD CATEGORY</h2>}  
-                                    {isEditMode && <h2 style={{ color: isdark ? "white" : "navy", marginTop: isMobile ? "10px" : "150px"}} className="pb-2">UPDATE PRODUCT</h2>}                           
+                                    {isEditMode && <h4 style={{ color: isdark ? "white" : "navy", marginTop: isEditMode ? "-150px" : isMobile ? "10px" : "150px",paddingTop:isEditMode?"100px":""}} className="pb-2">UPDATE PRODUCT</h4>}                           
                                     {!isEditMode &&<p>*To Add Itmes first you need to choose category if the category is not present in the below form</p>}
-                                    <form className={isMobile ? "p-3 rounded mb-5" : "rounded mb-5 p-5 mb-5"} style={{ width: isMobile ? "100%" : "60%", backgroundColor: isdark ? "transparent" : "white", marginBottom: "20px" ,boxShadow:isdark?"0px 0px 10px white": "5px 5px 10px rgba(0, 0, 0, 0.3)"}} onSubmit={handleSubmitProduct}>
+                                    <form className={isMobile ? "p-3 rounded mb-5" : "rounded  p-5 mb-5"} style={{ width: isMobile ? "100%" : "60%", backgroundColor: isdark ? "transparent" : "white", marginBottom:isEditMode?"-100px":"20px" ,boxShadow:isdark?"0px 0px 10px white": "5px 5px 10px rgba(0, 0, 0, 0.3)"}} onSubmit={handleSubmitProduct}>
                                     {!isEditMode && 
                                         <div className="row">
                                             <div class="col-4 mb-5">

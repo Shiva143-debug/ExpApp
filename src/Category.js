@@ -77,13 +77,13 @@ const Category = ({ id, isdark, close, updateData ,selectedCategory}) => {
                 <Toast ref={toast} />
                 <div className="row" >
                     <div className="col-3">
-                        <label htmlFor="" className="fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '14px' : '20px', paddingTop: "10px" }}>category:</label>
+                        <p  className="fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '16px' : '20px', paddingTop: "15px" }}>category:</p>
                     </div>
                     <div className="col-5">
                         <input type="text" value={values.category} placeholder="Enter Category Name" className="form-control mt-2 mb-2" style={{ width: isMobile ? "100%" : "100%", padding: isMobile ? "5px" : "10px" }} onChange={e => setValues({ ...values, category: e.target.value })} />
                     </div>
-                    <div className="col-1"></div>
-                    <div className="col-2">
+                    {/* <div className="col-1"></div> */}
+                    <div className="col-3 mt-2">
                         <button type="submit" onClick={popClose} className={`btn btn-primary ${isMobile ? "btn-sm" : "btn-lg"}`}>{isEditMode ? "UPDATE" : "ADD"}</button>
                     </div>
                 </div>

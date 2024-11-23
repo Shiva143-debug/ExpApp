@@ -3,9 +3,12 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useState, useEffect } from "react"
 import Slidebar from "./Slidebar";
 import { FaRupeeSign } from "react-icons/fa";
-import MyPieChart from './MyPieChart'; import { useNavigate } from 'react-router-dom';
+import MyPieChart from './MyPieChart'; 
+import { useNavigate } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+// import { Chart as ChartJS,ArcElement,Tooltips} from 'chart.js';
+// import { Pie } from 'react-chartjs-2';
 import "./Dashboard.css"
 
 const months = [
@@ -270,6 +273,7 @@ function Dashboard({ id, isdark }) {
                                     </div>
                                 }
                                 {isMobile &&
+                               
                                     <div style={{ marginBottom: "10px", display: "flex", flexDirection: "column" }}>
                                         <MyPieChart combinedData={combinedData} />
                                         <b style={{ color: isdark ? "white" : "black" }}>Total Income: {totalIncome}</b>

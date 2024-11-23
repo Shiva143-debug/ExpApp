@@ -228,7 +228,7 @@ function Additems({ id, isdark, selectedExpence, close }) {
                         <Slidebar isdark={isdark} />
                     </div>
                 )}
-                <div className="d-flex flex-column" style={{ width: isMobile ? "100%" : "85%", backgroundColor: isdark ? "black" : "whitesmoke", fontFamily: "Arial, sans-serif" }}>
+                <div className="d-flex flex-column" style={{ width: isMobile ? "100%" : "85%", backgroundColor: isdark ? "black" : "whitesmoke", fontFamily: "Arial, sans-serif" ,marginTop:isEditMode?"-50px":""}}>
                     <Toast ref={toast} />
                     <h2 style={{ color: isdark ? "white" : "black", textAlign: "start", width: "300px", marginTop: "100px", marginLeft: "50px" }}>Add Expence</h2>
                     <form id="addForm" className={isMobile ? "p-2  mb-5" : "mb-5 p-5"} style={{ width: "90%", minHeight: "80vh" }} onSubmit={handleSubmit}>
