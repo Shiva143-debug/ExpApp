@@ -16,7 +16,7 @@ const Footer = ({isdark}) => {
     useEffect(() => {
         setActiveButton(getActiveButton(location.pathname));
     }, [location]);
-
+ 
     function getActiveButton(pathname) {
         switch (pathname) {
             case "/dashBoard":
@@ -40,15 +40,12 @@ const Footer = ({isdark}) => {
                 <button onClick={() => setActiveButton("dashboard")} className={`${activeButton === 'dashboard' ? "active" : "MobileSideButton"} d-flex flex-column justify-content-center align-items-center`}>
                 <FaHome />DashBoard
                 </button>
-            </Link>
-
-            
+            </Link>            
             <Link to="/additems" className='nav-link'>
                 <button onClick={() => setActiveButton("additems")} className={`${activeButton === 'additems' ? "active" : "MobileSideButton"} d-flex flex-column justify-content-center align-items-center`}>
                 <GiExpense />Expences
                 </button>
             </Link>
-
             <Link to="/addcat" className='nav-link'>
                 <button onClick={() => setActiveButton("addcat")} className={`${activeButton === 'addcat' ? "active" : "MobileSideButton"} d-flex flex-column justify-content-center align-items-center`}>
                 <BiCategoryAlt /> Category
@@ -67,36 +64,7 @@ const Footer = ({isdark}) => {
                 </button>
             </Link>
         </div>
-        // <div style={{width:"100%" ,position: "fixed", bottom: 0, left: 0, right: 0, backgroundColor: "grey", justifyContent: "space-around", borderTop: "1px solid whitesmoke", display: "flex",flexWrap:"wrap",fontSize:"14px" }}>
-        //     <Link to="/dashBoard" className='nav-link'>
-        //         <button className={`${activeButton === 'dashboard' ? "active" : "MobileSideButton"}`}>
-        //             DashBoard
-        //         </button>
-        //     </Link>
-        //     <Link to="/additems" className='nav-link'>
-        //         <button className={`${activeButton === 'additems' ? "active" : "MobileSideButton"}`}>
-        //             Expences
-        //         </button>
-        //     </Link>
-
-        //     <Link to="/addcat" className='nav-link'>
-        //         <button className={`${activeButton === 'addcat' ? "active" : "MobileSideButton"}`}>
-        //             Category
-        //         </button>
-        //     </Link>
-
-        //     <Link to="/source" className='nav-link'>
-        //         <button className={`${activeButton === 'source' ? "active" : "MobileSideButton"}`}>
-        //             Source
-        //         </button>
-        //     </Link>
-
-        //     <Link to="/reports" className='nav-link'>
-        //         <button className={`${activeButton === 'reports' ? "active" : "MobileSideButton"}`}>
-        //             Reports
-        //         </button>
-        //     </Link>
-        // </div>
+       
     )
 }
 

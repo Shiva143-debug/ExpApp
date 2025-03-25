@@ -5,7 +5,7 @@ import { Toast } from 'primereact/toast';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import './Login.css';
-
+ 
 function Login({ setUserId }) {
     const [registerClicked, setRegisterClick] = useState(true)
     const [loginClicked, setLoginClick] = useState(false)
@@ -34,7 +34,6 @@ function Login({ setUserId }) {
     const onLoginClick = () => {
         setLoginClick(true)
         setRegisterClick(false)
-
     }
 
     const handleFormSubmit = (e) => {
