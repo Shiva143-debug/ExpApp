@@ -545,7 +545,7 @@ function Reports({ id, isdark }) {
         
                 // Right-aligned text (adjust for text width)
                 doc.text(`Expenses: ${totalCost} RS/-`, rightAlign - doc.getTextWidth(`Expenses: ${totalCost} RS/-`), 30);
-                doc.text(`Tax Amount: ${totalTaxAmount} RS/-`, rightAlign - doc.getTextWidth(`Total Tax: ${totalTaxAmount} RS/-`), 40);
+                doc.text(`Tax Amount: ${totalTaxAmount} RS/-`, rightAlign-10 - doc.getTextWidth(`Total Tax: ${totalTaxAmount} RS/-`), 40);
         
                 doc.setLineWidth(1);
                 doc.line(margin, 45, pageWidth - margin, 45);
