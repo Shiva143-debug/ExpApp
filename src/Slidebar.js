@@ -43,13 +43,13 @@ function Slidebar({ isdark }) {
 
                 <Link to="/additems" className='nav-link'>
                     <button onClick={() => setActiveButton('additems')} className={`mb-5 ${activeButton === 'additems' ? "active" : "sideButton"}`} style={{ backgroundColor: isdark ? "transparent" : "",color:isdark?"white":"",border:isdark?"3px solid rgba(0, 0, 0, 0.1)":""}}>
-                        <MdOutlineProductionQuantityLimits /> Add Expences
+                        <MdOutlineProductionQuantityLimits /> Expences
                     </button>
                 </Link>
 
                 <Link to="/addcat" className='nav-link'>
                     <button onClick={() => setActiveButton('addcat')} className={`mb-5 ${activeButton === 'addcat' ? "active" : "sideButton"}`} style={{ backgroundColor: isdark ? "transparent" : "",color:isdark?"white":"",border:isdark?"3px solid rgba(0, 0, 0, 0.1)":""}}>
-                        <LiaDeskpro />   Add Category
+                        <LiaDeskpro />  Category
                     </button>
                 </Link>
 

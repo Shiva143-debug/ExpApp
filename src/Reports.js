@@ -403,83 +403,169 @@ function Reports({ id, isdark }) {
     const totalTaxAmount = filteredDataForTotalCost.reduce((acc, curr) => acc + parseFloat(curr.tax_amount), 0);
 
 
-const exportPdf = () => {
-    let exportColumns = [
-        { header: 'Category', dataKey: 'category' },
-        { header: 'Product', dataKey: 'product' },
-        { header: 'Cost', dataKey: 'cost' },
-        { header: 'Date', dataKey: 'p_date' },
-        { header: 'Tax Amount', dataKey: 'tax_amount' },
-        { header: 'Description', dataKey: 'description' },
-    ];
+    const exportPdf = () => {
+        let exportColumns = [
+            { header: 'Category', dataKey: 'category' },
+            { header: 'Product', dataKey: 'product' },
+            { header: 'Cost', dataKey: 'cost' },
+            { header: 'Date', dataKey: 'p_date' },
+            { header: 'Tax Amount', dataKey: 'tax_amount' },
+            { header: 'Description', dataKey: 'description' },
+        ];
+    
+        const sortedAssets = filteredItems.sort((a, b) => 
+            a.category.localeCompare(b.category) || a.product.localeCompare(b.product)
+        );
 
-    const assets = filteredItems.map(item => ({
-        category: item.category,
-        product: item.product,
-        cost: item.cost,
-        p_date: item.p_date,
-        tax_amount: item.tax_amount,
-        description: item.description
-    }));
+        const totalTaxAmount = sortedAssets.reduce((sum, item) => sum + (parseInt(item.tax_amount)|| 0), 0);
+    
 
-    const doc = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: [210, 297],
-    });
+        let groupedAssets = [];
+        let categoryRowSpans = {};
+        let productRowSpans = {};
+    
+        sortedAssets.forEach((item, index) => {
+            if (!categoryRowSpans[item.category]) {
+                categoryRowSpans[item.category] = 1;
+            } else {
+                categoryRowSpans[item.category]++;
+            }
+    
+            let productKey = `${item.category}_${item.product}`;
+            if (!productRowSpans[productKey]) {
+                productRowSpans[productKey] = 1;
+            } else {
+                productRowSpans[productKey]++;
+            }
+    
+            groupedAssets.push({
+                category: item.category,
+                product: item.product,
+                cost: item.cost,
+                p_date: item.p_date,
+                tax_amount: item.tax_amount,
+                description: item.description,
+            });
+        });
+    
+        const doc = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: [210, 297],
+        });
+    
+        doc.autoTable({
+            columns: exportColumns,
+            body: groupedAssets,
+            margin: { top: 50 },
+            styles: { overflow: 'linebreak' },
+            columnStyles: {
+                cost: { halign: 'right' },
+                tax_amount: { halign: 'right' },
+            },
+            theme: 'grid',
+            headStyles: { fillColor: [22, 160, 133] },
+            showHead: 'everyPage',
+            didParseCell: function (data) {
+                let rowData = groupedAssets[data.row.index];
+    
+                if (data.column.dataKey === 'category') {
+                    let category = rowData.category;
+                    if (category && categoryRowSpans[category]) {
+                        if (data.row.index > 0 && groupedAssets[data.row.index - 1].category === category) {
+                            data.cell.text = '';
+                        } else {
+                            data.cell.styles.valign = 'middle';
+                            data.cell.styles.fontStyle = 'bold';
+                            data.cell.rowSpan = categoryRowSpans[category];
+                        }
+                    }
+                }
 
-  
-    doc.autoTable({
-        columns: exportColumns,
-        body: assets,
-        margin: { top: 50 },
-        styles: { overflow: 'linebreak' },
-        columnStyles: {
-            cost: { halign: 'right' },     
-            tax_amount: { halign: 'right' }, 
-        },
-        theme: 'grid',
-        headStyles: { fillColor: [22, 160, 133] },
-        showHead: 'everyPage',
-        foot: [[
-            { content: 'Total:', colSpan: 2, styles: { halign: 'right', fontStyle: 'bold' } },
-            { content: totalCost, styles: { halign: 'right', fontStyle: 'bold' } }, 
-            { content: '', },  
-            { content: totalTaxAmount, styles: { halign: 'right', fontStyle: 'bold' } }, 
-            { content: '' },  
-        ]]
-    });
+                if (data.column.dataKey === 'product') {
+                    let productKey = `${rowData.category}_${rowData.product}`;
+                    if (productKey && productRowSpans[productKey]) {
+                        if (data.row.index > 0 && 
+                            `${groupedAssets[data.row.index - 1].category}_${groupedAssets[data.row.index - 1].product}` === productKey) {
+                            data.cell.text = '';
+                        } else {
+                            data.cell.styles.valign = 'middle';
+                            data.cell.rowSpan = productRowSpans[productKey];
+                        }
+                    }
+                }
+            },
+        });
+    
 
-    const addHeaders = doc => {
-        const pageCount = doc.internal.getNumberOfPages();
+        // const addHeaders = doc => {
+        //     const pageCount = doc.internal.getNumberOfPages();
+    
+        //     for (let i = 1; i <= pageCount; i++) {
+        //         doc.setPage(i);
+        //         doc.setFontSize(25);
+        //         doc.text(`${months[Month - 1]} - ${Year} Report`, 10, 20);
+    
+        //         doc.setFontSize(14);
+        //         doc.setFont('', 'bold');
+    
+        //         let totalBalance = totalAmount - totalCost;
+    
 
-        for (let i = 1; i <= pageCount; i++) {
-            doc.setPage(i);
-            doc.setFontSize(25);
-            doc.text(`${months[Month - 1]} - ${Year} Report`, 10, 30); 
-            doc.setFontSize(14);
-            doc.setFont('', 'bold');
-            doc.setFontSize(25);
-            doc.text('Expenditure', doc.internal.pageSize.width - 68, 25);
-            
-            doc.setLineWidth(1);
-            doc.line(10, 32, doc.internal.pageSize.width - 10, 32);
-        }
+        //         doc.text(`Earnings: ${totalAmount} RS/-`, 10, 30);
+        //         doc.text(`Expenses: ${totalCost} RS/-`, 80, 30);
+        //         doc.text(`Balance: ${totalBalance} RS/-`, 150, 30);
+        //         doc.text(`Total Tax: ${totalTaxAmount} RS/-`, 10, 40);
+    
+        //         doc.setLineWidth(1);
+        //         doc.line(10, 45, doc.internal.pageSize.width - 10, 45); 
+        //     }
+        // };
+    
+        const addHeaders = doc => {
+            const pageWidth = doc.internal.pageSize.width; // Get page width
+            const margin = 10; // Left margin
+            const rightAlign = pageWidth - margin; // Right margin
+        
+            const pageCount = doc.internal.getNumberOfPages();
+        
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(25);
+                doc.text(`${months[Month - 1]} - ${Year} Report`, margin, 20);
+        
+                doc.setFontSize(14);
+                doc.setFont('', 'bold');
+        
+                let totalBalance = totalAmount - totalCost;
+        
+                // Left-aligned text
+                doc.text(`Earnings: ${totalAmount} RS/-`, margin, 30);
+                doc.text(`Balance: ${totalBalance} RS/-`, margin, 40);
+        
+                // Right-aligned text (adjust for text width)
+                doc.text(`Expenses: ${totalCost} RS/-`, rightAlign - doc.getTextWidth(`Expenses: ${totalCost} RS/-`), 30);
+                doc.text(`Tax Amount: ${totalTaxAmount} RS/-`, rightAlign - doc.getTextWidth(`Total Tax: ${totalTaxAmount} RS/-`), 40);
+        
+                doc.setLineWidth(1);
+                doc.line(margin, 45, pageWidth - margin, 45);
+            }
+        };
+        
+        const addFooters = doc => {
+            const pageCount = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(8);
+                doc.text(`Page ${i} of ${pageCount}`, doc.internal.pageSize.width / 2, 287, { align: 'center' });
+            }
+        };
+    
+        addHeaders(doc);
+        addFooters(doc);
+        doc.save(`${months[Month - 1]}_${Year}_Report.pdf`);
     };
-
-    const addFooters = doc => {
-        const pageCount = doc.internal.getNumberOfPages();
-        for (let i = 1; i <= pageCount; i++) {
-            doc.setPage(i);
-            doc.setFontSize(8);
-            doc.text(`Page ${i} of ${pageCount}`, doc.internal.pageSize.width / 2, 287, { align: 'center' });
-        }
-    };
-
-    addHeaders(doc);
-    addFooters(doc);
-    doc.save(`${months[Month - 1]}_${Year}_Report.pdf`); 
-};
+    
 
 
     return (
@@ -614,16 +700,7 @@ const exportPdf = () => {
                                         <div class="mt-2 mx-5" style={{ display: "flex", justifyContent: "space-between", marginBottom: "100px" }}>
                                             <button onClick={onBack} className={`btn btn-info ${isMobile ? "btn-sm" : "btn-lg"}`} style={{ marginRight: "20px" }}>Back To Reports</button>
 
-                                            {/* <Dropdown style={{ float: 'right' }}>
-                                    <Dropdown.Toggle variant="btn btn-success" id="dropdown-basic">
-                                        <BiExport /> Export
-                                    </Dropdown.Toggle>
-                                    <Dropdown.Menu>
-                                        <Dropdown.Item onClick={exportExcel}><AiOutlineFileExcel style={{ marginRight: '10px', color: 'green', height: '20px', width: '20px' }} />Excel</Dropdown.Item>
-                                        <Dropdown.Divider />
-                                        <Dropdown.Item onClick={exportPdf}><AiOutlineFilePdf style={{ marginRight: '10px', color: 'red', height: '20px', width: '20px' }} />Pdf</Dropdown.Item>
-                                    </Dropdown.Menu>
-                                </Dropdown> */}
+                                         
                                             <div >
                                                 <CSVLink data={csvData} filename={"reports.csv"} className={`btn btn-success ${isMobile ? "btn-sm" : "btn-lg"}`}> Excel <FaDownload />
                                                 </CSVLink>
