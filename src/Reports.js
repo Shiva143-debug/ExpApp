@@ -462,6 +462,7 @@ function Reports({ id, isdark }) {
             columnStyles: {
                 cost: { halign: 'right' },
                 tax_amount: { halign: 'right' },
+                description: { cellWidth: 60 } ,
             },
             theme: 'grid',
             headStyles: { fillColor: [22, 160, 133] },
@@ -497,35 +498,11 @@ function Reports({ id, isdark }) {
             },
         });
     
-
-        // const addHeaders = doc => {
-        //     const pageCount = doc.internal.getNumberOfPages();
-    
-        //     for (let i = 1; i <= pageCount; i++) {
-        //         doc.setPage(i);
-        //         doc.setFontSize(25);
-        //         doc.text(`${months[Month - 1]} - ${Year} Report`, 10, 20);
-    
-        //         doc.setFontSize(14);
-        //         doc.setFont('', 'bold');
-    
-        //         let totalBalance = totalAmount - totalCost;
-    
-
-        //         doc.text(`Earnings: ${totalAmount} RS/-`, 10, 30);
-        //         doc.text(`Expenses: ${totalCost} RS/-`, 80, 30);
-        //         doc.text(`Balance: ${totalBalance} RS/-`, 150, 30);
-        //         doc.text(`Total Tax: ${totalTaxAmount} RS/-`, 10, 40);
-    
-        //         doc.setLineWidth(1);
-        //         doc.line(10, 45, doc.internal.pageSize.width - 10, 45); 
-        //     }
-        // };
     
         const addHeaders = doc => {
-            const pageWidth = doc.internal.pageSize.width; // Get page width
-            const margin = 10; // Left margin
-            const rightAlign = pageWidth - margin; // Right margin
+            const pageWidth = doc.internal.pageSize.width;
+            const margin = 10;
+            const rightAlign = pageWidth - margin; 
         
             const pageCount = doc.internal.getNumberOfPages();
         
@@ -539,11 +516,9 @@ function Reports({ id, isdark }) {
         
                 let totalBalance = totalAmount - totalCost;
         
-                // Left-aligned text
                 doc.text(`Earnings: ${totalAmount} RS/-`, margin, 30);
                 doc.text(`Balance: ${totalBalance} RS/-`, margin, 40);
-        
-                // Right-aligned text (adjust for text width)
+
                 doc.text(`Expenses: ${totalCost} RS/-`, rightAlign - doc.getTextWidth(`Expenses: ${totalCost} RS/-`), 30);
                 doc.text(`Tax Amount: ${totalTaxAmount} RS/-`, rightAlign-10 - doc.getTextWidth(`Total Tax: ${totalTaxAmount} RS/-`), 40);
         
