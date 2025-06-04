@@ -28,7 +28,7 @@ function Dashboard({ id, isdark }) {
     const [yearsdata, setYearData] = useState([])
     const [yearWiseExpenceData, setYearExpenceData] = useState([])
     const [yearWiseSavingsData, setYearSavingsData] = useState([]);
-    const [year, setSelectedYearr] = useState("2024");
+    const [year, setSelectedYearr] = useState(new Date().getFullYear().toString());
     const [showYearlyReport, setShowYearlyReport] = useState(false)
     const [showDropdowns, setShowDropdowns] = useState(false);
     const navigate = useNavigate();

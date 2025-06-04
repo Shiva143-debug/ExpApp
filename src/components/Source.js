@@ -110,7 +110,7 @@ function Source({ id, isdark, selectedSource, close }) {
                             <form id="myForm" onSubmit={handleSubmit} className={isMobile ? "p-2 rounded pt-5" : " rounded mb-5 p-5"} style={{ width: isMobile ? "90%" : "60%", backgroundColor: isdark ? "black" : "white", boxShadow: isdark ? "0px 0px 10px white" : "5px 5px 10px rgba(0, 0, 0, 0.3)", marginBottom: isEditMode ? "-150px" : "" }}>
                                 <div className="mb-5 row">
                                     <div class="col-5">
-                                        <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "black", fontSize: isMobile ? '16px' : '20px' }}>Source Name<span style={{ color: "red" }}>*</span></label>
+                                        <label htmlFor="" className="fw-bold" style={{ color: isdark ? "white" : "black", fontSize: isMobile ? '16px' : '20px' }}>Source Name<span style={{ color: "red" }}>*</span></label>
                                     </div>
                                     <div className="col-1"><b>:</b></div>
                                     <div class="col-6">
@@ -120,7 +120,7 @@ function Source({ id, isdark, selectedSource, close }) {
                                 </div>
                                 <div className="mb-5 row">
                                     <div class="col-5">
-                                        <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "black", fontSize: isMobile ? '16px' : '20px' }}>Amount<span style={{ color: "red" }}>*</span></label>
+                                        <label htmlFor="" className="fw-bold" style={{ color: isdark ? "white" : "black", fontSize: isMobile ? '16px' : '20px' }}>Amount<span style={{ color: "red" }}>*</span></label>
                                     </div>
                                     <div className="col-1"><b>:</b></div>
                                     <div class="col-6">
@@ -130,7 +130,7 @@ function Source({ id, isdark, selectedSource, close }) {
 
                                 <div className="mb-5 row">
                                     <div class="col-5">
-                                        <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "black", fontSize: isMobile ? '16px' : '20px' }}>Date<span style={{ color: "red" }}>*</span></label>
+                                        <label htmlFor="" className="fw-bold" style={{ color: isdark ? "white" : "black", fontSize: isMobile ? '16px' : '20px' }}>Date<span style={{ color: "red" }}>*</span></label>
                                     </div>
                                     <div className="col-1"><b>:</b></div>
                                     <div class="col-6">

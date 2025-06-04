@@ -225,7 +225,7 @@ function Additems({ id, isdark, selectedExpence, close }) {
                         <div className="row">
                             {/* Category Section */}
                             <div className="col-12 col-md-6">
-                                <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-2' : 'mb-4'}`}>
+                                <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-3' : 'mb-4'}`}>
                                     <div className="col-5">
                                         <label className={`form-label ${isdark ? 'dark' : 'light'}`}>Category <span style={{color:"red"}}>*</span></label>
                                     </div>
@@ -245,7 +245,7 @@ function Additems({ id, isdark, selectedExpence, close }) {
 
                             {/* Expense Name Section */}
                             <div className="col-12 col-md-6">
-                                <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-2' : 'mb-4'}`}>
+                                <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-3' : 'mb-4'}`}>
 
                                     <div className="col-5">
                                         <label className={`form-label ${isdark ? 'dark' : 'light'}`}>Expense Name<span style={{color:"red"}}>*</span></label>
@@ -271,7 +271,7 @@ function Additems({ id, isdark, selectedExpence, close }) {
                         <div className="row">
                             {/* cost */}
                             <div className="col-12 col-md-6">
-                               <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-2' : 'mb-4'}`}>
+                               <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-3' : 'mb-4'}`}>
                                     <div className="col-5">
                                         <label className={`form-label ${isdark ? 'dark' : 'light'}`}>Cost<span style={{color:"red"}}>*</span></label>
                                     </div>
@@ -283,7 +283,7 @@ function Additems({ id, isdark, selectedExpence, close }) {
                             </div>
                             {/* purchaseDate */}
                             <div className="col-12 col-md-6">
-                               <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-2' : 'mb-4'}`}>
+                               <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-3' : 'mb-4'}`}>
                                     <div className="col-5">
                                         <label className={`form-label ${isdark ? 'dark' : 'light'}`}>Purchase/Spend Date<span style={{color:"red"}}>*</span></label>
                                     </div>
@@ -300,7 +300,7 @@ function Additems({ id, isdark, selectedExpence, close }) {
                         <div className="row">
                             {/* cost from section */}
                             <div className="col-12 col-md-6">
-                                <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-2' : 'mb-4'}`}>
+                                <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-3' : 'mb-4'}`}>
                                     <div className="col-5">
                                         <label className={`form-label ${isdark ? 'dark' : 'light'}`}>Cost From<span style={{color:"red"}}>*</span></label>
                                     </div>
@@ -319,7 +319,7 @@ function Additems({ id, isdark, selectedExpence, close }) {
                             </div>
                             {/* attachme image */}
                             <div className="col-12 col-md-6">
-                                <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-2' : 'mb-4'}`}>
+                                <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-3' : 'mb-4'}`}>
                                     <div className="col-5">
                                         <label className={`form-label ${isdark ? 'dark' : 'light'} ${isMobile ? 'mobile' : 'desktop'}`}>Attach Image</label>
                                     </div>
@@ -336,7 +336,7 @@ function Additems({ id, isdark, selectedExpence, close }) {
                         <div className="row">
                             {/* description */}
                             <div className="col-12 col-md-6">
-                                <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-2' : 'mb-4'}`}>
+                                <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-3' : 'mb-4'}`}>
                                     <div className="col-5">
                                         <label className={`form-label ${isdark ? 'dark' : 'light'}`}>Description</label>
                                     </div>
@@ -349,7 +349,7 @@ function Additems({ id, isdark, selectedExpence, close }) {
                             </div>
                             {/* tax applicable */}
                             <div className="col-12 col-md-6">
-                                <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-2' : 'mb-4'}`}>
+                                <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-3' : 'mb-4'}`}>
                                     <div className="col-5">
                                         <label className={`form-label ${isdark ? 'dark' : 'light'} ${isMobile ? 'mobile' : 'desktop'}`}>Tax Applicable</label>
                                     </div>
@@ -373,7 +373,7 @@ function Additems({ id, isdark, selectedExpence, close }) {
                         {taxApplicable === "yes" &&
                             <div className="row">
                                 <div className="col-12 col-md-6">
-                                    <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-2' : 'mb-4'}`}>
+                                    <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-3' : 'mb-4'}`}>
                                         <div className="col-5">
                                             <label className={`form-label ${isdark ? 'dark' : 'light'} ${isMobile ? 'mobile' : 'desktop'}`}>Tax Percentage</label>
                                         </div>
@@ -384,7 +384,7 @@ function Additems({ id, isdark, selectedExpence, close }) {
                                     </div>
                                 </div>
                                 <div className="col-12 col-md-6">
-                                    <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-2' : 'mb-4'}`}>
+                                    <div className={`d-flex align-items-center justify-content-between gap-2 ${isMobile ? 'mb-3' : 'mb-4'}`}>
                                         <div className="col-5">
                                             <label className={`form-label ${isdark ? 'dark' : 'light'} ${isMobile ? 'mobile' : 'desktop'}`}>Tax Amount</label>
                                         </div>
