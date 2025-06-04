@@ -157,7 +157,7 @@ function Additems({ id, isdark, selectedExpence, close }) {
             return;
         }
         else if (selectedProduct === "") {
-            toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please Select Product' });
+            toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please Select Expense' });
             return;
         }
         else if (cost === "") {
