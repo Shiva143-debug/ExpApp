@@ -1,0 +1,130 @@
+/* Layout styles */
+
+.responsive-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.sidebar-container {
+  width: 15%;
+  min-width: 200px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.content-container {
+  flex: 1;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.content-container.full-width {
+  width: 100%;
+}
+
+/* Dark theme */
+.dark-theme {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.light-theme {
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+/* Card styles */
+.custom-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dark-theme .custom-card {
+  background-color: #2a2a2a;
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.05);
+}
+
+/* Form container */
+.form-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dark-theme .form-wrapper {
+  background-color: #2a2a2a;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .responsive-layout {
+    flex-direction: column;
+  }
+  
+  .content-container {
+    width: 100% !important;
+    padding: 0.5rem;
+  }
+  
+  .form-wrapper {
+    padding: 1rem;
+  }
+  
+  .custom-card {
+    padding: 1rem;
+  }
+}
+
+/* Page header */
+.page-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.dark-theme .page-header {
+  border-bottom-color: #444;
+}
+
+/* Section dividers */
+.section-divider {
+  height: 1px;
+  background-color: #dee2e6;
+  margin: 2rem 0;
+}
+
+.dark-theme .section-divider {
+  background-color: #444;
+}
+
+/* Animated transitions */
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+}

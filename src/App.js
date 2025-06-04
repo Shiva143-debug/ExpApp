@@ -1,78 +1,144 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation } from 'react-router-dom';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
+// Styles
 import './App.css';
+import './styles/variables.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
-import AddCategory from "./AddCategory";
-import Source from "./Source";
-import DashBoard from "./DashBoard";
-import Reports from "./Reports";
-import Additems from "./Additems";
-import { useEffect, useState } from "react";
-import Header from "./Header";
-import useMediaQuery from '@mui/material/useMediaQuery';
-import Footer from "./Footer";
-import { useLocation } from 'react-router-dom';
-import ImageComponent from "./ImageComponent";
-import SignUpForm from "./SignUpForm";
-import LoginForm from "./LoginForm";
 
-function Layout({ children, id, isdark, toggleTheme }) {
+// Components
+import Footer from "./components/Footer";
 
+// Pages
+import AddCategory from "./components/AddCategory";
+import Source from "./components/Source";
+import DashBoard from "./components/DashBoard";
+import ImageComponent from "./components/Micilinious/ImageComponent";
+import LoginForm from "./components/LoginRegisterFolder/LoginForm";
+import Additems from "./components/Additems";
+import Header from "./components/Header";
+import SignUpForm from "./components/LoginRegisterFolder/SignUpForm";
+import Reports from "./components/Reports";
+
+// Context
+import { AuthProvider, useAuth } from './context/AuthContext';
+import { LoadingProvider, useLoading } from './context/LoadingContext';
+
+// Layout component that wraps authenticated pages
+const Layout = ({ children }) => {
+  const { userId, isDark, toggleTheme } = useAuth();
+  const { globalLoading } = useLoading();
   const location = useLocation();
-  const isLoginRoute = location.pathname === '/';
+  const isLoginRoute = location.pathname === '/' || location.pathname === '/login';
   const isMobile = useMediaQuery('(max-width:768px)');
+  
+  // Apply dark mode to body
+  useEffect(() => {
+    if (isDark) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }, [isDark]);
+
   return (
     <>
-      {!isLoginRoute && <Header id={id} isdark={isdark} toggleTheme={toggleTheme}/>}
-      {children}
-      {isMobile && (
-        <div>
-          <Footer isdark={isdark}  class="mt-5"/>
-        </div>
-      )}
+      {!isLoginRoute && <Header id={userId} isdark={isDark} toggleTheme={toggleTheme} />}
+      <main className={`app-main ${isDark ? 'dark-mode' : ''}`}>
+        {children}
+      </main>
+      {isMobile && <Footer isdark={isDark} />}
     </>
   );
-}
+};
 
-function App() {
-  const [userId, setUserId] = useState(() => {
-    return localStorage.getItem('userId');
-  });
+// Protected route component
+const ProtectedRoute = ({ children }) => {
+  const { userId } = useAuth();
+  
+  if (!userId) {
+    return <Navigate to="/login" replace />;
+  }
+  
+  return children;
+};
 
-  const [isdark, setDark] = useState(false);
-
-  const toggleTheme = () => {
-    setDark(!isdark);
-  };
+// App component with routes
+const AppRoutes = () => {
+  const { userId, isDark, login } = useAuth();
   
   useEffect(() => {
-    document.title = "Expenditure application";
+    document.title = "Expenditure Application";
   }, []);
 
-  useEffect(() => {
-    if (userId) {
-      localStorage.setItem('userId', userId);
-    } else {
-      localStorage.removeItem('userId');
-    }
-  }, [userId]);
-
   return (
-    <BrowserRouter>
-      <Routes>
+    <Routes>
       <Route path="/" element={<SignUpForm />} />
-      <Route path="/login" element={<LoginForm setUserId={setUserId}/>} /> 
-        {/* <Route path="/" element={<Login setUserId={setUserId} />} /> */}
-        <Route path="/dashBoard" element={<Layout id={userId}  isdark={isdark} toggleTheme={toggleTheme}><DashBoard id={userId} isdark={isdark}/></Layout>} />
-        <Route path="/additems" element={<Layout id={userId}  isdark={isdark} toggleTheme={toggleTheme}><Additems id={userId}  isdark={isdark}/></Layout>} />
-        <Route path="/addcat" element={<Layout id={userId}  isdark={isdark} toggleTheme={toggleTheme}><AddCategory id={userId} isdark={isdark}/></Layout>} />
-        <Route path="/source" element={<Layout id={userId}  isdark={isdark} toggleTheme={toggleTheme}><Source id={userId} isdark={isdark}/></Layout>} />
-        <Route path="/reports" element={<Layout id={userId} isdark={isdark}  toggleTheme={toggleTheme}><Reports id={userId} isdark={isdark}/></Layout>} />
-        <Route path="/image" element={<ImageComponent/>}/>
-      </Routes>
-    </BrowserRouter>
+      <Route path="/login" element={<LoginForm setUserId={login} />} />
+      
+      <Route path="/dashBoard" element={
+        <ProtectedRoute>
+          <Layout>
+            <DashBoard id={userId} isdark={isDark} />
+          </Layout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/additems" element={
+        <ProtectedRoute>
+          <Layout>
+            <Additems id={userId} isdark={isDark} />
+          </Layout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/addcat" element={
+        <ProtectedRoute>
+          <Layout>
+            <AddCategory id={userId} isdark={isDark} />
+          </Layout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/source" element={
+        <ProtectedRoute>
+          <Layout>
+            <Source id={userId} isdark={isDark} />
+          </Layout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/reports" element={
+        <ProtectedRoute>
+          <Layout>
+            <Reports id={userId} isdark={isDark} />
+          </Layout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/image" element={<ImageComponent />} />
+      
+      {/* Redirect to dashboard if already logged in */}
+      <Route path="*" element={userId ? <Navigate to="/dashBoard" replace /> : <Navigate to="/login" replace />} />
+    </Routes>
+  );
+};
+
+// Main App component wrapped with providers
+function App() {
+  return (
+    <AuthProvider>
+      <LoadingProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </LoadingProvider>
+    </AuthProvider>
   );
 }
 

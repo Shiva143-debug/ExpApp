@@ -1,10 +1,9 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import ImageContainer from './ImageContainer';
 import { Toast } from 'primereact/toast';
-import './App.css';
+import ImageContainer from '../Micilinious/ImageContainer';
+import { authService } from '../../api/apiService';
 
 const SignUpForm = () => {
 
@@ -19,8 +18,6 @@ const SignUpForm = () => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
-
-
 
     const handleBlur = (e) => {
         const { name } = e.target;
@@ -45,7 +42,7 @@ const SignUpForm = () => {
         return Object.keys(errors).length === 0;
     };
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
         const values = {
             full_name: formData.full_name,
@@ -56,59 +53,59 @@ const SignUpForm = () => {
 
         if (validateForm()) {
             setLoading(true);
+            try {
 
+                await authService.register(values);
+                toast.current.show({ severity: 'success', summary: 'Success', detail: 'Registration completed successfully' });
 
-            axios.post("https://exciting-spice-armadillo.glitch.me/register", values)
-                .then(res => {
-                    console.log(res);
-                    toast.current.show({ severity: 'success', summary: 'Success', detail: 'User Account Created successfully' });
-                    // setFormData({ full_name: '', email: '', mobile_no: '', address: '' });
-                    setTimeout(() => {
-                        navigate("/login");
-                    }, 1000);
-                    
-                })
-                .catch(err => {
-                    console.log(err);
-                    toast.current.show({ severity: 'error', summary: 'Error', detail: 'Email already exists. Please use a different email address.' });
-                })
-            .finally(() => setLoading(false));
+                setTimeout(() => {
+                    navigate("/login");
+                }, 1000);
+
+                setLoading(false);
+            } catch (error) {
+
+                toast.current.show({ severity: 'error', summary: 'Error', detail: 'Email already exists. Please use a different email address.' });
+                setLoading(false);
+            }
+
         }
     };
 
-  
+
     const signinclick = () => {
         navigate("/login")
     };
-    
+
     useEffect(() => {
         validateForm();
     }, [formData]);
 
 
     return (
-        <div className="container">
+        <div className="container-fluid">
             <Toast ref={toast} />
-            <ImageContainer />
-            <div className='form-section'>
-                <div >
-                    <img src="https://res.cloudinary.com/dxgbxchqm/image/upload/v1722424699/Screenshot_2024-07-31_164744_ii2feo.png" className="logo" alt="logo" />
-                    <h1 className='sl-heading'>Sign Up</h1>
-                    <p>Already have an account? <span onClick={signinclick} style={{color:"blue"}}>Sign In</span></p>
-                    <div>
+            <div className="auth-container">
+                <div className="auth-card">
+                    <ImageContainer />
+                    <div className="login-section">
+
+                        <img src="https://res.cloudinary.com/dxgbxchqm/image/upload/v1722424699/Screenshot_2024-07-31_164744_ii2feo.png" className="logo" alt="logo" />
+                        <h1 className='sl-heading'>Sign Up</h1>
+                        <p>Already have an account? <span onClick={signinclick} style={{ color: "blue" }}>Sign In</span></p>
                         <form onSubmit={handleFormSubmit}>
-                            <label>FullName*</label>
+                            <label>FullName<span style={{color:"red"}}>*</span></label>
                             <input type="text" name="full_name" placeholder="FullName" onChange={handleChange} onBlur={handleBlur} className='mb-2' />
                             {touchedFields.full_name && formErrors.full_name && <p className="error">{formErrors.full_name}</p>}
-                            <label>Email address*</label>
+                            <label>Email address<span style={{color:"red"}}>*</span></label>
                             <input type="email" name="email" placeholder="Email" onChange={handleChange} onBlur={handleBlur} className='mb-2' />
                             {touchedFields.email && formErrors.email && <p className="error">{formErrors.email}</p>}
 
-                            <label>Phone*</label>
+                            <label>Phone<span style={{color:"red"}}>*</span></label>
                             <input type="number" name="mobile_no" placeholder="mobile number" onChange={handleChange} onBlur={handleBlur} className='mb-2' />
                             {touchedFields.mobile_no && formErrors.mobile_no && <p className="error">{formErrors.mobile_no}</p>}
 
-                            <label>Address*</label>
+                            <label>Address<span style={{color:"red"}}>*</span></label>
                             <input type="address" name="address" placeholder="Address" onChange={handleChange} onBlur={handleBlur} className='mb-2' />
                             {touchedFields.address && formErrors.address && <p className="error">{formErrors.address}</p>}
                             <label>
@@ -117,7 +114,7 @@ const SignUpForm = () => {
                             {/* <button type="submit" className='mt-2'>Create your free account</button> */}
                             <button type="submit" className='mt-2 l-r-button' disabled={loading} >
                                 {loading ? (
-                                    <div className="spinner"></div> 
+                                    <div className="spinner"></div>
                                 ) : (
                                     "Create your free account"
                                 )}
@@ -125,8 +122,8 @@ const SignUpForm = () => {
                         </form>
                     </div>
                 </div>
-
             </div>
+
         </div>
 
 

@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
-import Slidebar from "./Slidebar";
 import { Toast } from 'primereact/toast';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import Slidebar from "./Micilinious/Slidebar";
+import { sourceService } from '../api/apiService';
+import "../App.css"
 
 
 function Source({ id, isdark, selectedSource, close }) {
@@ -38,9 +39,15 @@ function Source({ id, isdark, selectedSource, close }) {
         setAmount(event.target.value)
     }
 
-    const handleSubmit = (e) => {
+    const onClear = () => {
+        setSourceName("");
+        setAmount("");
+        setSelectedDate("");
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const values = {id, source: sourceName, amount, date: salaryDate}
+        const values = { id, source: sourceName, amount, date: salaryDate }
         const updateSourceData = { user_id: id, source: sourceName, amount, date: salaryDate }
 
         if (!values.source) {
@@ -56,37 +63,25 @@ function Source({ id, isdark, selectedSource, close }) {
             toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please enter salaryDate' });
             return;
         }
-        if (isEditMode) {
-            axios.put(`https://exciting-spice-armadillo.glitch.me/updateSource/${editSourceId}`, updateSourceData)
-                .then((res) => {
-                    if (toast.current) {
-                        toast.current.show({ severity: 'success', summary: 'Success', detail: 'updated Source of Income' });
-                    }
-                    // toast.current.show({ severity: 'success', summary: 'Success', detail: 'Category updated successfully' });
-                    popClose()
-                })
-                .catch((err) => {
-                    console.log(err);
-                    if (toast.current) {
-                        toast.current.show({ severity: 'error', summary: 'Error', detail: 'Error updating source of income' });
-                    }
-                    // toast.current.show({ severity: 'error', summary: 'Error', detail: 'Error updating product' });
-                });
-        }
-        else {
 
-            axios.post("https://exciting-spice-armadillo.glitch.me/addSource", values)
-                .then(res => {
-                    console.log(res);
-                    toast.current.show({ severity: 'success', summary: 'Success', detail: 'Source of Income added successfully' });
-                    document.getElementById("myForm").reset();
-                })
-                .catch(err => {
-                    console.log(err);
-                    toast.current.show({ severity: 'error', summary: 'Error', detail: 'Failed to add Source of Income' });
-                });
-        }
+        try {
+            if (isEditMode) {
+                await sourceService.updateSource(editSourceId, updateSourceData);
+                if (toast.current) {
+                    toast.current.show({ severity: 'success', summary: 'Success', detail: 'Updated Source of Income successfully' });
+                }
+                popClose();
+            } else {
+                await sourceService.addSource(values);
+                toast.current.show({ severity: 'success', summary: 'Success', detail: 'Source of Income added successfully' });
 
+                // Reset form
+                onClear();
+            }
+        } catch (error) {
+            console.error('Error handling source data:', error);
+            toast.current.show({ severity: 'error', summary: 'Error', detail: 'An error occurred while processing your request' });
+        }
 
     }
 
@@ -109,14 +104,15 @@ function Source({ id, isdark, selectedSource, close }) {
                                 <Slidebar isdark={isdark} />
                             </div>
                         )}
-                        <div style={{ width: isMobile ? "100%" : "85%", backgroundColor: isdark ? "black" : "whitesmoke", color: isdark ? "white" : "", top: 100, fontFamily: "Arial, sans-serif" ,marginTop:isEditMode?"-150px":""}} className="d-flex flex-column justify-content-center align-items-center vh-100">
+                        <div style={{ width: isMobile ? "100%" : "85%", backgroundColor: isdark ? "black" : "whitesmoke", color: isdark ? "white" : "", top: 100, fontFamily: "Arial, sans-serif", marginTop: isEditMode ? "-150px" : "" }} className="d-flex flex-column justify-content-center align-items-center vh-100">
                             <Toast ref={toast} />
-                            <center><h1 style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? "18px" : "28px", marginTop: isMobile ? "10px" : "120px" }}>{isEditMode ? "UPDATE" : "ADD"} THE <i style={{ color: "red" }}>SOURCE</i> OF INCOME</h1></center>
-                            <form id="myForm" onSubmit={handleSubmit} className={isMobile ? "p-2 rounded pt-5" : " rounded mb-5 p-5"} style={{ width: isMobile ? "90%" : "60%", backgroundColor: isdark ? "black" : "white", boxShadow: isdark ? "0px 0px 10px white" : "5px 5px 10px rgba(0, 0, 0, 0.3)" ,marginBottom:isEditMode?"-150px":""}}>
+                            <center><h1 style={{ color: isdark ? "white" : "black", fontSize: isMobile ? "18px" : "28px", marginTop: isMobile ? "10px" : "120px" }}>{isEditMode ? "UPDATE" : "ADD"} THE <i style={{ color: "red" }}>SOURCE</i> OF INCOME</h1></center>
+                            <form id="myForm" onSubmit={handleSubmit} className={isMobile ? "p-2 rounded pt-5" : " rounded mb-5 p-5"} style={{ width: isMobile ? "90%" : "60%", backgroundColor: isdark ? "black" : "white", boxShadow: isdark ? "0px 0px 10px white" : "5px 5px 10px rgba(0, 0, 0, 0.3)", marginBottom: isEditMode ? "-150px" : "" }}>
                                 <div className="mb-5 row">
                                     <div class="col-5">
-                                        <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '16px' : '20px' }}>Source Name:</label>
+                                        <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "black", fontSize: isMobile ? '16px' : '20px' }}>Source Name<span style={{ color: "red" }}>*</span></label>
                                     </div>
+                                    <div className="col-1"><b>:</b></div>
                                     <div class="col-6">
                                         <input type="text" placeholder="Enter source Name" value={sourceName} className={`form-control ${isdark ? 'dark-mode-input' : 'light-mode-input'}`} style={{ backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black" }}
                                             onChange={handleSourceNameChange} />
@@ -124,8 +120,9 @@ function Source({ id, isdark, selectedSource, close }) {
                                 </div>
                                 <div className="mb-5 row">
                                     <div class="col-5">
-                                        <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '16px' : '20px' }}>Amount:</label>
+                                        <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "black", fontSize: isMobile ? '16px' : '20px' }}>Amount<span style={{ color: "red" }}>*</span></label>
                                     </div>
+                                    <div className="col-1"><b>:</b></div>
                                     <div class="col-6">
                                         <input type="number" placeholder="Enter cost" value={amount} className={`form-control ${isdark ? 'dark-mode-input' : 'light-mode-input'}`} style={{ backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black" }} onChange={handleAmountChange} />
                                     </div>
@@ -133,15 +130,16 @@ function Source({ id, isdark, selectedSource, close }) {
 
                                 <div className="mb-5 row">
                                     <div class="col-5">
-                                        <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "navy", fontSize: isMobile ? '16px' : '20px' }}>Date:</label>
+                                        <label htmlFor="" className="px-5 fw-bold" style={{ color: isdark ? "white" : "black", fontSize: isMobile ? '16px' : '20px' }}>Date<span style={{ color: "red" }}>*</span></label>
                                     </div>
+                                    <div className="col-1"><b>:</b></div>
                                     <div class="col-6">
                                         <input type="date" placeholder="Enter purchase Date" value={salaryDate} className={`form-control ${isdark ? 'dark-mode-input' : 'light-mode-input'}`} style={{ backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black" }} onChange={onChangeSalaryDate} />
                                     </div>
                                 </div>
 
                                 <div className="mb-5 mt-2 d-flex justify-content-between mx-5">
-                                    {!isEditMode && <button onClick={onBack} className={`btn btn-info ${isMobile ? "btn-sm" : "btn-lg"}`}>Back</button>}
+                                    {!isEditMode && <button onClick={onClear} className={`btn btn-info ${isMobile ? "btn-sm" : "btn-lg"}`}>Clear</button>}
                                     <button type="submit" className={`btn btn-primary ${isMobile ? "btn-sm" : "btn-lg"}`}>{isEditMode ? "UPDATE" : "ADD"}</button>
                                 </div>
                             </form>

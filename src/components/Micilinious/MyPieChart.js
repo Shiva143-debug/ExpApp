@@ -98,6 +98,7 @@ const MyPieChart = ({ combinedData }) => {
                             `Month: ${d.month}`,
                             `Income: ${d.income}`,
                             `Expense: ${d.expense}`,
+                            `Savings: ${d.savings}`,
                             `Balance: ${d.balance}`
                         ];
                     }
