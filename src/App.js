@@ -48,11 +48,11 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      {!isLoginRoute && <Header id={userId} isdark={isDark} toggleTheme={toggleTheme} />}
+      {!isLoginRoute && <Header />}
       <main className={`app-main ${isDark ? 'dark-mode' : ''}`}>
         {children}
       </main>
-      {isMobile && <Footer isdark={isDark} />}
+      {isMobile && <Footer />}
     </>
   );
 };
@@ -84,7 +84,7 @@ const AppRoutes = () => {
       <Route path="/dashBoard" element={
         <ProtectedRoute>
           <Layout>
-            <DashBoard id={userId} isdark={isDark} />
+            <DashBoard />
           </Layout>
         </ProtectedRoute>
       } />
@@ -92,7 +92,7 @@ const AppRoutes = () => {
       <Route path="/additems" element={
         <ProtectedRoute>
           <Layout>
-            <Additems id={userId} isdark={isDark} />
+            <Additems />
           </Layout>
         </ProtectedRoute>
       } />
@@ -100,7 +100,7 @@ const AppRoutes = () => {
       <Route path="/addcat" element={
         <ProtectedRoute>
           <Layout>
-            <AddCategory id={userId} isdark={isDark} />
+            <AddCategory />
           </Layout>
         </ProtectedRoute>
       } />
@@ -108,7 +108,7 @@ const AppRoutes = () => {
       <Route path="/source" element={
         <ProtectedRoute>
           <Layout>
-            <Source id={userId} isdark={isDark} />
+            <Source />
           </Layout>
         </ProtectedRoute>
       } />
@@ -116,7 +116,7 @@ const AppRoutes = () => {
       <Route path="/reports" element={
         <ProtectedRoute>
           <Layout>
-            <Reports id={userId} isdark={isDark} />
+            <Reports />
           </Layout>
         </ProtectedRoute>
       } />

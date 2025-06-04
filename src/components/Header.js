@@ -7,29 +7,27 @@ import { ConfirmPopup, confirmPopup } from 'primereact/confirmpopup';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { IoMdExit } from "react-icons/io";
 import { Toast } from 'primereact/toast';
-
 import ImageUtils from '../ImageUtils';
-import axios from 'axios';
-import { use } from 'react';
 import { authService } from '../api/apiService';
+import { useAuth } from '../context/AuthContext';
 
 
-function Header({ id, isdark, toggleTheme }) {
+function Header() {
+    const { userId, isdark, toggleTheme, logout } = useAuth();
     const navigate = useNavigate();
     const toast = useRef(null);
     const [image, setImage] = useState("https://res.cloudinary.com/dxgbxchqm/image/upload/v1705489701/Screenshot_2024-01-17_163735_e4hqkc.png")
 
     const toggletheme = () => {
         toggleTheme();
-        // setBackgroundColor(isdark ? 'white' : '#242424');
     };
 
     const accept = () => {
         toast.current.show({ severity: 'success', summary: 'Confirmed', detail: 'You have LoggedOut successflly', life: 3000 });
         setTimeout(() => {
+            logout();
             navigate("/");
         }, 1000)
-
     };
 
     const reject = () => {
@@ -53,10 +51,7 @@ function Header({ id, isdark, toggleTheme }) {
         if (e.target.files && e.target.files[0]) {
             ImageUtils.convertImage(e.target.files[0]).then(function (base64) {
                 setImage(base64);
-                const values = {
-                    profile_picture_url: base64,
-                    id: id
-                };
+                const values = {profile_picture_url: base64,id: userId};
                 try {
                     authService.uploadProfilePicture(values);
                     toast.current.show({ severity: 'success', summary: 'Success', detail: 'Profile picture uploaded successfully' });
@@ -70,20 +65,18 @@ function Header({ id, isdark, toggleTheme }) {
 
     useEffect(() => {
         getProfileImage();
-    }, [id, image])
+    }, [userId, image])
 
     const getProfileImage = async () => {
         try {
-            const data = await authService.getProfilePicture(id);
+            const data = await authService.getProfilePicture(userId);
             if (data && data.length > 0 && data[0].profile_picture_url) {
                 setImage(data[0].profile_picture_url);
             }
         } catch (error) {
             console.log(error);
         }
-
     }
-
 
     const isMobile = useMediaQuery('(max-width:768px)');
 

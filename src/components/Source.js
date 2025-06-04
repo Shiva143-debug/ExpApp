@@ -5,9 +5,11 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import Slidebar from "./Micilinious/Slidebar";
 import { sourceService } from '../api/apiService';
 import "../App.css"
+import { useAuth } from "../context/AuthContext";
 
 
-function Source({ id, isdark, selectedSource, close }) {
+function Source({  selectedSource, close }) {
+    const { userId, isdark } = useAuth();
     const [salaryDate, setSelectedDate] = useState("");
     const [sourceName, setSourceName] = useState("");
     const [amount, setAmount] = useState("");
@@ -47,8 +49,8 @@ function Source({ id, isdark, selectedSource, close }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const values = { id, source: sourceName, amount, date: salaryDate }
-        const updateSourceData = { user_id: id, source: sourceName, amount, date: salaryDate }
+        const values = { userId, source: sourceName, amount, date: salaryDate }
+        const updateSourceData = { user_id: userId, source: sourceName, amount, date: salaryDate }
 
         if (!values.source) {
             toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please enter sourceName' });

@@ -24,7 +24,8 @@ const months = [
 const currentYear = new Date().getFullYear();
 const years = Array.from({ length: 7 }, (_, index) => (currentYear - 3 + index).toString());
 
-function Reports({ id, isdark }) {
+function Reports() {
+  const { userId, isdark } = useAuth();
   // State management
   const [month, setSelectedMonth] = useState((new Date().getMonth() + 1).toString());
   const [year, setSelectedYear] = useState(new Date().getFullYear().toString());
@@ -75,7 +76,7 @@ function Reports({ id, isdark }) {
     const fetchExpenseCost = async () => {
       setComponentLoading(prev => ({ ...prev, expenses: true }));
       try {
-        const data = await expenseService.getExpenseCost(id);
+        const data = await expenseService.getExpenseCost(userId);
         setExpenseCost(data);
       } catch (error) {
         console.error("Error fetching expense cost:", error);
@@ -85,17 +86,17 @@ function Reports({ id, isdark }) {
       }
     };
 
-    if (id) {
+    if (userId) {
       fetchExpenseCost();
     }
-  }, [id]);
+  }, [userId]);
 
   // Fetch source data
   useEffect(() => {
     const fetchSourceData = async () => {
       setComponentLoading(prev => ({ ...prev, sources: true }));
       try {
-        const data = await sourceService.getReportSourceData(id);
+        const data = await sourceService.getReportSourceData(userId);
         setSourceData(data);
       } catch (error) {
         console.error("Error fetching source data:", error);
@@ -107,10 +108,10 @@ function Reports({ id, isdark }) {
       }
     };
 
-    if (id) {
+    if (userId) {
       fetchSourceData();
     }
-  }, [id]);
+  }, [userId]);
 
   // Fetch categories and products
   useEffect(() => {
@@ -118,7 +119,7 @@ function Reports({ id, isdark }) {
       setComponentLoading(prev => ({ ...prev, categories: true, products: true }));
 
       try {
-        const categoriesData = await categoryService.getAllCategoriesAndProducts(id);
+        const categoriesData = await categoryService.getAllCategoriesAndProducts(userId);
         setProductsData(categoriesData);
       } catch (error) {
         console.error("Error fetching categories and products:", error);
@@ -128,7 +129,7 @@ function Reports({ id, isdark }) {
       }
 
       try {
-        const categories = await categoryService.getCategories(id);
+        const categories = await categoryService.getCategories(userId);
         setCategoriesData(categories);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -140,17 +141,17 @@ function Reports({ id, isdark }) {
       }
 
       try {
-        const sourceData = await sourceService.getAllSourceData(id);
+        const sourceData = await sourceService.getAllSourceData(userId);
         setMainSourceData(sourceData);
       } catch (error) {
         console.error("Error fetching all source data:", error);
       }
     };
 
-    if (id) {
+    if (userId) {
       fetchCategoriesAndProducts();
     }
-  }, [id]);
+  }, [userId]);
 
   // Handle filter changes
   const handleFilterChange = (event) => {
@@ -176,7 +177,7 @@ function Reports({ id, isdark }) {
   const handleDeleteExpense = async (itemId) => {
     setLoading(true);
     try {
-      await expenseService.deleteExpense(itemId, id);
+      await expenseService.deleteExpense(itemId, userId);
       toast.current.show({
         severity: 'success', summary: 'Success', detail: 'Expense deleted successfully'
       });
@@ -195,7 +196,7 @@ function Reports({ id, isdark }) {
   const handleDeleteCategory = async (itemId) => {
     setLoading(true);
     try {
-      await categoryService.deleteCategory(itemId, id);
+      await categoryService.deleteCategory(itemId, userId);
       toast.current.show({ severity: 'success', summary: 'Success', detail: 'Category deleted successfully' });
       setCategoriesData(prevData => prevData.filter(item => item.id !== itemId));
     } catch (error) {
@@ -210,7 +211,7 @@ function Reports({ id, isdark }) {
   const handleDeleteProduct = async (itemId) => {
     setLoading(true);
     try {
-      await productService.deleteProduct(itemId, id);
+      await productService.deleteProduct(itemId, userId);
       toast.current.show({ severity: 'success', summary: 'Success', detail: 'Product deleted successfully' });
       setProductsData(prevData => prevData.filter(item => item.id !== itemId));
     } catch (error) {
@@ -227,7 +228,7 @@ function Reports({ id, isdark }) {
   const handleDeleteSource = async (itemId) => {
     setLoading(true);
     try {
-      await sourceService.deleteSource(itemId, id);
+      await sourceService.deleteSource(itemId, userId);
       toast.current.show({ severity: 'success', summary: 'Success', detail: 'Source deleted successfully' });
       setMainSourceData(prevData => prevData.filter(item => item.id !== itemId));
     } catch (error) {

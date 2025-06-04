@@ -57,7 +57,7 @@ const SignUpForm = () => {
 
                 await authService.register(values);
                 toast.current.show({ severity: 'success', summary: 'Success', detail: 'Registration completed successfully' });
-
+                setFormData({ full_name: '', email: '', user_password: '', mobile_no: '', address: '' })
                 setTimeout(() => {
                     navigate("/login");
                 }, 1000);

@@ -6,8 +6,10 @@ import { TbReportSearch } from "react-icons/tb";
 import { SiProxmox } from "react-icons/si";
 import '../styles/Footer.css';
 import { FaMoneyBillWave, FaTags } from 'react-icons/fa';
+import { useAuth } from '../context/AuthContext';
 
-const Footer = ({ isdark }) => {
+const Footer = () => {
+  const { isDark } = useAuth();
   const location = useLocation();
   
   // Function to determine if a route is active
@@ -16,7 +18,7 @@ const Footer = ({ isdark }) => {
   };
 
   return (
-    <div className={`mobile-footer ${isdark ? 'dark-footer' : ''}`}>
+    <div className={`mobile-footer ${isDark ? 'dark-footer' : ''}`}>
       <Link to="/dashBoard" className="footer-item">
         <div className={`footer-icon-container ${isActive('/dashBoard') ? 'active-footer-item' : ''}`}>
           <MdDashboard className="footer-icon" />

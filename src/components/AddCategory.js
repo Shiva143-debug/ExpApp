@@ -8,13 +8,11 @@ import { Dialog } from 'primereact/dialog';
 import Slidebar from "./Micilinious/Slidebar";
 import { categoryService, productService } from '../api/apiService';
 import Category from "./Category";
+import { useAuth } from "../context/AuthContext";
 
-function AddCategory({ id, isdark, close, selectedCategory }) {
-    const [values, setValues] = useState({
-        category: "",
-        product: "",
-    });
-
+function AddCategory({  close, selectedCategory }) {
+    const { userId, isdark } = useAuth();
+    const [values, setValues] = useState({category: "",product: "",});
     const [categories, setCategories] = useState([]);
     const [selectedOption, setSelectedOption] = useState("select");
     const [loading, setLoading] = useState(false);
@@ -27,9 +25,9 @@ function AddCategory({ id, isdark, close, selectedCategory }) {
     const isMobile = useMediaQuery('(max-width:768px)');
 
     // Prepare data objects for API calls
-    const productData = { id, category: selectedOption, product: values.product, };
+    const productData = { userId, category: selectedOption, product: values.product, };
 
-    const updateProductData = { user_id: id, product: values.product, };
+    const updateProductData = { user_id: userId, product: values.product, };
 
     // Close popup with delay
     const popClose = () => {
@@ -74,12 +72,12 @@ function AddCategory({ id, isdark, close, selectedCategory }) {
     // Fetch categories on component mount
     useEffect(() => {
         getCategoriesData()
-    }, [id])
+    }, [userId])
 
     const getCategoriesData = async () => {
-        if (id) {
+        if (userId) {
             try {
-                const data = await categoryService.getCategories(id);
+                const data = await categoryService.getCategories(userId);
                 setCategories(data);
             } catch (err) {
                 console.error("Error fetching categories:", err);
@@ -233,7 +231,7 @@ function AddCategory({ id, isdark, close, selectedCategory }) {
                     )}
 
                     <Dialog visible={showDialogue} style={{ width: isMobile ? '90vw' : '50vw' }} onHide={closeCategoryDialog} header="ADD CATEGORY" draggable={false} resizable={false} className={isdark ? "dark-dialog" : ""}>
-                        <Category close={closeCategoryDialog} id={id} isdark={isdark} updateData={updateCategoriesList} />
+                        <Category close={closeCategoryDialog} id={userId} isdark={isdark} updateData={updateCategoriesList} />
                     </Dialog>
                 </div>
             </div>

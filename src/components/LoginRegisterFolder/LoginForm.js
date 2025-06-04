@@ -42,7 +42,7 @@ const LoginForm = ({ setUserId }) => {
             try {
                 const data = await authService.login(loginformData);
                 toast.current.show({ severity: 'success', summary: 'Success', detail: 'Login successfully' });
-
+                setLoginFormData({ loginEmail: '', password: '' });
                 setTimeout(() => {
                     setUserId(data.result.id);
                     navigate("/dashBoard");

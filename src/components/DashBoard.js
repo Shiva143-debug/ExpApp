@@ -9,6 +9,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { expenseService, sourceService, savingsService } from '../api/apiService';
 import "../styles/Dashboard.css"
+import { useAuth } from '../context/AuthContext';
 
 const months = [
     "January", "February", "March", "April",
@@ -19,7 +20,8 @@ const months = [
 const currentYear = new Date().getFullYear();
 const years = Array.from({ length: 7 }, (_, index) => (currentYear - 3 + index).toString());
 
-function Dashboard({ id, isdark }) {
+function Dashboard() {
+    const { userId, isdark } = useAuth();
     const [Month, setSelectedMonth] = useState((new Date().getMonth() + 1).toString());
     const [Year, setSelectedYear] = useState(new Date().getFullYear().toString());
     const [totalCostData, setExpenseCost] = useState([])
@@ -67,55 +69,55 @@ function Dashboard({ id, isdark }) {
     useEffect(() => {
         const fetchExpenseCost = async () => {
             try {
-                const data = await expenseService.getExpenseCost(id);
+                const data = await expenseService.getExpenseCost(userId);
                 setExpenseCost(data);
             } catch (err) {
                 console.error("Error fetching expense cost:", err);
             }
         };
 
-        if (id) {
+        if (userId) {
             fetchExpenseCost();
         }
-    }, [id]);
+    }, [userId]);
 
     // Fetch year-wise expense data
     useEffect(() => {
         const fetchYearWiseExpenseData = async () => {
             try {
-                const data = await expenseService.getYearWiseExpenseData(id, year);
+                const data = await expenseService.getYearWiseExpenseData(userId, year);
                 setYearExpenceData(data);
             } catch (err) {
                 console.error("Error fetching year-wise expense data:", err);
             }
         };
 
-        if (id && year) {
+        if (userId && year) {
             fetchYearWiseExpenseData();
         }
-    }, [year, id]);
+    }, [year, userId]);
 
 
     // Fetch year-wise savings data
     useEffect(() => {
         const fetchYearWiseSavingsData = async () => {
             try {
-                const data = await savingsService.getYearWiseSavingsData(id, year);
+                const data = await savingsService.getYearWiseSavingsData(userId, year);
                 setYearSavingsData(data);
             } catch (err) {
                 console.error("Error fetching year-wise savings data:", err);
             }
         };
 
-        if (id && year) {
+        if (userId && year) {
             fetchYearWiseSavingsData();
         }
-    }, [year, id]);
+    }, [year, userId]);
     // Fetch source/income data
     useEffect(() => {
         const fetchSourceData = async () => {
             try {
-                const data = await sourceService.getSourceData(id, Month, Year);
+                const data = await sourceService.getSourceData(userId, Month, Year);
                 setTotalIncome(data);
             } catch (err) {
                 console.error("Error fetching source data:", err);
@@ -123,15 +125,15 @@ function Dashboard({ id, isdark }) {
             }
         };
 
-        if (id && Month && Year) {
+        if (userId && Month && Year) {
             fetchSourceData();
         }
-    }, [Month, Year, id]);
+    }, [Month, Year, userId]);
 
     useEffect(() => {
         const fetchSavingsData = async () => {
             try {
-                const data = await savingsService.getSavingData(id, Month, Year);
+                const data = await savingsService.getSavingData(userId, Month, Year);
                 setSavingsData(data);
             } catch (err) {
                 console.error("Error fetching savings data:", err);
@@ -139,16 +141,16 @@ function Dashboard({ id, isdark }) {
             }
         };
 
-        if (id && Month && Year) {
+        if (userId && Month && Year) {
             fetchSavingsData();
         }
-    }, [Month, Year, id]);
+    }, [Month, Year, userId]);
 
     // Fetch year-wise data
     useEffect(() => {
         const fetchYearData = async () => {
             try {
-                const data = await sourceService.getYearWiseData(id, year);
+                const data = await sourceService.getYearWiseData(userId, year);
                 setYearData(data);
             } catch (err) {
                 console.error("Error fetching year-wise data:", err);
@@ -156,10 +158,10 @@ function Dashboard({ id, isdark }) {
             }
         };
 
-        if (id && year) {
+        if (userId && year) {
             fetchYearData();
         }
-    }, [year, id]);
+    }, [year, userId]);
 
     const grandTotal = totalIncomeData.reduce((acc, curr) => acc + parseInt(curr.amount), 0);
     const savingsAmount = savingsData.reduce((acc, curr) => acc + parseInt(curr.amount), 0);

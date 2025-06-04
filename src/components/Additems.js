@@ -10,9 +10,11 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "bootstrap/dist/css/bootstrap.min.css"
 import "../styles/AddItems.css"
+import { useAuth } from "../context/AuthContext";
 
 
-function Additems({ id, isdark, selectedExpence, close }) {
+function Additems({  selectedExpence, close }) {
+    const { userId, isdark } = useAuth();
     const [Data, setData] = useState([])
     const [products, setProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("select");
@@ -55,11 +57,11 @@ function Additems({ id, isdark, selectedExpence, close }) {
 
     useEffect(() => {
         fetchCategories();
-    }, [id]);
+    }, [userId]);
 
     const fetchCategories = async () => {
         try {
-            const data = await categoryService.getCategories(id);
+            const data = await categoryService.getCategories(userId);
             setData(data);
         } catch (error) {
             console.error('Error fetching categories:', error);
@@ -74,7 +76,7 @@ function Additems({ id, isdark, selectedExpence, close }) {
 
     const fetchProducts = async (category) => {
         try {
-            const data = await categoryService.getProductsByCategory(category, id);
+            const data = await categoryService.getProductsByCategory(category, userId);
             setProducts(data);
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -111,7 +113,7 @@ function Additems({ id, isdark, selectedExpence, close }) {
             const currentMonth = selectedDate.getMonth() + 1;
             const currentYear = selectedDate.getFullYear();
 
-            const data = await sourceService.getAllSourceData(id);
+            const data = await sourceService.getAllSourceData(userId);
             console.log("source data",data)
             const filteredData = data.filter(item => {
                 const itemDate = new Date(item.date);
@@ -142,9 +144,9 @@ function Additems({ id, isdark, selectedExpence, close }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const expenseData = {id,category: selectedCategory,product: selectedProduct,cost,source: selectedSource,p_date: purchaseDate,description,is_tax_app: taxApplicable,percentage,tax_amount: taxAmount,image: attachFile}
+        const expenseData = {userId,category: selectedCategory,product: selectedProduct,cost,source: selectedSource,p_date: purchaseDate,description,is_tax_app: taxApplicable,percentage,tax_amount: taxAmount,image: attachFile}
 
-        const updateItemData = {user_id: id,cost,p_date: purchaseDate,description,is_tax_app: taxApplicable,percentage,tax_amount: taxAmount}
+        const updateItemData = {user_id: userId,cost,p_date: purchaseDate,description,is_tax_app: taxApplicable,percentage,tax_amount: taxAmount}
 
         if (taxApplicable === "no") {
             expenseData.percentage = 0;
