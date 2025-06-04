@@ -180,8 +180,8 @@ function AddCategory({ id, isdark, close, selectedCategory }) {
 
                             <Toast ref={toast} position="top-right" />
 
-                            {!isEditMode && <h2 style={headingStyle} className="pb-2">ADD CATEGORY/EXPENCE</h2>}
-                            {isEditMode && <h4 style={headingStyle} className="pb-2">UPDATE CATEGORY/EXPENCE</h4>}
+                            {!isEditMode && <h3 style={headingStyle} className="pb-2">ADD CATEGORY/EXPENCE ITEM</h3>}
+                            {isEditMode && <h4 style={headingStyle} className="pb-2">UPDATE CATEGORY/EXPENCE ITEM</h4>}
 
                             {/* {!isEditMode && <p className="text-center mb-4">*To add items, first select a category or create a new one if needed</p>} */}
 
