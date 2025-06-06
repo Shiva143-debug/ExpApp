@@ -303,12 +303,12 @@ function Reports() {
     // 2. Title (centered in white)
     doc.setFontSize(14);
     doc.setTextColor(255, 255, 255);
-    const titleText = `Expense Report for ${months[parseInt(month) - 1]} ${year}`;
+    const titleText = ` ${months[parseInt(month) - 1]} ${year} Expense Report`;
     const titleX = (pageWidth - doc.getTextWidth(titleText)) / 2;
     doc.text(titleText, titleX, 13);
 
     // 4. Prepare table columns and rows
-    const tableColumn = ["Category", "Product", "Amount", "Purchase Date", "Tax Amount", "Description"];
+    const tableColumn = ["Category", "Expence", "Amount", "Date", "Tax Amount", "Description"];
     const tableRows = filteredSearchData.map(item => [
       item.category,
       item.product,

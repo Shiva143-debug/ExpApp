@@ -70,7 +70,7 @@ const ProtectedRoute = ({ children }) => {
 
 // App component with routes
 const AppRoutes = () => {
-  const { userId, isDark, login } = useAuth();
+  const { userId,login } = useAuth();
   
   useEffect(() => {
     document.title = "Expenditure Application";
