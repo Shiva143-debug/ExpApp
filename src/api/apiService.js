@@ -1,6 +1,7 @@
 import axios from 'axios';
-
-const API_BASE_URL = 'https://exciting-spice-armadillo.glitch.me';
+// https://backend-exp-1.onrender.com
+// https://exciting-spice-armadillo.glitch.me
+const API_BASE_URL = 'https://backend-exp-1.onrender.com';
 
 // Create axios instance with base URL
 const api = axios.create({
