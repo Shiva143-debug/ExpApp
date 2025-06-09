@@ -75,7 +75,7 @@ const LoginForm = ({ setUserId }) => {
                             <h1 className='sl-heading'>Log In</h1>
                             <p>Don't have an account? <span onClick={signupclick} style={{ color: "blue", cursor: "pointer" }}>Sign Up</span></p>
                         <form onSubmit={handleLoginFormSubmit}>
-                            <label>Email address<span style={{color:"red"}}>*</span></label>
+                            <label>Email<span style={{color:"red"}}>*</span></label>
                             <input type="email" name="loginEmail" placeholder="Email" onChange={handleChangelogin} onBlur={handleBlur} className='form-control mb-2' />
                             {touchedFields.loginEmail && loginFormErrors.loginEmail && <p className="text-danger">{loginFormErrors.loginEmail}</p>}
 
