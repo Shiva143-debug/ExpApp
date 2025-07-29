@@ -75,7 +75,7 @@ function Slidebar({ isdark }) {
                     className={activeButton === 'source' ? "active" : "sideButton"}
                 >
                     <LiaProceduresSolid className="nav-icon" />
-                    <small>Source/Income</small>
+                    <small>Source</small>
                 </button>
             </Link>
 

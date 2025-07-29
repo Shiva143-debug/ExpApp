@@ -408,7 +408,7 @@ function Reports() {
 
             {activeView === "dashboard" ? (
               <>
-                <h2 className="reports-title">Reports</h2>
+                <h2 className="reports-title pt-5">Reports</h2>
                 <div className="summary-cards">
 
                   <div className="report-card" onClick={() => setActiveView("expenses")} >

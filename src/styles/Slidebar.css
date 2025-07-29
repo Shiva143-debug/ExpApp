@@ -55,8 +55,10 @@
 
 /* Dark mode styles */
 .dark-slidebar {
-    background-color: #2a2a2a;
+    background-color: black;
+    border-right: 1px solid gray;
 }
+
 
 .dark-slidebar .sideButton {
     color: white;

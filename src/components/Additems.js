@@ -221,7 +221,7 @@ function Additems({  selectedExpence, close }) {
                 )}
                 <div className={`content-container ${isMobile ? 'mobile' : ''} ${isdark ? 'dark' : 'light'} ${isEditMode ? 'edit-mode' : ''}`}>
                     <Toast ref={toast} />
-                    <h2 className="form-title">Expense</h2>
+                    <h2 className="form-title pt-5">Expense</h2>
                     <form id="addForm" className={`add-items-form ${isMobile ? 'mobile' : 'desktop'}`} onSubmit={handleSubmit}>
 
                         <div className="row">

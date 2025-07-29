@@ -1,10 +1,12 @@
 .add-items-container {
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 
 .sidebar-container {
   width: 15%;
+  margin-top:50px
 }
 
 .content-container {
@@ -15,7 +17,7 @@
 
 .content-container.mobile {
   width: 100%;
-  min-height: 80vh;
+  min-height: 70vh;
   height: 100vh;
   max-height: 110vh;
   margin-bottom: 50px;

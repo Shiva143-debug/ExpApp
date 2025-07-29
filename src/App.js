@@ -53,8 +53,8 @@ const Layout = ({ children }) => {
       <main className={`app-main ${isDark ? 'dark-mode' : ''}`}>
         {children}
       </main>
-      {isMobile && <Footer />}
       {!isLoginRoute && <ChatbotButton />}
+      {isMobile && <Footer />}
     </>
   );
 };

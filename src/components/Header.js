@@ -81,15 +81,17 @@ function Header() {
     const isMobile = useMediaQuery('(max-width:768px)');
 
     return (
-        <div className="d-flex justify-content-between" style={{ position: "fixed", width: "100vw", backgroundColor: isdark ? "#242424" : "white", color: isdark ? "white" : "black", zIndex: 100, padding: "10px", boxShadow: isdark ? '0 2px 4px white' : '0 2px 4px rgba(0, 0, 0, 0.1)', }}>
+        <div className="d-flex justify-content-between" style={{ position: "fixed", width: "100vw",height:"80px", backgroundColor: isdark ? "black" : "white", color: isdark ? "white" : "black", zIndex: 100, padding: "10px", boxShadow: isdark ? '0 1px 2px white' : '0 2px 4px rgba(0, 0, 0, 0.1)', }}>
             <Toast ref={toast} />
             <ConfirmPopup style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
             <div class="d-flex ">
                 {/* <img src="images/companyName.webp" alt="comapanyImage" style={{ width:isMobile?"40px": "50px" }} /> */}
-                <h2>Expenditure</h2>
+                {/* <h2 >Expenditure</h2> */}
+                {!isdark && <img src="images/main-logo.png" alt="logo" style={{ width: isMobile ? "150px" : "200px", height: isMobile ? "80px" : "70px", marginTop: "-10px", marginLeft: '20px' }} />}
+                {isdark && <img src="images/main-logo-dark.png" alt="logo" style={{ width: isMobile ? "150px" : "200px", height: isMobile ? "80px" : "70px", marginTop: "-10px", marginLeft: '20px' }} />}
             </div>
             <div className="d-flex">
-                {isdark === false ? (<IoMoon size={isMobile ? 30 : 50} className="icon mt-2" onClick={(e) => toggletheme()} />) : (<IoIosSunny className="icon mt-2" size={isMobile ? 30 : 50} onClick={(e) => toggletheme()} />)}
+                {!isdark? (<IoMoon size={isMobile ? 30 : 50} className="icon mt-2" onClick={(e) => toggletheme()} />) : (<IoIosSunny className="icon mt-2" size={isMobile ? 30 : 50} onClick={(e) => toggletheme()} />)}
                 <div>
                     <input type="file" accept="image/*" id="profile-pic" style={{ display: 'none' }} onChange={handleImageChange} />
                     <label htmlFor="profile-pic">
