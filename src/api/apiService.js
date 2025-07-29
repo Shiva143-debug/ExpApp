@@ -95,8 +95,6 @@ export const categoryService = {
     }
   },
 
- 
-
 
   updateCategory: async (categoryId, updateData) => {
     try {

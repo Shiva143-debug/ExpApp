@@ -28,6 +28,7 @@ import Reports from "./components/Reports";
 // Context
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { LoadingProvider, useLoading } from './context/LoadingContext';
+import ChatbotButton from "./components/ChatbotButton";
 
 // Layout component that wraps authenticated pages
 const Layout = ({ children }) => {
@@ -53,6 +54,7 @@ const Layout = ({ children }) => {
         {children}
       </main>
       {isMobile && <Footer />}
+      {!isLoginRoute && <ChatbotButton />}
     </>
   );
 };
